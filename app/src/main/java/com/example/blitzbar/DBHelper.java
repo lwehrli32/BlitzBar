@@ -1,5 +1,6 @@
 package com.example.blitzbar;
 
+import android.annotation.SuppressLint;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -14,6 +15,7 @@ public class DBHelper {
         sqLiteDatabase.execSQL("Create table if not exists users " + "(user_id Integer primary key, username text, first_name text, last_name text, email text, birthday text, blitz_score Integer, fav_drink text, fav_bar text, dark_mode Integer, search_radius Integer)");
     }
 
+    @SuppressLint("DefaultLocale")
     public boolean insertUser(String username, String first_name, String last_name, String email, String birthday, long blitz_score, String fav_drink, String fav_bar){
         createUsersTable();
 
@@ -44,6 +46,6 @@ public class DBHelper {
     public User getUser(String username){
         Cursor c = sqLiteDatabase.rawQuery(String.format("Select * from users where username like '%s'", username), null);
         //User user = new User();
-        return Null;
+        return null;
     }
 }
