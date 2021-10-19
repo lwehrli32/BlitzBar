@@ -2,7 +2,6 @@ package com.example.blitzbar;
 
 public class User {
 
-    private String username;
     private String first_name;
     private String last_name;
     private String email;
@@ -13,8 +12,7 @@ public class User {
     private boolean dark_mode;
     private int search_radius;
 
-    public User(String username, String first_name, String last_name, String email, String birthday, long blitz_score, String fav_bar, String fav_drink, int dark_mode, int search_radius){
-        this.username = username;
+    public User(String first_name, String last_name, String email, String birthday, long blitz_score, String fav_bar, String fav_drink, int dark_mode, int search_radius){
         this.first_name = first_name;
         this.last_name = last_name;
         this.email = email;
@@ -29,8 +27,6 @@ public class User {
             this.dark_mode = true;
         }
     }
-
-    public String getUsername(){return this.username;}
 
     public String getFirst_name(){return this.first_name;}
 
