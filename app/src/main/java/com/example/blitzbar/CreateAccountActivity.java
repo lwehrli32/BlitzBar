@@ -56,6 +56,9 @@ public class CreateAccountActivity extends AppCompatActivity {
         String userEmail = emailEditText.getText().toString();
         String userPassword = passwordEditText.getText().toString();
         boolean goodInput = true;
+        long blitzScore = 0;
+        String fav_bar = "";
+        String fav_drink = "";
 
         if (firstName == "" || firstName == null){
             setFeedback("First name is required");
@@ -69,30 +72,31 @@ public class CreateAccountActivity extends AppCompatActivity {
         }else if(userEmail == "" || userEmail == null){
             setFeedback("Email is required");
             goodInput = false;
+        }else if(userPassword == "" || userPassword == null){
+            setFeedback("Password is required");
+            goodInput = false;
         }
 
-        long blitzScore = 0;
-        String fav_bar = "";
-        String fav_drink = "";
+        if(goodInput) {
+            Context context = getApplicationContext();
+            SQLiteDatabase sqLiteDatabase = context.openOrCreateDatabase("notes", Context.MODE_PRIVATE, null);
+            DBHelper dbHelper = new DBHelper(sqLiteDatabase);
 
-        Context context = getApplicationContext();
-        SQLiteDatabase sqLiteDatabase = context.openOrCreateDatabase("notes", Context.MODE_PRIVATE,null);
-        DBHelper dbHelper = new DBHelper(sqLiteDatabase);
+            // TODO ERROR HERE
+            boolean userCreated = true;//dbHelper.insertUser(firstName, lastName, userEmail, birthday, blitzScore, fav_drink, fav_bar);
 
-        // TODO ERROR HERE
-        boolean userCreated = true;//dbHelper.insertUser(firstName, lastName, userEmail, birthday, blitzScore, fav_drink, fav_bar);
+            sqLiteDatabase.close();
 
-        sqLiteDatabase.close();
+            if (userCreated) {
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putInt("loggedIn", 1).apply();
 
-        if (userCreated) {
-            SharedPreferences.Editor editor = sp.edit();
-            editor.putInt("loggedIn", 1).apply();
-
-            // TODO goto home page/map page
-            Intent intent = new Intent(this, SettingsActivity.class);
-            startActivity(intent);
-        }else{
-
+                // TODO goto home page/map page
+                Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+            } else {
+                setFeedback("Email is already taken");
+            }
         }
     }
 
