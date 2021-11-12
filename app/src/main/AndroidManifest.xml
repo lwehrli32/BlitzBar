@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
         <activity
+            android:name=".SettingsActivity"
+            android:exported="true" />
+        <activity
             android:name=".CreateAccountActivity"
             android:exported="true" />
         <activity

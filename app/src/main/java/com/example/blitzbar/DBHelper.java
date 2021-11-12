@@ -35,7 +35,10 @@ public class DBHelper {
 
         if(numUsers > 0) return false;
 
+        // TODO find out how to insert passwords
         // user does not exist, insert the user
+
+        // TODO error here
         sqLiteDatabase.execSQL(String.format("Insert into users (first_name, last_name, email, birthday, blitz_score, fav_drink, fav_bar, dark_mode, search_radius) Values ('%s', '%s', '%s', '%s', '%d', '%s', '%s', 0, 5)", first_name, last_name, email, birthday, blitz_score, fav_drink, fav_bar));
         return true;
     }
@@ -67,6 +70,7 @@ public class DBHelper {
         String fav_drink = null;
         int dark_mode = 0;
         int search_radius = 5;
+        int numUsers = 0;
 
         c.moveToFirst();
 
@@ -79,14 +83,18 @@ public class DBHelper {
             fav_drink = c.getString(fav_drink_index);
             dark_mode = c.getInt(dark_mode_index);
             search_radius = c.getInt(search_radius_index);
-
+            numUsers++;
             c.moveToNext();
+        }
+
+        if (numUsers != 1) {
+
+            return null;
         }
 
         User user = new User(first_name, last_name, email, birthday, blitz_score, fav_bar, fav_drink, dark_mode, search_radius);
 
         c.close();
-        sqLiteDatabase.close();
         return user;
     }
 }
