@@ -47,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
         String userEmail = emailTextView.getText().toString();
 
         Context context = getApplicationContext();
-        SQLiteDatabase sqLiteDatabase = context.openOrCreateDatabase("notes", Context.MODE_PRIVATE,null);
+        SQLiteDatabase sqLiteDatabase = context.openOrCreateDatabase("BlitzBar", Context.MODE_PRIVATE,null);
         DBHelper dbHelper = new DBHelper(sqLiteDatabase);
 
         User user = dbHelper.getUser(userEmail);
