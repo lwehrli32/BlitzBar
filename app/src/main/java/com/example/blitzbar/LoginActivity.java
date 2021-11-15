@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void userLogin(View v){
-        feedback.setText("");
+        setFeedback("");
         String userEmail = emailTextView.getText().toString();
 
         Context context = getApplicationContext();
@@ -53,7 +53,7 @@ public class LoginActivity extends AppCompatActivity {
         User user = dbHelper.getUser(userEmail);
 
         sqLiteDatabase.close();
-        if (user.getEmail() != null) {
+        if (user != null) {
             String pwd = null;
 
             SharedPreferences.Editor editor = sp.edit();
@@ -63,7 +63,11 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
         }else{
-            feedback.setText("User not found");
+            setFeedback("User not found");
         }
+    }
+
+    public void setFeedback(String msg){
+        feedback.setText(msg);
     }
 }

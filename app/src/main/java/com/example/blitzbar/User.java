@@ -12,12 +12,12 @@ public class User {
     private boolean dark_mode;
     private int search_radius;
 
-    public User(String first_name, String last_name, String email, String birthday, long blitz_score, String fav_bar, String fav_drink, int dark_mode, int search_radius){
+    public User(String first_name, String last_name, String email, String birthday, String blitz_score, String fav_bar, String fav_drink, int dark_mode, int search_radius){
         this.first_name = first_name;
         this.last_name = last_name;
         this.email = email;
         this.birthday = birthday;
-        this.blitz_score = blitz_score;
+        this.blitz_score = Long.parseLong(blitz_score);
         this.fav_bar = fav_bar;
         this.fav_drink = fav_drink;
         this.search_radius = search_radius;

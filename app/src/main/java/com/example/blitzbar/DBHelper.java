@@ -14,11 +14,11 @@ public class DBHelper {
     }
 
     public void createUsersTable(){
-        sqLiteDatabase.execSQL("Create table if not exists users " + "(user_id Integer primary key, first_name text, last_name text, email text, birthday text, blitz_score Integer, fav_drink text, fav_bar text, dark_mode Integer, search_radius Integer)");
+        sqLiteDatabase.execSQL("Create table if not exists users " + "(user_id Integer primary key, first_name text, last_name text, email text, birthday text, blitz_score text, fav_drink text, fav_bar text, dark_mode Integer, search_radius Integer)");
     }
 
     @SuppressLint("DefaultLocale")
-    public boolean insertUser(String first_name, String last_name, String email, String birthday, long blitz_score, String fav_drink, String fav_bar){
+    public boolean insertUser(String first_name, String last_name, String email, String birthday, String blitz_score, String fav_drink, String fav_bar){
         createUsersTable();
 
         // check if the user already exists
@@ -31,7 +31,6 @@ public class DBHelper {
         }
 
         c.close();
-        sqLiteDatabase.close();
 
         if(numUsers > 0) return false;
 
@@ -39,7 +38,7 @@ public class DBHelper {
         // user does not exist, insert the user
 
         // TODO error here
-        sqLiteDatabase.execSQL(String.format("Insert into users (first_name, last_name, email, birthday, blitz_score, fav_drink, fav_bar, dark_mode, search_radius) Values ('%s', '%s', '%s', '%s', '%d', '%s', '%s', 0, 5)", first_name, last_name, email, birthday, blitz_score, fav_drink, fav_bar));
+        sqLiteDatabase.execSQL(String.format("Insert into users (first_name, last_name, email, birthday, blitz_score, fav_drink, fav_bar, dark_mode, search_radius) Values ('%s', '%s', '%s', '%s', '%s', '%s', '%s', 0, 5)", first_name, last_name, email, birthday, blitz_score, fav_drink, fav_bar));
         return true;
     }
 
@@ -65,7 +64,7 @@ public class DBHelper {
         String first_name = null;
         String last_name = null;
         String birthday = null;
-        long blitz_score = 0;
+        String blitz_score = "0";
         String fav_bar = null;
         String fav_drink = null;
         int dark_mode = 0;
@@ -78,7 +77,7 @@ public class DBHelper {
             first_name = c.getString(first_name_index);
             last_name = c.getString(last_name_index);
             birthday = c.getString(birthday_index);
-            blitz_score = c.getLong(blitz_score_index);
+            blitz_score = c.getString(blitz_score_index);
             fav_bar = c.getString(fav_bar_index);
             fav_drink = c.getString(fav_drink_index);
             dark_mode = c.getInt(dark_mode_index);
@@ -88,13 +87,11 @@ public class DBHelper {
         }
 
         if (numUsers != 1) {
-
             return null;
         }
 
-        User user = new User(first_name, last_name, email, birthday, blitz_score, fav_bar, fav_drink, dark_mode, search_radius);
-
         c.close();
-        return user;
+
+        return new User(first_name, last_name, email, birthday, blitz_score, fav_bar, fav_drink, dark_mode, search_radius);
     }
 }

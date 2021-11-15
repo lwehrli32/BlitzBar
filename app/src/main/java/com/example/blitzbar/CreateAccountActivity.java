@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.regex.Pattern;
+
 public class CreateAccountActivity extends AppCompatActivity {
     SharedPreferences sp;
     int loggedIn = 0;
@@ -56,7 +58,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         String userEmail = emailEditText.getText().toString();
         String userPassword = passwordEditText.getText().toString();
         boolean goodInput = true;
-        long blitzScore = 0;
+        String blitzScore = "0";
         String fav_bar = "";
         String fav_drink = "";
 
@@ -72,7 +74,10 @@ public class CreateAccountActivity extends AppCompatActivity {
         }else if(userEmail == "" || userEmail == null){
             setFeedback("Email is required");
             goodInput = false;
-        }else if(userPassword == "" || userPassword == null){
+        }else if(!isValid(userEmail)){
+            setFeedback("Email is not valid");
+            goodInput = false;
+        } else if(userPassword == "" || userPassword == null){
             setFeedback("Password is required");
             goodInput = false;
         }
@@ -83,7 +88,7 @@ public class CreateAccountActivity extends AppCompatActivity {
             DBHelper dbHelper = new DBHelper(sqLiteDatabase);
 
             // TODO ERROR HERE
-            boolean userCreated = true;//dbHelper.insertUser(firstName, lastName, userEmail, birthday, blitzScore, fav_drink, fav_bar);
+            boolean userCreated = dbHelper.insertUser(firstName, lastName, userEmail, birthday, blitzScore, fav_drink, fav_bar);
 
             sqLiteDatabase.close();
 
@@ -102,5 +107,17 @@ public class CreateAccountActivity extends AppCompatActivity {
 
     public void setFeedback(String msg){
         feedback.setText(msg);
+    }
+
+    public static boolean isValid(String email){
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+
+                "[a-zA-Z0-9_+&*-]+)*@" +
+                "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
+                "A-Z]{2,7}$";
+
+        Pattern pat = Pattern.compile(emailRegex);
+        if (email == null)
+            return false;
+        return pat.matcher(email).matches();
     }
 }
