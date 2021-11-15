@@ -13,5 +13,93 @@
         android:text="Settings"
         android:textSize="32dp"
         tools:layout_editor_absoluteX="147dp"
-        tools:layout_editor_absoluteY="16dp" />
+        tools:layout_editor_absoluteY="24dp" />
+
+    <Switch
+        android:id="@+id/switch1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Switch"
+        tools:layout_editor_absoluteX="183dp"
+        tools:layout_editor_absoluteY="192dp" />
+
+    <Switch
+        android:id="@+id/switch2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Switch"
+        tools:layout_editor_absoluteX="183dp"
+        tools:layout_editor_absoluteY="236dp" />
+
+    <Switch
+        android:id="@+id/switch3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Switch"
+        tools:layout_editor_absoluteX="183dp"
+        tools:layout_editor_absoluteY="280dp" />
+
+    <Switch
+        android:id="@+id/switch4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Switch"
+        tools:layout_editor_absoluteX="183dp"
+        tools:layout_editor_absoluteY="325dp" />
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="94dp"
+        android:layout_height="33dp"
+        tools:layout_editor_absoluteX="182dp"
+        tools:layout_editor_absoluteY="367dp" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="46dp"
+        android:layout_height="39dp"
+        android:background="@android:color/transparent"
+        app:srcCompat="?attr/homeAsUpIndicator"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="28dp" />
+
+    <TextView
+        android:id="@+id/DarkMode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="DarkMode"
+        tools:layout_editor_absoluteX="101dp"
+        tools:layout_editor_absoluteY="200dp" />
+
+    <TextView
+        android:id="@+id/Sounds"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sounds"
+        tools:layout_editor_absoluteX="119dp"
+        tools:layout_editor_absoluteY="244dp" />
+
+    <TextView
+        android:id="@+id/Notifications"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Notifications"
+        tools:layout_editor_absoluteX="86dp"
+        tools:layout_editor_absoluteY="288dp" />
+
+    <TextView
+        android:id="@+id/LocationPublic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Location Public"
+        tools:layout_editor_absoluteX="70dp"
+        tools:layout_editor_absoluteY="333dp" />
+
+    <TextView
+        android:id="@+id/SearchRadius"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Search Radius"
+        tools:layout_editor_absoluteX="76dp"
+        tools:layout_editor_absoluteY="374dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
