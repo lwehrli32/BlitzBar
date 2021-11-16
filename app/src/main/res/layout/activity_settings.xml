@@ -28,6 +28,7 @@
         android:layout_marginBottom="15dp"
         android:text="Dark Mode"
         android:textSize="24dp"
+        android:onClick="onSwitch"
         app:layout_constraintBottom_toTopOf="@+id/Sounds"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,6 +43,7 @@
         android:layout_marginBottom="16dp"
         android:text="Sounds"
         android:textSize="24dp"
+        android:onClick="onSwitch"
         app:layout_constraintLeft_toLeftOf="@+id/DarkMode"
         app:layout_constraintBottom_toTopOf="@+id/Notifications"
         app:layout_constraintEnd_toEndOf="parent"
@@ -57,6 +59,7 @@
         android:layout_marginBottom="18dp"
         android:text="Notifications"
         android:textSize="24dp"
+        android:onClick="onSwitch"
         app:layout_constraintLeft_toLeftOf="@+id/DarkMode"
         app:layout_constraintBottom_toTopOf="@+id/LocationPublic"
         app:layout_constraintEnd_toEndOf="parent"
@@ -72,6 +75,7 @@
         android:layout_marginBottom="20dp"
         android:text="Location Public"
         android:textSize="24dp"
+        android:onClick="onSwitch"
         app:layout_constraintBottom_toTopOf="@+id/SearchRadiusBox"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="@+id/DarkMode"
@@ -91,7 +95,7 @@
         app:layout_constraintTop_toBottomOf="@+id/LocationPublic" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/backButton"
         android:layout_width="45dp"
         android:layout_height="36dp"
         android:layout_marginStart="16dp"
@@ -100,7 +104,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/textView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="?attr/homeAsUpIndicator" />
+        app:srcCompat="?attr/homeAsUpIndicator"
+        android:onClick="onClick"/>
 
     <TextView
         android:id="@+id/SearchRadius"
