@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +17,7 @@ import android.widget.Switch;
 
 public class SettingsActivity extends AppCompatActivity {
     SharedPreferences sp;
+    private boolean notifications;
     Switch swDarkMode;
     Switch swSounds;
     Switch swNotifications;
@@ -80,17 +82,22 @@ public class SettingsActivity extends AppCompatActivity {
             amanager.setStreamMute(AudioManager.STREAM_NOTIFICATION, false);
         }
     }
-
+    //TODO BLOCK NOTIFICATIONS WHEN notifications is false
     private void toggleNotifications() {
-        boolean notifications = sp.getBoolean("notifications", false);
+        notifications = sp.getBoolean("notifications", false);
         notifications = !notifications;
         sp.edit().putBoolean("notifications", notifications).apply();
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.areNotificationsEnabled(notifications);
     }
-    //TODO CREATE LOCATIONPUBLIC TOGGLE
-    private void toggleLocationPublic() {
 
+    //TODO Figure out what we want LocationPublic to exactly do
+    private void toggleLocationPublic() {
+        boolean locationPublic = sp.getBoolean("locationPublic", false);
+        locationPublic = !locationPublic;
+        sp.edit().putBoolean("locationPublic", locationPublic).apply();
+    }
+
+    public boolean getNotifications() {
+        return notifications;
     }
 
     private void switchState() {
@@ -102,6 +109,7 @@ public class SettingsActivity extends AppCompatActivity {
         swDarkMode.setChecked(sp.getBoolean("darkMode", false));
         swSounds.setChecked(sp.getBoolean("sounds", false));
         swNotifications.setChecked(sp.getBoolean("notifications", false));
+        swLocationPublic.setChecked(sp.getBoolean("locationPublic", false));
     }
 
     private void switchStateDark() {
@@ -113,6 +121,7 @@ public class SettingsActivity extends AppCompatActivity {
         swDarkMode.setChecked(sp.getBoolean("darkMode", false));
         swSounds.setChecked(sp.getBoolean("sounds", false));
         swNotifications.setChecked(sp.getBoolean("notifications", false));
+        swLocationPublic.setChecked(sp.getBoolean("locationPublic", false));
     }
 
     @Override
