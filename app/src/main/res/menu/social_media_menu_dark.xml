@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-    android:id="@+id/facebook"
+    android:id="@+id/facebookDark"
     android:title="Facebook"
     android:icon="@drawable/f_logo_rgb_blue_58" />
     <item
-        android:id="@+id/twitter"
+        android:id="@+id/twitterDark"
         android:title="Twitter"
         android:icon="@drawable/_021_twitter_logo___blue" />
     <item
-        android:id="@+id/instagram"
+        android:id="@+id/instagramDark"
         android:title="Instagram"
         android:icon="@drawable/instagram_glyph_gradient_rgb" />
 </menu>
