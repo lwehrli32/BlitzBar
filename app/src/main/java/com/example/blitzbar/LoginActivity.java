@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 public class LoginActivity extends AppCompatActivity {
-    public boolean darkMode;
+    private boolean darkMode;
     SharedPreferences sp;
     int loggedIn = 0;
     EditText emailTextView;
@@ -43,6 +43,9 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public boolean getDarkMode() {
+        return darkMode;
+    }
     public void toggleDarkMode() {
         darkMode = !darkMode;
     }

@@ -52,7 +52,7 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(darkModeFunc.darkMode = true) {
+        if(darkModeFunc.getDarkMode() == true) {
             setContentView(R.layout.activity_settings_dark);
         } else {
             setContentView(R.layout.activity_settings);
