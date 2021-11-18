@@ -91,11 +91,6 @@ public class SettingsActivity extends AppCompatActivity {
         sp.edit().putBoolean("locationPublic", locationPublic).apply();
     }
 
-    public boolean getMute() { return mute; }
-    public boolean getNotifications() {
-        return notifications;
-    }
-
     private void switchState() {
         swDarkMode = findViewById(R.id.DarkMode);
         swSounds = findViewById(R.id.Sounds);
