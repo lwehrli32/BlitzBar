@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 public class LoginActivity extends AppCompatActivity {
+    public boolean darkMode;
     SharedPreferences sp;
     int loggedIn = 0;
     EditText emailTextView;
@@ -39,6 +40,15 @@ public class LoginActivity extends AppCompatActivity {
 
     public void gotoCreateAccount(View view){
         Intent intent = new Intent(this, CreateAccountActivity.class);
+        startActivity(intent);
+    }
+
+    public void toggleDarkMode() {
+        darkMode = !darkMode;
+    }
+
+    public void restartActivity(Class passedClass) {
+        Intent intent = new Intent(this, passedClass);
         startActivity(intent);
     }
 

@@ -2,6 +2,7 @@ package com.example.blitzbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.Switch;
 
 public class SettingsActivity extends AppCompatActivity {
     SharedPreferences sp;
+    LoginActivity darkModeFunc = new LoginActivity();
 
     // TODO CREATE METHODS FOR SWITCHES AND BUTTONS
 
@@ -22,7 +24,8 @@ public class SettingsActivity extends AppCompatActivity {
     public void onSwitch(View v) {
         switch (v.getId()) {
             case R.id.DarkMode:
-                toggleDarkMode();
+                darkModeFunc.toggleDarkMode();
+                darkModeFunc.restartActivity(SettingsActivity.class);
                 break;
             case R.id.Sounds:
                 // TODO toggle sounds
@@ -40,14 +43,14 @@ public class SettingsActivity extends AppCompatActivity {
 
     }
 
-    public void toggleDarkMode() {
-
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
+        if(darkModeFunc.darkMode = true) {
+            setContentView(R.layout.activity_settings_dark);
+        } else {
+            setContentView(R.layout.activity_settings);
+        }
         sp = getApplicationContext().getSharedPreferences("BlitzBar", Context.MODE_PRIVATE);
 
         // TODO REMOVE THIS CODE

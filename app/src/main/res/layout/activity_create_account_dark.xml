@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#252627"
+    tools:context=".LoginActivity">
+
+    <Button
+        android:id="@+id/createAccountLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="27dp"
+        android:layout_marginBottom="16dp"
+        android:onClick="gotoLogin"
+        android:text="Login"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/createAccountButton"
+        app:layout_constraintTop_toBottomOf="@+id/createAccountButton" />
+
+    <EditText
+        android:id="@+id/createAccountPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:ems="10"
+        android:textColorHint="@android:color/white"
+        android:hint="Password"
+        android:inputType="textPassword"
+        app:layout_constraintBottom_toTopOf="@+id/createAccountButton"
+        app:layout_constraintStart_toStartOf="@+id/createAccountEmail"
+        app:layout_constraintTop_toBottomOf="@+id/createAccountEmail" />
+
+    <EditText
+        android:id="@+id/createAccountEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="11dp"
+        android:ems="10"
+        android:textColorHint="@android:color/white"
+        android:hint="Email"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/createAccountPassword"
+        app:layout_constraintStart_toStartOf="@+id/createAccountBirthday"
+        app:layout_constraintTop_toBottomOf="@+id/createAccountBirthday" />
+
+    <ImageView
+        android:id="@+id/createAccountLogo"
+        android:layout_width="222dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="19dp"
+        app:layout_constraintBottom_toTopOf="@+id/createAccountFeedback"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo" />
+
+    <Button
+        android:id="@+id/createAccountButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="33dp"
+        android:layout_marginBottom="16dp"
+        android:onClick="userCreateAccount"
+        android:text="Create Account"
+        app:layout_constraintBottom_toTopOf="@+id/createAccountLogin"
+        app:layout_constraintEnd_toEndOf="@+id/createAccountPassword"
+        app:layout_constraintTop_toBottomOf="@+id/createAccountPassword" />
+
+    <EditText
+        android:id="@+id/createAccountFirstName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:layout_marginBottom="13dp"
+        android:ems="10"
+        android:textColorHint="@android:color/white"
+        android:hint="First Name"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/createAccountLastName"
+        app:layout_constraintStart_toStartOf="@+id/createAccountLogo"
+        app:layout_constraintTop_toBottomOf="@+id/createAccountFeedback" />
+
+    <EditText
+        android:id="@+id/createAccountLastName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="18dp"
+        android:ems="10"
+        android:textColorHint="@android:color/white"
+        android:hint="Last Name"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/createAccountBirthday"
+        app:layout_constraintStart_toStartOf="@+id/createAccountFirstName"
+        app:layout_constraintTop_toBottomOf="@+id/createAccountFirstName" />
+
+    <EditText
+        android:id="@+id/createAccountBirthday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="13dp"
+        android:ems="10"
+        android:textColorHint="@android:color/white"
+        android:hint="Birthday"
+        android:inputType="date"
+        app:layout_constraintBottom_toTopOf="@+id/createAccountEmail"
+        app:layout_constraintStart_toStartOf="@+id/createAccountLastName"
+        app:layout_constraintTop_toBottomOf="@+id/createAccountLastName" />
+
+    <TextView
+        android:id="@+id/createAccountFeedback"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="78dp"
+        android:layout_marginEnd="80dp"
+        android:layout_marginBottom="16dp"
+        android:text=""
+        app:layout_constraintBottom_toTopOf="@+id/createAccountFirstName"
+        app:layout_constraintEnd_toEndOf="@+id/createAccountFirstName"
+        app:layout_constraintStart_toStartOf="@+id/createAccountLogo"
+        app:layout_constraintTop_toBottomOf="@+id/createAccountLogo" />
+</androidx.constraintlayout.widget.ConstraintLayout>
