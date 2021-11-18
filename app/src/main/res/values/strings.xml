@@ -8,12 +8,4 @@
     <string name="settings">Settings</string>
     <string name="back_button">Back Button</string>
     <string name="miles">Miles</string>
-    <string name="settings">Settings</string>
-    <string name="dark_mode">Dark Mode</string>
-    <string name="sounds">Sounds</string>
-    <string name="notifications">Notifications</string>
-    <string name="location_public">Location Public</string>
-    <string name="back_button">Back Button</string>
-    <string name="search_radius">Search Radius</string>
-    <string name="miles">Miles</string>
 </resources>
