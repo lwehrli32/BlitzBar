@@ -47,11 +47,6 @@ public class LoginActivity extends AppCompatActivity {
         darkMode = !darkMode;
     }
 
-    public void restartActivity(Class passedClass) {
-        Intent intent = new Intent(this, passedClass);
-        startActivity(intent);
-    }
-
     public void userLogin(View v){
         setFeedback("");
         String userEmail = emailTextView.getText().toString();

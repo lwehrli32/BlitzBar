@@ -25,7 +25,7 @@ public class SettingsActivity extends AppCompatActivity {
         switch (v.getId()) {
             case R.id.DarkMode:
                 darkModeFunc.toggleDarkMode();
-                darkModeFunc.restartActivity(SettingsActivity.class);
+                restartActivity();
                 break;
             case R.id.Sounds:
                 // TODO toggle sounds
@@ -42,6 +42,12 @@ public class SettingsActivity extends AppCompatActivity {
     public void goToLastActivity() {
 
     }
+
+    public void restartActivity() {
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
