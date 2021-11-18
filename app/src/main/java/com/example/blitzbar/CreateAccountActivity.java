@@ -26,8 +26,12 @@ public class CreateAccountActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_account);
         sp = getApplicationContext().getSharedPreferences("BlitzBar", Context.MODE_PRIVATE);
+        if(sp.getBoolean("darkMode", false)) {
+            setContentView(R.layout.activity_create_account_dark);
+        } else {
+            setContentView(R.layout.activity_create_account);
+        }
 
         loggedIn = sp.getInt("loggedIn", 0);
         firstNameEditText = (EditText) findViewById(R.id.createAccountFirstName);

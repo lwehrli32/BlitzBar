@@ -8,7 +8,7 @@
     tools:context=".SettingsActivity">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textViewDark"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@android:dimen/app_icon_size"
@@ -16,12 +16,12 @@
         android:text="Settings"
         android:textColor="@android:color/white"
         android:textSize="48dp"
-        app:layout_constraintBottom_toTopOf="@+id/DarkMode"
-        app:layout_constraintEnd_toEndOf="@+id/DarkMode"
+        app:layout_constraintBottom_toTopOf="@+id/DarkModeDark"
+        app:layout_constraintEnd_toEndOf="@+id/DarkModeDark"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Switch
-        android:id="@+id/DarkMode"
+        android:id="@+id/DarkModeDark"
         android:layout_width="230dp"
         android:layout_height="48dp"
         android:layout_marginStart="65dp"
@@ -32,13 +32,13 @@
         android:textSize="24dp"
         android:onClick="onSwitch"
         android:textColor="@android:color/white"
-        app:layout_constraintBottom_toTopOf="@+id/Sounds"
+        app:layout_constraintBottom_toTopOf="@+id/SoundsDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewDark" />
 
     <Switch
-        android:id="@+id/Sounds"
+        android:id="@+id/SoundsDark"
         android:layout_width="230dp"
         android:layout_height="48dp"
         android:layout_marginStart="65dp"
@@ -49,14 +49,14 @@
         android:textSize="24dp"
         android:onClick="onSwitch"
         android:textColor="@android:color/white"
-        app:layout_constraintLeft_toLeftOf="@+id/DarkMode"
-        app:layout_constraintBottom_toTopOf="@+id/Notifications"
+        app:layout_constraintLeft_toLeftOf="@+id/DarkModeDark"
+        app:layout_constraintBottom_toTopOf="@+id/NotificationsDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/DarkMode" />
+        app:layout_constraintTop_toBottomOf="@+id/DarkModeDark" />
 
     <Switch
-        android:id="@+id/Notifications"
+        android:id="@+id/NotificationsDark"
         android:layout_width="230dp"
         android:layout_height="48dp"
         android:layout_marginStart="65dp"
@@ -67,14 +67,14 @@
         android:onClick="onSwitch"
         android:trackTint="@android:color/darker_gray"
         android:textColor="@android:color/white"
-        app:layout_constraintLeft_toLeftOf="@+id/DarkMode"
-        app:layout_constraintBottom_toTopOf="@+id/LocationPublic"
+        app:layout_constraintLeft_toLeftOf="@+id/DarkModeDark"
+        app:layout_constraintBottom_toTopOf="@+id/LocationPublicDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Sounds" />
+        app:layout_constraintTop_toBottomOf="@+id/SoundsDark" />
 
     <Switch
-        android:id="@+id/LocationPublic"
+        android:id="@+id/LocationPublicDark"
         android:layout_width="230dp"
         android:layout_height="48dp"
         android:layout_marginStart="65dp"
@@ -85,14 +85,14 @@
         android:onClick="onSwitch"
         android:trackTint="@android:color/darker_gray"
         android:textColor="@android:color/white"
-        app:layout_constraintBottom_toTopOf="@+id/SearchRadiusBox"
+        app:layout_constraintBottom_toTopOf="@+id/SearchRadiusBoxDark"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintLeft_toLeftOf="@+id/DarkMode"
+        app:layout_constraintLeft_toLeftOf="@+id/DarkModeDark"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Notifications" />
+        app:layout_constraintTop_toBottomOf="@+id/NotificationsDark" />
 
     <EditText
-        android:id="@+id/SearchRadiusBox"
+        android:id="@+id/SearchRadiusBoxDark"
         android:layout_width="52dp"
         android:layout_height="48dp"
         android:layout_marginEnd="63dp"
@@ -101,17 +101,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:inputType="number"
         android:textColor="@android:color/white"
-        app:layout_constraintStart_toEndOf="@+id/SearchRadius"
-        app:layout_constraintTop_toBottomOf="@+id/LocationPublic" />
+        app:layout_constraintStart_toEndOf="@+id/SearchRadiusDark"
+        app:layout_constraintTop_toBottomOf="@+id/LocationPublicDark" />
 
     <ImageButton
-        android:id="@+id/backButton"
+        android:id="@+id/backButtonDark"
         android:layout_width="45dp"
         android:layout_height="36dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:background="@android:color/transparent"
-        app:layout_constraintBottom_toBottomOf="@+id/textView"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewDark"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="?attr/homeAsUpIndicator"
@@ -119,16 +119,16 @@
         app:tint="@android:color/white" />
 
     <TextView
-        android:id="@+id/SearchRadius"
+        android:id="@+id/SearchRadiusDark"
         android:layout_width="180dp"
         android:layout_height="48dp"
         android:layout_marginStart="65dp"
         android:text="Search Radius"
         android:textColor="@android:color/white"
         android:textSize="24dp"
-        app:layout_constraintBottom_toBottomOf="@+id/SearchRadiusBox"
-        app:layout_constraintEnd_toStartOf="@+id/SearchRadiusBox"
-        app:layout_constraintLeft_toLeftOf="@+id/DarkMode"
+        app:layout_constraintBottom_toBottomOf="@+id/SearchRadiusBoxDark"
+        app:layout_constraintEnd_toStartOf="@+id/SearchRadiusBoxDark"
+        app:layout_constraintLeft_toLeftOf="@+id/DarkModeDark"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/SearchRadiusBox" />
+        app:layout_constraintTop_toTopOf="@+id/SearchRadiusBoxDark" />
 </androidx.constraintlayout.widget.ConstraintLayout>

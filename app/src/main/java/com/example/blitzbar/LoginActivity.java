@@ -6,13 +6,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
 public class LoginActivity extends AppCompatActivity {
-    private boolean darkMode;
     SharedPreferences sp;
     int loggedIn = 0;
     EditText emailTextView;
@@ -23,7 +23,11 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         sp = getApplicationContext().getSharedPreferences("BlitzBar", Context.MODE_PRIVATE);
-        setContentView(R.layout.activity_login);
+        if(sp.getBoolean("darkMode", false)) {
+            setContentView(R.layout.activity_login_dark);
+        } else {
+            setContentView(R.layout.activity_login);
+        }
 
         loggedIn = sp.getInt("loggedIn", 0);
         emailTextView = (EditText) findViewById (R.id.loginEmail);
@@ -43,12 +47,7 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public boolean getDarkMode() {
-        return darkMode;
-    }
-    public void toggleDarkMode() {
-        darkMode = !darkMode;
-    }
+
 
     public void userLogin(View v){
         setFeedback("");
