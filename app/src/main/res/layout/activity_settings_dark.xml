@@ -7,6 +7,7 @@
     android:background="#252627"
     tools:context=".SettingsActivity">
 
+    <?ignore
     <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
@@ -19,6 +20,7 @@
         android:background="?android:attr/windowBackground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/social_media_menu_dark" />
+        ?>
 
     <TextView
         android:id="@+id/textViewDark"

@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".SettingsActivity">
 
+    <?ignore
     <FrameLayout
         android:id="@+id/container"
         android:layout_width="0dp"
@@ -24,7 +25,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/social_media_menu" />
-
+    ?>
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"

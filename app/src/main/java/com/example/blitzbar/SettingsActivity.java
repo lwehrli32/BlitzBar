@@ -18,6 +18,7 @@ import android.widget.Switch;
 public class SettingsActivity extends AppCompatActivity {
     SharedPreferences sp;
     private boolean notifications;
+    private boolean mute;
     Switch swDarkMode;
     Switch swSounds;
     Switch swNotifications;
@@ -55,7 +56,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     //TODO CREATE BACK BUTTON FUNCTIONALITY
-    public void goToLastActivity() {
+    private void goToLastActivity() {
 
     }
 
@@ -71,17 +72,11 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void toggleMute() {
-        boolean mute = sp.getBoolean("sounds", true);
+        mute = sp.getBoolean("sounds", true);
         mute = !mute;
         sp.edit().putBoolean("sounds", mute).apply();
-        AudioManager amanager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-
-        if(mute) {
-            amanager.setStreamMute(AudioManager.STREAM_NOTIFICATION, true);
-        } else {
-            amanager.setStreamMute(AudioManager.STREAM_NOTIFICATION, false);
-        }
     }
+
     //TODO BLOCK NOTIFICATIONS WHEN notifications is false
     private void toggleNotifications() {
         notifications = sp.getBoolean("notifications", true);
@@ -96,6 +91,7 @@ public class SettingsActivity extends AppCompatActivity {
         sp.edit().putBoolean("locationPublic", locationPublic).apply();
     }
 
+    public boolean getMute() { return mute; }
     public boolean getNotifications() {
         return notifications;
     }
