@@ -3,15 +3,19 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/mrsha/AndroidStudioProjects/BlitzBar/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.26015625" />
+        <entry key="..\:/Users/mrsha/AndroidStudioProjects/BlitzBar/app/src/main/res/drawable/ic_baseline_pin_drop_white_24.xml" value="0.305859375" />
         <entry key="..\:/Users/mrsha/AndroidStudioProjects/BlitzBar/app/src/main/res/layout/activity_create_account.xml" value="0.3307291666666667" />
         <entry key="..\:/Users/mrsha/AndroidStudioProjects/BlitzBar/app/src/main/res/layout/activity_create_account_dark.xml" value="0.415625" />
         <entry key="..\:/Users/mrsha/AndroidStudioProjects/BlitzBar/app/src/main/res/layout/activity_login.xml" value="0.3307291666666667" />
         <entry key="..\:/Users/mrsha/AndroidStudioProjects/BlitzBar/app/src/main/res/layout/activity_login_dark.xml" value="0.415625" />
         <entry key="..\:/Users/mrsha/AndroidStudioProjects/BlitzBar/app/src/main/res/layout/activity_main.xml" value="0.3307291666666667" />
-        <entry key="..\:/Users/mrsha/AndroidStudioProjects/BlitzBar/app/src/main/res/layout/activity_settings.xml" value="0.5541666666666667" />
+        <entry key="..\:/Users/mrsha/AndroidStudioProjects/BlitzBar/app/src/main/res/layout/activity_settings.xml" value="0.25" />
         <entry key="..\:/Users/mrsha/AndroidStudioProjects/BlitzBar/app/src/main/res/layout/activity_settings_dark.xml" value="0.415625" />
+        <entry key="..\:/Users/mrsha/AndroidStudioProjects/BlitzBar/app/src/main/res/menu/main_menu_dark.xml" value="0.29375" />
         <entry key="..\:/Users/mrsha/AndroidStudioProjects/BlitzBar/app/src/main/res/menu/mainmenu.xml" value="0.2453125" />
         <entry key="..\:/Users/mrsha/AndroidStudioProjects/BlitzBar/app/src/main/res/menu/social_media_menu.xml" value="0.2453125" />
+        <entry key="..\:/Users/mrsha/AndroidStudioProjects/BlitzBar/app/src/main/res/menu/social_media_menu_dark.xml" value="0.29375" />
       </map>
     </option>
   </component>

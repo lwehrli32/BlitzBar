@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/friendsPage"
+        android:title="Friends"
+        android:icon="@drawable/ic_baseline_people_white_24" />
+    <item
+        android:id="@+id/listPage"
+        android:title="List View"
+        android:icon="@drawable/ic_baseline_list_white_24" />
+    <item
+        android:id="@+id/mapPage"
+        android:title="Map View"
+        android:icon="@drawable/ic_baseline_pin_drop_white_24" />
+    <item
+        android:id="@+id/settingsPage"
+        android:title="Settings"
+        android:icon="@drawable/ic_baseline_settings_white_24" />
+</menu>

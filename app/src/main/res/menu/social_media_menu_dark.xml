@@ -3,13 +3,13 @@
     <item
     android:id="@+id/facebook"
     android:title="Facebook"
-    android:icon="@drawable/f_logo_rgb_black_58" />
+    android:icon="@drawable/f_logo_rgb_blue_58" />
     <item
         android:id="@+id/twitter"
         android:title="Twitter"
-        android:icon="@drawable/_021_twitter_logo___black" />
+        android:icon="@drawable/_021_twitter_logo___blue" />
     <item
         android:id="@+id/instagram"
         android:title="Instagram"
-        android:icon="@drawable/glyph_logo_may2016" />
+        android:icon="@drawable/instagram_glyph_gradient_rgb" />
 </menu>
