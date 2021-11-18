@@ -28,14 +28,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@android:dimen/app_icon_size"
         android:layout_marginEnd="24dp"
-        android:text="Settings"
+        android:text="@string/settings"
         android:textColor="@android:color/white"
-        android:textSize="48dp"
+        android:textSize="48sp"
         app:layout_constraintBottom_toTopOf="@+id/DarkModeDark"
         app:layout_constraintEnd_toEndOf="@+id/DarkModeDark"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Switch
+    <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/DarkModeDark"
         android:layout_width="230dp"
         android:layout_height="48dp"
@@ -43,8 +43,8 @@
         android:layout_marginEnd="65dp"
         android:layout_marginBottom="15dp"
         android:trackTint="@android:color/darker_gray"
-        android:text="Dark Mode"
-        android:textSize="24dp"
+        android:text="@string/dark_mode"
+        android:textSize="24sp"
         android:onClick="onSwitch"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toTopOf="@+id/SoundsDark"
@@ -52,7 +52,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewDark" />
 
-    <Switch
+    <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/SoundsDark"
         android:layout_width="230dp"
         android:layout_height="48dp"
@@ -60,8 +60,8 @@
         android:trackTint="@android:color/darker_gray"
         android:layout_marginEnd="65dp"
         android:layout_marginBottom="16dp"
-        android:text="Sounds"
-        android:textSize="24dp"
+        android:text="@string/sounds"
+        android:textSize="24sp"
         android:onClick="onSwitch"
         android:textColor="@android:color/white"
         app:layout_constraintLeft_toLeftOf="@+id/DarkModeDark"
@@ -70,15 +70,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/DarkModeDark" />
 
-    <Switch
+    <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/NotificationsDark"
         android:layout_width="230dp"
         android:layout_height="48dp"
         android:layout_marginStart="65dp"
         android:layout_marginEnd="65dp"
         android:layout_marginBottom="18dp"
-        android:text="Notifications"
-        android:textSize="24dp"
+        android:text="@string/notifications"
+        android:textSize="24sp"
         android:onClick="onSwitch"
         android:trackTint="@android:color/darker_gray"
         android:textColor="@android:color/white"
@@ -88,15 +88,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/SoundsDark" />
 
-    <Switch
+    <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/LocationPublicDark"
         android:layout_width="230dp"
         android:layout_height="48dp"
         android:layout_marginStart="65dp"
         android:layout_marginEnd="65dp"
         android:layout_marginBottom="20dp"
-        android:text="Location Public"
-        android:textSize="24dp"
+        android:text="@string/location_public"
+        android:textSize="24sp"
         android:onClick="onSwitch"
         android:trackTint="@android:color/darker_gray"
         android:textColor="@android:color/white"
@@ -117,7 +117,10 @@
         android:inputType="number"
         android:textColor="@android:color/white"
         app:layout_constraintStart_toEndOf="@+id/SearchRadiusDark"
-        app:layout_constraintTop_toBottomOf="@+id/LocationPublicDark" />
+        app:layout_constraintTop_toBottomOf="@+id/LocationPublicDark"
+        android:autofillHints="@string/miles"
+        android:hint="@string/miles"
+        android:textColorHint="@color/white"/>
 
     <ImageButton
         android:id="@+id/backButtonDark"
@@ -131,16 +134,17 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="?attr/homeAsUpIndicator"
         android:onClick="onClick"
-        app:tint="@android:color/white" />
+        app:tint="@android:color/white"
+        android:contentDescription="@string/back_button"/>
 
     <TextView
         android:id="@+id/SearchRadiusDark"
         android:layout_width="180dp"
         android:layout_height="48dp"
         android:layout_marginStart="65dp"
-        android:text="Search Radius"
+        android:text="@string/search_radius"
         android:textColor="@android:color/white"
-        android:textSize="24dp"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@+id/SearchRadiusBoxDark"
         app:layout_constraintEnd_toStartOf="@+id/SearchRadiusBoxDark"
         app:layout_constraintLeft_toLeftOf="@+id/DarkModeDark"

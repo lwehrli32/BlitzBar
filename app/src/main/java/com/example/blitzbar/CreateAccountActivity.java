@@ -1,7 +1,6 @@
 package com.example.blitzbar;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -66,22 +65,22 @@ public class CreateAccountActivity extends AppCompatActivity {
         String fav_bar = "";
         String fav_drink = "";
 
-        if (firstName == "" || firstName == null){
+        if (firstName.equals("")){
             setFeedback("First name is required");
             goodInput = false;
-        }else if(lastName == "" || lastName == null){
+        }else if(lastName.equals("")){
             setFeedback("Last name is required");
             goodInput = false;
-        }else if(birthday == "" || birthday == null){
+        }else if(birthday.equals("")){
             setFeedback("Birthday is required");
             goodInput = false;
-        }else if(userEmail == "" || userEmail == null){
+        }else if(userEmail.equals("")){
             setFeedback("Email is required");
             goodInput = false;
         }else if(!isValid(userEmail)){
             setFeedback("Email is not valid");
             goodInput = false;
-        } else if(userPassword == "" || userPassword == null){
+        } else if(userPassword.equals("")){
             setFeedback("Password is required");
             goodInput = false;
         }

@@ -4,8 +4,6 @@ import android.annotation.SuppressLint;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import java.util.ArrayList;
-
 public class DBHelper {
     SQLiteDatabase sqLiteDatabase;
 

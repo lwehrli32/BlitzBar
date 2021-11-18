@@ -2,15 +2,13 @@ package com.example.blitzbar;
 
 public class User {
 
-    private String first_name;
-    private String last_name;
-    private String email;
-    private String birthday;
+    private final String first_name;
+    private final String last_name;
+    private final String email;
+    private final String birthday;
     private long blitz_score;
     private String fav_bar;
     private String fav_drink;
-    private boolean dark_mode;
-    private int search_radius;
 
     public User(String first_name, String last_name, String email, String birthday, String blitz_score, String fav_bar, String fav_drink, int dark_mode, int search_radius){
         this.first_name = first_name;
@@ -20,12 +18,6 @@ public class User {
         this.blitz_score = Long.parseLong(blitz_score);
         this.fav_bar = fav_bar;
         this.fav_drink = fav_drink;
-        this.search_radius = search_radius;
-        if(dark_mode == 0){
-            this.dark_mode = false;
-        }else{
-            this.dark_mode = true;
-        }
     }
 
     public String getFirst_name(){return this.first_name;}
@@ -42,7 +34,4 @@ public class User {
 
     public Long getBlitz_score(){return this.blitz_score;}
 
-    public int getSearch_radius(){return this.search_radius;}
-
-    public boolean getDark_mode(){return this.dark_mode;}
 }

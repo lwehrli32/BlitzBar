@@ -2,27 +2,18 @@ package com.example.blitzbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
-
-import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.media.AudioManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.Switch;
 
 public class SettingsActivity extends AppCompatActivity {
     SharedPreferences sp;
-    private boolean notifications;
-    private boolean mute;
-    Switch swDarkMode;
-    Switch swSounds;
-    Switch swNotifications;
-    Switch swLocationPublic;
+    SwitchCompat swDarkMode;
+    SwitchCompat swSounds;
+    SwitchCompat swNotifications;
+    SwitchCompat swLocationPublic;
 
     public void onClick(View v) {
         if(v.getId() == R.id.backButton) {
@@ -31,27 +22,15 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public void onSwitch(View v) {
-        switch (v.getId()) {
-            case R.id.DarkMode:
-            case R.id.DarkModeDark:
-                toggleDarkMode();
-                restartActivity();
-                break;
-
-            case R.id.Sounds:
-            case R.id.SoundsDark:
-                toggleMute();
-                break;
-
-            case R.id.Notifications:
-            case R.id.NotificationsDark:
-                toggleNotifications();
-                break;
-
-            case R.id.LocationPublic:
-            case R.id.LocationPublicDark:
-                toggleLocationPublic();
-                break;
+        if(v.getId() == R.id.DarkMode || v.getId() == R.id.DarkModeDark) {
+            toggleDarkMode();
+            restartActivity();
+        } else if (v.getId() == R.id.Sounds || v.getId() == R.id.SoundsDark) {
+            toggleMute();
+        } else if (v.getId() == R.id.Notifications || v.getId() == R.id.NotificationsDark) {
+            toggleNotifications();
+        } else if (v.getId() == R.id.LocationPublic || v.getId() == R.id.LocationPublicDark) {
+            toggleLocationPublic();
         }
     }
 
@@ -72,14 +51,14 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void toggleMute() {
-        mute = sp.getBoolean("sounds", true);
+        boolean mute = sp.getBoolean("sounds", true);
         mute = !mute;
         sp.edit().putBoolean("sounds", mute).apply();
     }
 
     //TODO BLOCK NOTIFICATIONS WHEN notifications is false
     private void toggleNotifications() {
-        notifications = sp.getBoolean("notifications", true);
+        boolean notifications = sp.getBoolean("notifications", true);
         notifications = !notifications;
         sp.edit().putBoolean("notifications", notifications).apply();
     }
