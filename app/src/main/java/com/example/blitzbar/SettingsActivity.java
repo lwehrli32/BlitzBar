@@ -71,7 +71,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void toggleMute() {
-        boolean mute = sp.getBoolean("sounds", false);
+        boolean mute = sp.getBoolean("sounds", true);
         mute = !mute;
         sp.edit().putBoolean("sounds", mute).apply();
         AudioManager amanager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
@@ -84,14 +84,14 @@ public class SettingsActivity extends AppCompatActivity {
     }
     //TODO BLOCK NOTIFICATIONS WHEN notifications is false
     private void toggleNotifications() {
-        notifications = sp.getBoolean("notifications", false);
+        notifications = sp.getBoolean("notifications", true);
         notifications = !notifications;
         sp.edit().putBoolean("notifications", notifications).apply();
     }
 
     //TODO Figure out what we want LocationPublic to exactly do
     private void toggleLocationPublic() {
-        boolean locationPublic = sp.getBoolean("locationPublic", false);
+        boolean locationPublic = sp.getBoolean("locationPublic", true);
         locationPublic = !locationPublic;
         sp.edit().putBoolean("locationPublic", locationPublic).apply();
     }
@@ -107,9 +107,9 @@ public class SettingsActivity extends AppCompatActivity {
         swLocationPublic = findViewById(R.id.LocationPublic);
 
         swDarkMode.setChecked(sp.getBoolean("darkMode", false));
-        swSounds.setChecked(sp.getBoolean("sounds", false));
-        swNotifications.setChecked(sp.getBoolean("notifications", false));
-        swLocationPublic.setChecked(sp.getBoolean("locationPublic", false));
+        swSounds.setChecked(sp.getBoolean("sounds", true));
+        swNotifications.setChecked(sp.getBoolean("notifications", true));
+        swLocationPublic.setChecked(sp.getBoolean("locationPublic", true));
     }
 
     private void switchStateDark() {
@@ -119,9 +119,9 @@ public class SettingsActivity extends AppCompatActivity {
         swLocationPublic = findViewById(R.id.LocationPublicDark);
 
         swDarkMode.setChecked(sp.getBoolean("darkMode", false));
-        swSounds.setChecked(sp.getBoolean("sounds", false));
-        swNotifications.setChecked(sp.getBoolean("notifications", false));
-        swLocationPublic.setChecked(sp.getBoolean("locationPublic", false));
+        swSounds.setChecked(sp.getBoolean("sounds", true));
+        swNotifications.setChecked(sp.getBoolean("notifications", true));
+        swLocationPublic.setChecked(sp.getBoolean("locationPublic", true));
     }
 
     @Override
