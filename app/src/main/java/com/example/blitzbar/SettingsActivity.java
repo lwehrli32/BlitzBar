@@ -16,7 +16,7 @@ public class SettingsActivity extends AppCompatActivity {
     SwitchCompat swLocationPublic;
 
     public void onClick(View v) {
-        if(v.getId() == R.id.backButton) {
+        if(v.getId() == R.id.backButton || v.getId() == R.id.backButtonDark) {
             goToLastActivity();
         }
     }
@@ -33,10 +33,9 @@ public class SettingsActivity extends AppCompatActivity {
             toggleLocationPublic();
         }
     }
-
-    //TODO CREATE BACK BUTTON FUNCTIONALITY
+    //TODO return to the previous default screen
     private void goToLastActivity() {
-
+        super.onBackPressed();
     }
 
     private void restartActivity() {
