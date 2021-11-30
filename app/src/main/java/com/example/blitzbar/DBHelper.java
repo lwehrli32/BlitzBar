@@ -11,22 +11,12 @@ public class DBHelper {
         this.sqLiteDatabase = sqLiteDatabase;
     }
 
-    public void createUsersTable(){
-        sqLiteDatabase.execSQL("Create table if not exists users " + "(user_id Integer primary key, first_name text, last_name text, email text, birthday text, blitz_score text, fav_drink text, fav_bar text, dark_mode Integer, search_radius Integer)");
-    }
+    private int getUserId(String email){
 
-    public void createFriendsTable(){
-        sqLiteDatabase.execSQL("Create table if not exists friends " + "(id Integer primary key, user_id Integer, friend_id Integer)");
-    }
+        Cursor c = sqLiteDatabase.rawQuery(String.format("Select * from users where email = '%s'", email), null);
 
-    public boolean createFriendShip(String user_email, String friend_email){
-        createFriendsTable();
-
-        int user_id = -1;
-        int friend_id = -1;
-
-        Cursor c = sqLiteDatabase.rawQuery(String.format("Select * from users where email = '%s'", user_email), null);
         int numUsers = 0;
+        int user_id = -1;
 
         int userIdIndex = c.getColumnIndex("user_id");
 
@@ -38,25 +28,54 @@ public class DBHelper {
 
         c.close();
 
-        if(numUsers != 1) return false;
+        if (numUsers != 1) return -1;
 
-        c = sqLiteDatabase.rawQuery(String.format("Select * from users where email = '%s'", friend_email), null);
-        numUsers = 0;
-        userIdIndex = c.getColumnIndex("user_id");
+        return user_id;
+    }
 
-        while(!c.isAfterLast()){
-            numUsers++;
-            friend_id = c.getInt(userIdIndex);
+    public void createUsersTable(){
+        sqLiteDatabase.execSQL("Create table if not exists users " + "(user_id Integer primary key, first_name text, last_name text, email text, birthday text, blitz_score text, fav_drink text, fav_bar text, dark_mode Integer, search_radius Integer)");
+    }
+
+    public void createFriendsTable(){
+        sqLiteDatabase.execSQL("Create table if not exists friends " + "(id Integer primary key, user_id Integer, friend_id Integer)");
+    }
+
+    public boolean createFriendShip(String user_email, String friend_email){
+        createFriendsTable();
+
+        int user_id = getUserId(user_email);
+        int friend_id = getUserId(friend_email);
+
+        if(user_id == -1 || friend_id == -1) return false;
+
+        sqLiteDatabase.execSQL(String.format("Insert into friends (user_id, friend_id) Values ('%i', '%i')", user_id, friend_id));
+
+        return true;
+    }
+
+    public boolean isFriend(String user_email, String friend_email){
+        createFriendsTable();
+
+        int user_id = getUserId(user_email);
+        int friend_id = getUserId(friend_email);
+        int numRelationship = 0;
+
+        if (user_id == -1 || friend_id == -1) return false;
+
+        Cursor c = sqLiteDatabase.rawQuery(String.format("Select * from friends where user_id = '%i' and friend_id = '%i'", user_id, friend_id), null);
+
+        while(!c.isAfterLast()) {
+            numRelationship++;
             c.moveToNext();
         }
 
         c.close();
 
-        if(numUsers != 1) return false;
-
-        sqLiteDatabase.execSQL(String.format("Insert into friends (user_id, friend_id) Values ('%i', '%i')", user_id, friend_id));
+        if (numRelationship != 1) return false;
 
         return true;
+
     }
 
     @SuppressLint("DefaultLocale")
