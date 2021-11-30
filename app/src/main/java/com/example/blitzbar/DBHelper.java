@@ -15,6 +15,50 @@ public class DBHelper {
         sqLiteDatabase.execSQL("Create table if not exists users " + "(user_id Integer primary key, first_name text, last_name text, email text, birthday text, blitz_score text, fav_drink text, fav_bar text, dark_mode Integer, search_radius Integer)");
     }
 
+    public void createFriendsTable(){
+        sqLiteDatabase.execSQL("Create table if not exists friends " + "(id Integer primary key, user_id Integer, friend_id Integer)");
+    }
+
+    public boolean createFriendShip(String user_email, String friend_email){
+        createFriendsTable();
+
+        int user_id = -1;
+        int friend_id = -1;
+
+        Cursor c = sqLiteDatabase.rawQuery(String.format("Select * from users where email = '%s'", user_email), null);
+        int numUsers = 0;
+
+        int userIdIndex = c.getColumnIndex("user_id");
+
+        while(!c.isAfterLast()){
+            numUsers++;
+            user_id = c.getInt(userIdIndex);
+            c.moveToNext();
+        }
+
+        c.close();
+
+        if(numUsers != 1) return false;
+
+        c = sqLiteDatabase.rawQuery(String.format("Select * from users where email = '%s'", friend_email), null);
+        numUsers = 0;
+        userIdIndex = c.getColumnIndex("user_id");
+
+        while(!c.isAfterLast()){
+            numUsers++;
+            friend_id = c.getInt(userIdIndex);
+            c.moveToNext();
+        }
+
+        c.close();
+
+        if(numUsers != 1) return false;
+
+        sqLiteDatabase.execSQL(String.format("Insert into friends (user_id, friend_id) Values ('%i', '%i')", user_id, friend_id));
+
+        return true;
+    }
+
     @SuppressLint("DefaultLocale")
     public boolean insertUser(String first_name, String last_name, String email, String birthday, String blitz_score, String fav_drink, String fav_bar){
         createUsersTable();
