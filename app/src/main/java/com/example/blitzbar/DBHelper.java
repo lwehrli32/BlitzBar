@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.util.ArrayList;
+
 public class DBHelper {
     SQLiteDatabase sqLiteDatabase;
 
@@ -33,6 +35,23 @@ public class DBHelper {
         return user_id;
     }
 
+    private String getUserEmail(int user_id){
+
+        Cursor c = sqLiteDatabase.rawQuery(String.format("Select * from users where user_id = %i", user_id), null);
+
+        int userEmailIndex = c.getColumnIndex("email");
+        String user_email = "";
+
+        while(!c.isAfterLast()){
+            user_email = c.getString(userEmailIndex);
+            c.moveToNext();
+        }
+
+        c.close();
+
+        return user_email;
+    }
+
     public void createUsersTable(){
         sqLiteDatabase.execSQL("Create table if not exists users " + "(user_id Integer primary key, first_name text, last_name text, email text, birthday text, blitz_score text, fav_drink text, fav_bar text, dark_mode Integer, search_radius Integer)");
     }
@@ -49,7 +68,7 @@ public class DBHelper {
 
         if(user_id == -1 || friend_id == -1) return false;
 
-        sqLiteDatabase.execSQL(String.format("Insert into friends (user_id, friend_id) Values ('%i', '%i')", user_id, friend_id));
+        sqLiteDatabase.execSQL(String.format("Insert into friends (user_id, friend_id) Values (%i, %i)", user_id, friend_id));
 
         return true;
     }
@@ -63,7 +82,7 @@ public class DBHelper {
 
         if (user_id == -1 || friend_id == -1) return false;
 
-        Cursor c = sqLiteDatabase.rawQuery(String.format("Select * from friends where user_id = '%i' and friend_id = '%i'", user_id, friend_id), null);
+        Cursor c = sqLiteDatabase.rawQuery(String.format("Select * from friends where user_id = %i and friend_id = %i", user_id, friend_id), null);
 
         while(!c.isAfterLast()) {
             numRelationship++;
@@ -76,6 +95,29 @@ public class DBHelper {
 
         return true;
 
+    }
+
+    public ArrayList<String> listFriends(String email){
+        createFriendsTable();
+        createUsersTable();
+
+        ArrayList<String> friends = new ArrayList<>();
+
+        int userId = getUserId(email);
+
+        Cursor c = sqLiteDatabase.rawQuery(String.format("Select * from friends where user_id = %i", userId), null);
+
+        int friendIdIndex = c.getColumnIndex("friend_id");
+
+        while(!c.isAfterLast()){
+            int friend_id = c.getInt(friendIdIndex);
+            String friend_email = getUserEmail(friend_id);
+            friends.add(friend_email);
+            c.moveToNext();
+        }
+
+        c.close();
+        return friends;
     }
 
     @SuppressLint("DefaultLocale")
@@ -97,8 +139,6 @@ public class DBHelper {
 
         // TODO find out how to insert passwords
         // user does not exist, insert the user
-
-        // TODO error here
         sqLiteDatabase.execSQL(String.format("Insert into users (first_name, last_name, email, birthday, blitz_score, fav_drink, fav_bar, dark_mode, search_radius) Values ('%s', '%s', '%s', '%s', '%s', '%s', '%s', 0, 5)", first_name, last_name, email, birthday, blitz_score, fav_drink, fav_bar));
         return true;
     }
