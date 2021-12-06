@@ -36,7 +36,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if (loggedIn == 1){
             //TODO set this to the main home screen
-            Intent intent = new Intent(this, SettingsActivity.class);
+            Intent intent = new Intent(this, MapsActivity.class);
             startActivity(intent);
         }
     }

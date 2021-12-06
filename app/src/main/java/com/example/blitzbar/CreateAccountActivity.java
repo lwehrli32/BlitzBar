@@ -100,7 +100,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                 editor.putInt("loggedIn", 1).apply();
 
                 // TODO goto home page/map page
-                Intent intent = new Intent(this, SettingsActivity.class);
+                Intent intent = new Intent(this, MapsActivity.class);
                 startActivity(intent);
             } else {
                 setFeedback("Email is already taken");
