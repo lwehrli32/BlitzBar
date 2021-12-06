@@ -35,7 +35,6 @@ public class LoginActivity extends AppCompatActivity {
         feedback.setText("");
 
         if (loggedIn == 1){
-            //TODO set this to the main home screen
             Intent intent = new Intent(this, MapsActivity.class);
             startActivity(intent);
         }
@@ -65,8 +64,7 @@ public class LoginActivity extends AppCompatActivity {
             SharedPreferences.Editor editor = sp.edit();
             editor.putInt("loggedIn", 1).apply();
 
-            // TODO goto home page/map page
-            Intent intent = new Intent(this, SettingsActivity.class);
+            Intent intent = new Intent(this, MapsActivity.class);
             startActivity(intent);
         }else{
             setFeedback("User not found");

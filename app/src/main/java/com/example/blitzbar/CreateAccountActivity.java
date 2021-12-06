@@ -42,8 +42,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         feedback.setText("");
 
         if(loggedIn == 1){
-            // TODO go to main screen
-            Intent intent = new Intent(this, SettingsActivity.class);
+            Intent intent = new Intent(this, MapsActivity.class);
             startActivity(intent);
         }
     }
@@ -90,7 +89,6 @@ public class CreateAccountActivity extends AppCompatActivity {
             SQLiteDatabase sqLiteDatabase = context.openOrCreateDatabase("BlitzBar", Context.MODE_PRIVATE, null);
             DBHelper dbHelper = new DBHelper(sqLiteDatabase);
 
-            // TODO ERROR HERE
             boolean userCreated = dbHelper.insertUser(firstName, lastName, userEmail, birthday, blitzScore, fav_drink, fav_bar);
 
             sqLiteDatabase.close();
@@ -98,8 +96,6 @@ public class CreateAccountActivity extends AppCompatActivity {
             if (userCreated) {
                 SharedPreferences.Editor editor = sp.edit();
                 editor.putInt("loggedIn", 1).apply();
-
-                // TODO goto home page/map page
                 Intent intent = new Intent(this, MapsActivity.class);
                 startActivity(intent);
             } else {
