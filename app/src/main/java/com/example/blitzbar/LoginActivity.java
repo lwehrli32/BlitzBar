@@ -17,11 +17,13 @@ public class LoginActivity extends AppCompatActivity {
     EditText emailTextView;
     EditText passwordTextView;
     TextView feedback;
+    String userEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         sp = getApplicationContext().getSharedPreferences("BlitzBar", Context.MODE_PRIVATE);
+
         if(sp.getBoolean("darkMode", false)) {
             setContentView(R.layout.activity_login_dark);
         } else {
@@ -29,12 +31,13 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         loggedIn = sp.getInt("loggedIn", 0);
+        userEmail = sp.getString("userEmail", "");
         emailTextView = (EditText) findViewById (R.id.loginEmail);
         passwordTextView = (EditText) findViewById (R.id.loginPassword);
         feedback = (TextView) findViewById(R.id.loginfeedback);
         feedback.setText("");
 
-        if (loggedIn == 1){
+        if (loggedIn == 1 && userEmail != ""){
             Intent intent = new Intent(this, MapsActivity.class);
             startActivity(intent);
         }
@@ -44,8 +47,6 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(this, CreateAccountActivity.class);
         startActivity(intent);
     }
-
-
 
     public void userLogin(View v){
         setFeedback("");
@@ -63,6 +64,7 @@ public class LoginActivity extends AppCompatActivity {
 
             SharedPreferences.Editor editor = sp.edit();
             editor.putInt("loggedIn", 1).apply();
+            editor.putString("userEmail", userEmail).apply();
 
             Intent intent = new Intent(this, MapsActivity.class);
             startActivity(intent);

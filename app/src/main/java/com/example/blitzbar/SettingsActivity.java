@@ -5,8 +5,11 @@ import androidx.appcompat.widget.SwitchCompat;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 public class SettingsActivity extends AppCompatActivity {
     SharedPreferences sp;
@@ -33,6 +36,7 @@ public class SettingsActivity extends AppCompatActivity {
             toggleLocationPublic();
         }
     }
+
     //TODO return to the previous default screen
     private void goToLastActivity() {
         super.onBackPressed();
@@ -97,17 +101,13 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         sp = getApplicationContext().getSharedPreferences("BlitzBar", Context.MODE_PRIVATE);
-        if(sp.getBoolean("darkMode", false)) {
+
+        if (sp.getBoolean("darkMode", false)) {
             setContentView(R.layout.activity_settings_dark);
             switchStateDark();
-
         } else {
             setContentView(R.layout.activity_settings);
             switchState();
         }
-
-        // TODO REMOVE THIS CODE
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putInt("loggedIn", 0).apply();
     }
 }

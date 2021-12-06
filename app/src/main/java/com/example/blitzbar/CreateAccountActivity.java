@@ -15,6 +15,7 @@ import java.util.regex.Pattern;
 public class CreateAccountActivity extends AppCompatActivity {
     SharedPreferences sp;
     int loggedIn = 0;
+    String userEmail;
     EditText firstNameEditText;
     EditText lastNameEditText;
     EditText birthdayEditText;
@@ -33,6 +34,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         }
 
         loggedIn = sp.getInt("loggedIn", 0);
+        userEmail = sp.getString("userEmail", "");
         firstNameEditText = (EditText) findViewById(R.id.createAccountFirstName);
         lastNameEditText = (EditText) findViewById(R.id.createAccountLastName);
         birthdayEditText = (EditText) findViewById(R.id.createAccountBirthday);
@@ -41,7 +43,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         feedback = (TextView) findViewById(R.id.createAccountFeedback);
         feedback.setText("");
 
-        if(loggedIn == 1){
+        if(loggedIn == 1 && userEmail != ""){
             Intent intent = new Intent(this, MapsActivity.class);
             startActivity(intent);
         }
@@ -95,7 +97,10 @@ public class CreateAccountActivity extends AppCompatActivity {
 
             if (userCreated) {
                 SharedPreferences.Editor editor = sp.edit();
+
                 editor.putInt("loggedIn", 1).apply();
+                editor.putString("userEmail", userEmail).apply();
+
                 Intent intent = new Intent(this, MapsActivity.class);
                 startActivity(intent);
             } else {
