@@ -9,6 +9,8 @@ public class User {
     private long blitz_score;
     private String fav_bar;
     private String fav_drink;
+    private int longitude;
+    private int latitude;
 
     public User(String first_name, String last_name, String email, String birthday, String blitz_score, String fav_bar, String fav_drink, int dark_mode, int search_radius){
         this.first_name = first_name;
