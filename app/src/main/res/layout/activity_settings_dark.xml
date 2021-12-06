@@ -9,8 +9,8 @@
 
     <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/SoundsDark"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="240dp"
+        android:layout_height="48dp"
         android:layout_marginStart="65dp"
         android:layout_marginEnd="65dp"
         android:layout_marginBottom="20dp"
@@ -26,11 +26,11 @@
 
     <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/LocationPublicDark"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="240dp"
+        android:layout_height="48dp"
         android:layout_marginStart="65dp"
         android:layout_marginEnd="65dp"
-        android:layout_marginBottom="22dp"
+        android:layout_marginBottom="20dp"
         android:onClick="onSwitch"
         android:text="@string/location_public"
         android:textColor="@android:color/white"
@@ -43,11 +43,11 @@
 
     <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/NotificationsDark"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="240dp"
+        android:layout_height="48dp"
         android:layout_marginStart="65dp"
         android:layout_marginEnd="65dp"
-        android:layout_marginBottom="93dp"
+        android:layout_marginBottom="90dp"
         android:onClick="onSwitch"
         android:text="@string/notifications"
         android:textColor="@android:color/white"
@@ -60,12 +60,12 @@
 
     <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/DarkModeDark"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="240dp"
+        android:layout_height="48dp"
         android:layout_marginStart="65dp"
-        android:layout_marginTop="354dp"
+        android:layout_marginTop="360dp"
         android:layout_marginEnd="65dp"
-        android:layout_marginBottom="23dp"
+        android:layout_marginBottom="20dp"
         android:onClick="onSwitch"
         android:text="@string/dark_mode"
         android:textColor="@android:color/white"
@@ -78,8 +78,8 @@
 
     <ImageButton
         android:id="@+id/backButtonDark"
-        android:layout_width="59dp"
-        android:layout_height="56dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="40dp"
         android:background="@android:color/transparent"
