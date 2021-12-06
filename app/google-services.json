@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "3142168812",
-    "project_id": "lab-8-fdb45",
-    "storage_bucket": "lab-8-fdb45.appspot.com"
+    "project_number": "889238416986",
+    "project_id": "blitzbar-628f4",
+    "storage_bucket": "blitzbar-628f4.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:3142168812:android:b1c2df3c83c7ffbda2f5c9",
+        "mobilesdk_app_id": "1:889238416986:android:73294e0e19002adb72b263",
         "android_client_info": {
-          "package_name": "com.uw.lab8"
+          "package_name": "com.example.blitzbar"
         }
       },
       "oauth_client": [
         {
-          "client_id": "3142168812-hju0p4k88mpqdj0kto6vjeiip6h0q6rd.apps.googleusercontent.com",
+          "client_id": "889238416986-u05kbc03c3b2b57l3bdj9campqsh6067.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCMUy7FQTk3DleSeYZs6K5dIO09qIHgmBg"
+          "current_key": "AIzaSyA_7Z8zy6gTq_sAna1BGEcuw_itt2je0Xs"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "3142168812-hju0p4k88mpqdj0kto6vjeiip6h0q6rd.apps.googleusercontent.com",
+              "client_id": "889238416986-u05kbc03c3b2b57l3bdj9campqsh6067.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
