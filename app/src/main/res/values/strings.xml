@@ -11,4 +11,5 @@
     <string name="title_activity_maps">MapsActivity</string>
     <string name="blitzbar_logo_cutout_textless">BlitzBar logo cutout textless</string>
     <string name="button">Button</string>
+    <string name="google_places_key">AIzaSyDaQaR0aDza_nDhgYTeg-w6kaXsgP8Yzhw</string>
 </resources>
