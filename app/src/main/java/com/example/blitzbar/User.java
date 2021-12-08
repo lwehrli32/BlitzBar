@@ -1,5 +1,8 @@
 package com.example.blitzbar;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class User {
 
     private final String first_name;
@@ -12,12 +15,12 @@ public class User {
     private int longitude;
     private int latitude;
 
-    public User(String first_name, String last_name, String email, String birthday, String blitz_score, String fav_bar, String fav_drink, int dark_mode, int search_radius){
+    public User(String first_name, String last_name, String email, String birthday, Long blitz_score, String fav_bar, String fav_drink){
         this.first_name = first_name;
         this.last_name = last_name;
         this.email = email;
         this.birthday = birthday;
-        this.blitz_score = Long.parseLong(blitz_score);
+        this.blitz_score = blitz_score;
         this.fav_bar = fav_bar;
         this.fav_drink = fav_drink;
     }
@@ -35,5 +38,11 @@ public class User {
     public String getFav_drink(){return this.fav_drink;}
 
     public Long getBlitz_score(){return this.blitz_score;}
+
+    public void FirebaseRead() {
+        DatabaseReference userDatabase = FirebaseDatabase.getInstance().getReference();
+        User user = new User(first_name, last_name, email, birthday, blitz_score, fav_bar, fav_drink);
+        //DatabaseReference userData = userDatabase.child("users").child(email).setValue(user);
+    }
 
 }

@@ -1,7 +1,6 @@
 package com.example.blitzbar;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,6 +10,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.firebase.database.FirebaseDatabase;
+
 public class LoginActivity extends AppCompatActivity {
     SharedPreferences sp;
     int loggedIn = 0;
@@ -18,6 +19,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText passwordTextView;
     TextView feedback;
     String userEmail;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
