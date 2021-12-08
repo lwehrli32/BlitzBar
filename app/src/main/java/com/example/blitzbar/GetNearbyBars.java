@@ -1,7 +1,12 @@
 package com.example.blitzbar;
 
+import android.content.Context;
 import android.icu.util.BuddhistCalendar;
 import android.os.AsyncTask;
+import android.util.Log;
+import android.widget.ScrollView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
@@ -26,11 +31,15 @@ public class GetNearbyBars extends AsyncTask<Object, String, String> {
     BufferedReader bufferedReader;
     StringBuilder stringBuilder;
     String data;
+    ScrollView scrollView;
+    TextView textView;
+    Context context;
 
     @Override
     protected String doInBackground(Object... params) {
-        mMap = (GoogleMap) params[0];
+        scrollView = (ScrollView) params[0];
         url = (String) params[1];
+        textView = (TextView) params[2];
 
         try {
             URL myUrl = new URL(url);
@@ -58,7 +67,7 @@ public class GetNearbyBars extends AsyncTask<Object, String, String> {
 
     @Override
     protected void onPostExecute(String s) {
-
+        
         try {
             JSONObject parentObject = new JSONObject(s);
             JSONArray resultsArray = parentObject.getJSONArray("results");
@@ -76,7 +85,13 @@ public class GetNearbyBars extends AsyncTask<Object, String, String> {
 
                 LatLng latLng = new LatLng(Double.parseDouble(latitude), Double.parseDouble(longitude));
 
+//                Log.d("MyActivity", "Name: " + name);
+//                Toast.makeText(context, name, Toast.LENGTH_SHORT).show();
 
+
+                textView.setText(name);
+                
+                scrollView.addView(textView);
             }
         } catch (JSONException e) {
             e.printStackTrace();
