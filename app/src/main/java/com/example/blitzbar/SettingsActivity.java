@@ -106,15 +106,18 @@ public class SettingsActivity extends AppCompatActivity {
 
         if (sp.getBoolean("darkMode", false)) {
             setContentView(R.layout.activity_settings_dark);
+            userName = (TextView) findViewById(R.id.userNameDark);
+            profileImage = (ImageView) findViewById(R.id.profileImageDark);
             switchStateDark();
         } else {
             setContentView(R.layout.activity_settings);
+            userName = (TextView) findViewById(R.id.userName);
+            profileImage = (ImageView) findViewById(R.id.profileImage);
             switchState();
         }
 
         String userEmail = sp.getString("userEmail", "");
-        userName = (TextView) findViewById(R.id.userName);
-        profileImage = (ImageView) findViewById(R.id.profileImage);
+        //String image = sp.getString("image", "");
 
         if (userEmail != "") {
             Context context = getApplicationContext();
@@ -127,7 +130,10 @@ public class SettingsActivity extends AppCompatActivity {
 
             userName.setText(user.getFirst_name() + " " + user.getLast_name());
 
-            //TODO set profile image
+            //if (image == ""){
+                // set to default image
+                //profileImage.setImageResource();
+            //}
         }else{
             System.out.println("No user");
         }

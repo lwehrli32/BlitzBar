@@ -90,20 +90,8 @@
         app:srcCompat="?attr/homeAsUpIndicator"
         app:tint="@android:color/white" />
 
-    <ImageView
-        android:id="@+id/profileImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/userName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.737"
-        tools:srcCompat="@tools:sample/avatars" />
-
     <TextView
-        android:id="@+id/userName"
+        android:id="@+id/userNameDark"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
@@ -113,6 +101,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.789" />
+        app:layout_constraintVertical_bias="0.925" />
+
+    <ImageView
+        android:id="@+id/profileImageDark"
+        android:layout_width="141dp"
+        android:layout_height="164dp"
+        app:layout_constraintBottom_toTopOf="@+id/userNameDark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.794"
+        app:srcCompat="@drawable/default_account_image" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
