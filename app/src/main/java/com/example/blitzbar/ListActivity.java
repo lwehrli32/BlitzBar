@@ -3,18 +3,26 @@ package com.example.blitzbar;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.common.api.GoogleApi;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.navigation.NavigationBarView;
 
 import android.content.Intent;
+import android.location.LocationRequest;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ScrollView;
 
 public class ListActivity extends AppCompatActivity {
 
     private NavigationBarView bottomNavigationBarView;
-    GoogleMap mMap;
+    private GoogleMap mMap;
+    LocationRequest request;
+    GoogleApi client;
+    LatLng latLngCurrent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,11 +31,12 @@ public class ListActivity extends AppCompatActivity {
         bottomNavigationBarView = findViewById(R.id.bottomnav);
         bottomNavigationBarView.setOnItemSelectedListener(bottomnavFunction);
 
-
+        ScrollView scroll = (ScrollView) this.findViewById(R.id.scrollView1);
     }
 
     public void listBars(View v) {
         StringBuilder stringBuilder = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?");
+        stringBuilder.append("location="+latLngCurrent.latitude + "," + latLngCurrent.longitude);
         stringBuilder.append("&radius="+1000);
         stringBuilder.append("&keyword="+"bar");
         stringBuilder.append("&key="+getResources().getString(R.string.google_places_key));
@@ -36,7 +45,10 @@ public class ListActivity extends AppCompatActivity {
 
         Object dataTransfer[] = new Object[2];
         dataTransfer[0] = mMap;
+        dataTransfer[1] = url;
 
+        GetNearbyBars getNearbyBars = new GetNearbyBars();
+        getNearbyBars.execute(dataTransfer);
     }
 
 
