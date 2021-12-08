@@ -17,6 +17,8 @@ public class SettingsActivity extends AppCompatActivity {
     SwitchCompat swSounds;
     SwitchCompat swNotifications;
     SwitchCompat swLocationPublic;
+    TextView userName;
+    ImageView profileImage;
 
     public void onClick(View v) {
         if(v.getId() == R.id.backButton || v.getId() == R.id.backButtonDark) {
@@ -108,6 +110,26 @@ public class SettingsActivity extends AppCompatActivity {
         } else {
             setContentView(R.layout.activity_settings);
             switchState();
+        }
+
+        String userEmail = sp.getString("userEmail", "");
+        userName = (TextView) findViewById(R.id.userName);
+        profileImage = (ImageView) findViewById(R.id.profileImage);
+
+        if (userEmail != "") {
+            Context context = getApplicationContext();
+            SQLiteDatabase sqLiteDatabase = context.openOrCreateDatabase("BlitzBar", Context.MODE_PRIVATE, null);
+            DBHelper dbHelper = new DBHelper(sqLiteDatabase);
+
+            User user = dbHelper.getUser(userEmail);
+
+            sqLiteDatabase.close();
+
+            userName.setText(user.getFirst_name() + " " + user.getLast_name());
+
+            //TODO set profile image
+        }else{
+            System.out.println("No user");
         }
     }
 }
