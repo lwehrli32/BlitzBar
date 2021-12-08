@@ -84,12 +84,11 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="?attr/homeAsUpIndicator" />
 
-
     <TextView
         android:id="@+id/userName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="44dp"
+        android:layout_marginBottom="28dp"
         android:text="Name"
         app:layout_constraintBottom_toTopOf="@+id/DarkMode"
         app:layout_constraintEnd_toEndOf="parent"
@@ -99,11 +98,25 @@
         android:id="@+id/profileImage"
         android:layout_width="119dp"
         android:layout_height="135dp"
-        app:layout_constraintBottom_toTopOf="@+id/userName"
+        android:onClick="selectImage"
+        app:layout_constraintBottom_toTopOf="@+id/select_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.718"
+        app:layout_constraintVertical_bias="0.914"
         app:srcCompat="@drawable/default_account_image" />
+
+    <Button
+        android:id="@+id/select_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:text="Change Profile Picture"
+        android:textSize="25px"
+        android:onClick="selectImage"
+        app:layout_constraintBottom_toTopOf="@+id/userName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,17 +1,35 @@
 package com.example.blitzbar;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.ByteArrayOutputStream;
+
 public class SettingsActivity extends AppCompatActivity {
+    static final int PICK_IMAGE = 1;
+    static final long MAX_DOWNLOAD_SIZE = 1024 * 1024; // 1 megabyte
+
     SharedPreferences sp;
     SwitchCompat swDarkMode;
     SwitchCompat swSounds;
@@ -99,25 +117,123 @@ public class SettingsActivity extends AppCompatActivity {
         swLocationPublic.setChecked(sp.getBoolean("locationPublic", true));
     }
 
+    void selectImage(View v){
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+
+            // compare the resultCode with the
+            // SELECT_PICTURE constant
+            if (requestCode == PICK_IMAGE) {
+                // Get the url of the image from data
+                System.out.println("Found image");
+                Uri selectedImageUri = data.getData();
+                if (null != selectedImageUri) {
+                    System.out.println("Found image");
+                }
+            }
+        }
+    }
+
+    public void uploadFile(){
+        try {
+            Uri path = Uri.parse("android.resource://com.example.blitzbar/" + R.drawable.default_account_image);
+            String imgPath = path.toString();
+
+            StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+            StorageReference imageRef = storageRef.child(imgPath);
+
+            Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.default_account_image);
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+            byte[] imageByteStream = outputStream.toByteArray();
+
+            UploadTask uploadTask = imageRef.putBytes(imageByteStream);
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.e("Profile_Image_Upload", "Upload to firebase failed");
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Log.i("Profile_Image_Upload", "Profile image successfully uploaded to firebase.");
+                }
+            });
+        }catch(Exception e){
+            e.printStackTrace();
+            Log.e("Error", "Upload to firebase failed");
+        }
+    }
+
+    public void download_image(){
+
+        // ***************************************
+        // TODO this code may need some touching up before use
+        // ***************************************
+
+        Uri path = Uri.parse("android.resource://com.example.blitzbar/" + R.drawable.default_account_image);
+        String imgPath = path.toString();
+
+        StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+        StorageReference imageRef = storageRef.child(imgPath);
+
+        final ImageView imageView = findViewById(R.id.profileImage);
+        final long image_size = MAX_DOWNLOAD_SIZE;
+
+        imageRef.getBytes(image_size).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+
+                // set image
+                imageView.setImageBitmap(bitmap);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                e.printStackTrace();
+                Log.e("Error", "Download from firebase failed");
+            }
+        });
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         sp = getApplicationContext().getSharedPreferences("BlitzBar", Context.MODE_PRIVATE);
 
+        Button imageBtn;
+
         if (sp.getBoolean("darkMode", false)) {
             setContentView(R.layout.activity_settings_dark);
             userName = (TextView) findViewById(R.id.userNameDark);
             profileImage = (ImageView) findViewById(R.id.profileImageDark);
+            imageBtn = (Button)findViewById(R.id.select_image_dark);
             switchStateDark();
         } else {
             setContentView(R.layout.activity_settings);
             userName = (TextView) findViewById(R.id.userName);
             profileImage = (ImageView) findViewById(R.id.profileImage);
+            imageBtn = (Button)findViewById(R.id.select_image);
             switchState();
         }
 
+        imageBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectImage(v);
+            }
+        });
+
         String userEmail = sp.getString("userEmail", "");
-        //String image = sp.getString("image", "");
 
         if (userEmail != "") {
             Context context = getApplicationContext();
@@ -129,13 +245,6 @@ public class SettingsActivity extends AppCompatActivity {
             sqLiteDatabase.close();
 
             userName.setText(user.getFirst_name() + " " + user.getLast_name());
-
-            //if (image == ""){
-                // set to default image
-                //profileImage.setImageResource();
-            //}
-        }else{
-            System.out.println("No user");
         }
     }
 }
