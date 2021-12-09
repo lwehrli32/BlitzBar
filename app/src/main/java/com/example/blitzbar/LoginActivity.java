@@ -10,8 +10,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.google.firebase.database.FirebaseDatabase;
-
 public class LoginActivity extends AppCompatActivity {
     SharedPreferences sp;
     int loggedIn = 0;
@@ -55,13 +53,15 @@ public class LoginActivity extends AppCompatActivity {
         String userEmail = emailTextView.getText().toString();
 
         Context context = getApplicationContext();
-        SQLiteDatabase sqLiteDatabase = context.openOrCreateDatabase("BlitzBar", Context.MODE_PRIVATE,null);
-        DBHelper dbHelper = new DBHelper(sqLiteDatabase);
 
-        User user = dbHelper.getUser(userEmail);
+        // TODO log user in
+        //SQLiteDatabase sqLiteDatabase = context.openOrCreateDatabase("BlitzBar", Context.MODE_PRIVATE,null);
+        //FireBaseHelper dbHelper = new FireBaseHelper(sqLiteDatabase);
 
-        sqLiteDatabase.close();
-        if (user != null) {
+        //User user = dbHelper.getUser(userEmail);
+
+        //sqLiteDatabase.close();
+        if (true) {
             String pwd = null;
 
             SharedPreferences.Editor editor = sp.edit();

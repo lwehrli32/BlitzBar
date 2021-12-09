@@ -87,15 +87,17 @@ public class CreateAccountActivity extends AppCompatActivity {
         }
 
         if(goodInput) {
-            Context context = getApplicationContext();
-            SQLiteDatabase sqLiteDatabase = context.openOrCreateDatabase("BlitzBar", Context.MODE_PRIVATE, null);
-            DBHelper dbHelper = new DBHelper(sqLiteDatabase);
 
-            boolean userCreated = dbHelper.insertUser(firstName, lastName, userEmail, birthday, blitzScore, fav_drink, fav_bar);
+            // TODO create new user
+            //Context context = getApplicationContext();
+            //SQLiteDatabase sqLiteDatabase = context.openOrCreateDatabase("BlitzBar", Context.MODE_PRIVATE, null);
+            //FireBaseHelper dbHelper = new FireBaseHelper(sqLiteDatabase);
 
-            sqLiteDatabase.close();
+            //boolean userCreated = dbHelper.insertUser(firstName, lastName, userEmail, birthday, blitzScore, fav_drink, fav_bar);
 
-            if (userCreated) {
+            //sqLiteDatabase.close();
+
+            if (false) {
                 SharedPreferences.Editor editor = sp.edit();
 
                 editor.putInt("loggedIn", 1).apply();
