@@ -157,15 +157,11 @@ public class DBHelper {
         int last_name_index = c.getColumnIndex("last_name");
         int birthday_index = c.getColumnIndex("birthday");
         int blitz_score_index = c.getColumnIndex("blitz_score");
-        int fav_drink_index = c.getColumnIndex("fav_drink");
-        int fav_bar_index = c.getColumnIndex("fav_bar");
 
         String first_name = null;
         String last_name = null;
         String birthday = null;
         long blitz_score = 0;
-        String fav_bar = null;
-        String fav_drink = null;
         int numUsers = 0;
 
         c.moveToFirst();
@@ -175,8 +171,6 @@ public class DBHelper {
             last_name = c.getString(last_name_index);
             birthday = c.getString(birthday_index);
             blitz_score = c.getLong(blitz_score_index);
-            fav_bar = c.getString(fav_bar_index);
-            fav_drink = c.getString(fav_drink_index);
             numUsers++;
             c.moveToNext();
         }
@@ -187,6 +181,6 @@ public class DBHelper {
 
         c.close();
 
-        return new User(first_name, last_name, email, birthday, blitz_score, fav_bar, fav_drink);
+        return new User(first_name, last_name, email, birthday, blitz_score);
     }
 }
