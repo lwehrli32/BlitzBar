@@ -13,7 +13,9 @@ public class FireBaseHelper {
     }
 
 
-    private boolean insertUser(String first_name, String last_name, String email, String birthday, long blitz_score){
+    private boolean insertUser(String first_name, String last_name, String email, String birthday, long blitz_score, ArrayList<String> friends, long longitude, long latitude){
+        User user = new User(first_name, last_name, email, birthday, blitz_score, friends, longitude, latitude);
+        userDatabase.child("users").child(email).setValue(user);
         return true;
     }
 
@@ -27,18 +29,6 @@ public class FireBaseHelper {
 
     private boolean locationUpdate(String email) {
         return true;
-    }
-
-
-
-    private long getUserId(String email) {
-        long user_Id = -1;
-        return user_Id;
-    }
-
-    private String getUserEmail(int user_id) {
-        String user_email = "";
-        return user_email;
     }
 
     private ArrayList<String> listFriends(String email) {
@@ -57,6 +47,9 @@ public class FireBaseHelper {
         String last_name = null;
         String birthday = null;
         long blitz_score = 0;
-        return new User(first_name, last_name, email, birthday, blitz_score);
+        ArrayList<String> friends = null;
+        long longitude = 0;
+        long latitude = 0;
+        return new User(first_name, last_name, email, birthday, blitz_score, friends, longitude, latitude);
     }
 }
