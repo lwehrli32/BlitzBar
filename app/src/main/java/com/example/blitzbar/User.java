@@ -39,10 +39,5 @@ public class User {
 
     public Long getBlitz_score(){return this.blitz_score;}
 
-    public void FirebaseRead() {
-        DatabaseReference userDatabase = FirebaseDatabase.getInstance().getReference();
-        User user = new User(first_name, last_name, email, birthday, blitz_score, fav_bar, fav_drink);
-        //DatabaseReference userData = userDatabase.child("users").child(email).setValue(user);
-    }
 
 }
