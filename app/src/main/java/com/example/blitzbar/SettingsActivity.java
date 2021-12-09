@@ -239,14 +239,13 @@ public class SettingsActivity extends AppCompatActivity {
             Context context = getApplicationContext();
             SQLiteDatabase sqLiteDatabase = context.openOrCreateDatabase("BlitzBar", Context.MODE_PRIVATE, null);
 
-            // TODO get name and image from fire base data
-            //FireBaseHelper dbHelper = new FireBaseHelper(sqLiteDatabase);
+            DBHelper dbHelper = new DBHelper(sqLiteDatabase);
 
-            //User user = dbHelper.getUser(userEmail);
+            User user = dbHelper.getUser(userEmail);
 
-            //sqLiteDatabase.close();
+            sqLiteDatabase.close();
 
-            //userName.setText(user.getFirst_name() + " " + user.getLast_name());
+            userName.setText(user.getFirst_name() + " " + user.getLast_name());
         }
     }
 }

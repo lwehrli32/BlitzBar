@@ -54,14 +54,13 @@ public class LoginActivity extends AppCompatActivity {
 
         Context context = getApplicationContext();
 
-        // TODO log user in
-        //SQLiteDatabase sqLiteDatabase = context.openOrCreateDatabase("BlitzBar", Context.MODE_PRIVATE,null);
-        //FireBaseHelper dbHelper = new FireBaseHelper(sqLiteDatabase);
+        SQLiteDatabase sqLiteDatabase = context.openOrCreateDatabase("BlitzBar", Context.MODE_PRIVATE,null);
+        DBHelper dbHelper = new DBHelper(sqLiteDatabase);
 
-        //User user = dbHelper.getUser(userEmail);
+        User user = dbHelper.getUser(userEmail);
 
-        //sqLiteDatabase.close();
-        if (true) {
+        sqLiteDatabase.close();
+        if (user != null) {
             String pwd = null;
 
             SharedPreferences.Editor editor = sp.edit();
