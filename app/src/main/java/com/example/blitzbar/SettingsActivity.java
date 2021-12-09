@@ -1,12 +1,15 @@
 package com.example.blitzbar;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -28,6 +31,11 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -46,6 +54,10 @@ public class SettingsActivity extends AppCompatActivity {
     String cameraPermission[];
     String storagePermission[];
     Uri imageuri;
+    ProgressDialog pd;
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference databaseReference;
+    StorageReference storageRef;
 
     SharedPreferences sp;
     SwitchCompat swDarkMode;
@@ -201,6 +213,20 @@ public class SettingsActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == IMAGEPICK_GALLERY_REQUEST) {
+                imageuri = data.getData();
+                upload_image(imageuri);
+            }
+            if (requestCode == IMAGE_PICKCAMERA_REQUEST) {
+                upload_image(imageuri);
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
     public void showImagePicDialog(View v) {
         String options[] = {"Camera", "Gallery"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -228,51 +254,57 @@ public class SettingsActivity extends AppCompatActivity {
         builder.create().show();
     }
 
-    public void upload_image(){
+    public void upload_image(final Uri uri){
+        pd.show();
 
         try {
-            Uri path = Uri.parse("android.resource://com.example.blitzbar/" + R.drawable.profile_image);
-            String imgPath = path.toString();
+            //Uri path = Uri.parse("android.resource://com.example.blitzbar/" + R.drawable.profile_image);
+            //String imgPath = path.toString();
 
-            StorageReference storageRef = FirebaseStorage.getInstance().getReference();
-            StorageReference imageRef = storageRef.child(imgPath);
+            // TODO get user name
+            String tempusername = "Lukas";
+            StorageReference imageRef = storageRef.child("Profile_Pictures").child(tempusername);
 
-            Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.profile_image);
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
-            byte[] imageByteStream = outputStream.toByteArray();
+            //Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.profile_image);
+            //ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            //bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+            //byte[] imageByteStream = outputStream.toByteArray();
 
-            UploadTask uploadTask = imageRef.putBytes(imageByteStream);
-            uploadTask.addOnFailureListener(new OnFailureListener() {
+            //UploadTask uploadTask = imageRef.putBytes(imageByteStream);
+            imageRef.putFile(uri).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
                     Log.e("Profile_Image_Upload", "Upload to firebase failed");
+                    pd.dismiss();
                 }
             }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     Log.i("Profile_Image_Upload", "Profile image successfully uploaded to firebase.");
+                    profileImage.setImageURI(null);
+                    profileImage.setImageURI(uri);
+                    SharedPreferences.Editor editor = sp.edit();
+                    editor.putInt("profilePic", 1).apply();
+                    pd.dismiss();
                 }
             });
         }catch(Exception e){
             e.printStackTrace();
             Log.e("Error", "Upload to firebase failed");
+            pd.dismiss();
         }
     }
 
     public void download_image(){
+        pd.show();
 
-        // ***************************************
-        // TODO this code may need some touching up before use
-        // ***************************************
+        //Uri path = Uri.parse("android.resource://com.example.blitzbar/" + R.drawable.profile_image);
+        //String imgPath = path.toString();
 
-        Uri path = Uri.parse("android.resource://com.example.blitzbar/" + R.drawable.profile_image);
-        String imgPath = path.toString();
+        // TODO get username
+        String tempusername = "Lukas";
+        StorageReference imageRef = storageRef.child("Profile_Pictures").child(tempusername);
 
-        StorageReference storageRef = FirebaseStorage.getInstance().getReference();
-        StorageReference imageRef = storageRef.child(imgPath);
-
-        final ImageView imageView = (ImageView) findViewById(R.id.profileImage);
         final long image_size = MAX_DOWNLOAD_SIZE;
 
         imageRef.getBytes(image_size).addOnSuccessListener(new OnSuccessListener<byte[]>() {
@@ -281,13 +313,16 @@ public class SettingsActivity extends AppCompatActivity {
                 Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
 
                 // set image
-                imageView.setImageBitmap(bitmap);
+                profileImage.setImageBitmap(bitmap);
+
+                pd.dismiss();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 e.printStackTrace();
                 Log.e("Error", "Download from firebase failed");
+                pd.dismiss();
             }
         });
     }
@@ -296,6 +331,12 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         sp = getApplicationContext().getSharedPreferences("BlitzBar", Context.MODE_PRIVATE);
+
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        storageRef = FirebaseStorage.getInstance().getReference();
+        databaseReference = firebaseDatabase.getReference("Profile_Pictures");
+        pd = new ProgressDialog(this);
+        pd.setCanceledOnTouchOutside(false);
 
         Button imageBtn;
 
@@ -309,13 +350,19 @@ public class SettingsActivity extends AppCompatActivity {
             setContentView(R.layout.activity_settings);
             userName = (TextView) findViewById(R.id.userName);
             profileImage = (ImageView) findViewById(R.id.profileImage);
-            imageBtn = (Button)findViewById(R.id.select_image);
+            imageBtn = (Button) findViewById(R.id.select_image);
             switchState();
         }
-
         String userEmail = sp.getString("userEmail", "");
 
         if (userEmail != "") {
+
+            int hasProfilePic = sp.getInt("profilePic", 0);
+
+            if (hasProfilePic == 1) {
+                download_image();
+            }
+
             Context context = getApplicationContext();
             SQLiteDatabase sqLiteDatabase = context.openOrCreateDatabase("BlitzBar", Context.MODE_PRIVATE, null);
 
