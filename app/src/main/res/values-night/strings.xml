@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">BlitzBar</string>
+    <string name="search_radius">Search Radius</string>
+    <string name="location_public">Location Public</string>
+    <string name="notifications">Notifications</string>
+    <string name="sounds">Sounds</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="settings">Settings</string>
+    <string name="back_button">Back Button</string>
+    <string name="miles">Miles</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="blitzbar_logo_cutout_textless">BlitzBar logo cutout textless</string>
+    <string name="button">Button</string>
+    <string name="google_places_key">AIzaSyDaQaR0aDza_nDhgYTeg-w6kaXsgP8Yzhw</string>
+</resources>

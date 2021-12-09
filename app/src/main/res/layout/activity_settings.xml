@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
     tools:context=".SettingsActivity">
 
     <androidx.appcompat.widget.SwitchCompat
@@ -17,6 +18,7 @@
         android:onClick="onSwitch"
         android:text="@string/dark_mode"
         android:textSize="24sp"
+        android:textColor="@color/textColor"
         app:layout_constraintBottom_toTopOf="@+id/Sounds"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -33,6 +35,7 @@
         android:onClick="onSwitch"
         android:text="@string/notifications"
         android:textSize="24sp"
+        android:textColor="@color/textColor"
         app:layout_constraintBottom_toTopOf="@+id/LocationPublic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -49,6 +52,7 @@
         android:onClick="onSwitch"
         android:text="@string/sounds"
         android:textSize="24sp"
+        android:textColor="@color/textColor"
         app:layout_constraintBottom_toTopOf="@+id/Notifications"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -65,24 +69,26 @@
         android:onClick="onSwitch"
         android:text="@string/location_public"
         android:textSize="24sp"
+        android:textColor="@color/textColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Notifications" />
 
-    <ImageButton
+    <!--<ImageButton
         android:id="@+id/backButton"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="40dp"
+        android:textColor="@color/textColor"
         android:background="@android:color/transparent"
         android:contentDescription="@string/back_button"
         android:onClick="onClick"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="?attr/homeAsUpIndicator" />
+        app:srcCompat="?attr/homeAsUpIndicator" />-->
 
     <TextView
         android:id="@+id/userName"
@@ -90,6 +96,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="28dp"
         android:text="Name"
+        android:textColor="@color/textColor"
         app:layout_constraintBottom_toTopOf="@+id/DarkMode"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -114,9 +121,25 @@
         android:text="Change Profile Picture"
         android:textSize="25px"
         android:onClick="showImagePicDialog"
+        android:textColor="@color/textColor"
         app:layout_constraintBottom_toTopOf="@+id/userName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomnav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/windowBackground"
+        android:outlineAmbientShadowColor="@color/black"
+        android:textColor="@color/textColor"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/LocationPublic"
+        app:layout_constraintVertical_bias="1.0"
+        app:menu="@menu/bottom_nav_menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

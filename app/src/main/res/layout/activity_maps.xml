@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
     tools:context=".MapsActivity" >
 
     <fragment
@@ -11,6 +12,7 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:textColor="@color/textColor"
         tools:context=".MapsActivity" >
 
     <ImageView
@@ -34,6 +36,7 @@
         android:layout_height="wrap_content"
         android:background="?android:attr/windowBackground"
         android:layout_gravity="bottom"
+        android:textColor="@color/textColor"
         app:menu="@menu/bottom_nav_menu" />
 </FrameLayout>
 

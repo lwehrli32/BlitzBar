@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
     tools:context=".LoginActivity">
 
     <Button
@@ -14,6 +15,7 @@
         android:layout_marginBottom="16dp"
         android:onClick="gotoLogin"
         android:text="Login"
+        android:textColor="@color/textColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/createAccountButton"
         app:layout_constraintTop_toBottomOf="@+id/createAccountButton" />
@@ -26,6 +28,7 @@
         android:ems="10"
         android:hint="Password"
         android:inputType="textPassword"
+        android:textColor="@color/textColor"
         app:layout_constraintBottom_toTopOf="@+id/createAccountButton"
         app:layout_constraintStart_toStartOf="@+id/createAccountEmail"
         app:layout_constraintTop_toBottomOf="@+id/createAccountEmail" />
@@ -38,6 +41,7 @@
         android:ems="10"
         android:hint="Email"
         android:inputType="textPersonName"
+        android:textColor="@color/textColor"
         app:layout_constraintBottom_toTopOf="@+id/createAccountPassword"
         app:layout_constraintStart_toStartOf="@+id/createAccountBirthday"
         app:layout_constraintTop_toBottomOf="@+id/createAccountBirthday" />
@@ -62,6 +66,7 @@
         android:layout_marginBottom="16dp"
         android:onClick="userCreateAccount"
         android:text="Create Account"
+        android:textColor="@color/textColor"
         app:layout_constraintBottom_toTopOf="@+id/createAccountLogin"
         app:layout_constraintEnd_toEndOf="@+id/createAccountPassword"
         app:layout_constraintTop_toBottomOf="@+id/createAccountPassword" />
@@ -75,6 +80,7 @@
         android:ems="10"
         android:hint="First Name"
         android:inputType="textPersonName"
+        android:textColor="@color/textColor"
         app:layout_constraintBottom_toTopOf="@+id/createAccountLastName"
         app:layout_constraintStart_toStartOf="@+id/createAccountLogo"
         app:layout_constraintTop_toBottomOf="@+id/createAccountFeedback" />
@@ -87,6 +93,7 @@
         android:ems="10"
         android:hint="Last Name"
         android:inputType="textPersonName"
+        android:textColor="@color/textColor"
         app:layout_constraintBottom_toTopOf="@+id/createAccountBirthday"
         app:layout_constraintStart_toStartOf="@+id/createAccountFirstName"
         app:layout_constraintTop_toBottomOf="@+id/createAccountFirstName" />
@@ -99,6 +106,7 @@
         android:ems="10"
         android:hint="Birthday"
         android:inputType="date"
+        android:textColor="@color/textColor"
         app:layout_constraintBottom_toTopOf="@+id/createAccountEmail"
         app:layout_constraintStart_toStartOf="@+id/createAccountLastName"
         app:layout_constraintTop_toBottomOf="@+id/createAccountLastName" />
@@ -111,6 +119,7 @@
         android:layout_marginEnd="80dp"
         android:layout_marginBottom="16dp"
         android:text=""
+        android:textColor="@color/textColor"
         app:layout_constraintBottom_toTopOf="@+id/createAccountFirstName"
         app:layout_constraintEnd_toEndOf="@+id/createAccountFirstName"
         app:layout_constraintStart_toStartOf="@+id/createAccountLogo"

@@ -3,6 +3,7 @@ package com.example.blitzbar;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.app.ActivityCompat;
 
@@ -23,14 +24,18 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -51,6 +56,8 @@ public class SettingsActivity extends AppCompatActivity {
     private static final int CAMERA_REQUEST = 100;
     private static final int STORAGE_REQUEST = 200;
 
+    private NavigationBarView bottomNavigationBarView;
+
     String cameraPermission[];
     String storagePermission[];
     Uri imageuri;
@@ -67,21 +74,18 @@ public class SettingsActivity extends AppCompatActivity {
     TextView userName;
     ImageView profileImage;
 
-    public void onClick(View v) {
-        if(v.getId() == R.id.backButton || v.getId() == R.id.backButtonDark) {
+    /*public void onClick(View v) {
+        if(v.getId() == R.id.backButton) {
             goToLastActivity();
         }
-    }
+    }*/
 
     public void onSwitch(View v) {
-        if(v.getId() == R.id.DarkMode || v.getId() == R.id.DarkModeDark) {
-            toggleDarkMode();
-            restartActivity();
-        } else if (v.getId() == R.id.Sounds || v.getId() == R.id.SoundsDark) {
+        if (v.getId() == R.id.Sounds) {
             toggleMute();
-        } else if (v.getId() == R.id.Notifications || v.getId() == R.id.NotificationsDark) {
+        } else if (v.getId() == R.id.Notifications) {
             toggleNotifications();
-        } else if (v.getId() == R.id.LocationPublic || v.getId() == R.id.LocationPublicDark) {
+        } else if (v.getId() == R.id.LocationPublic) {
             toggleLocationPublic();
         }
     }
@@ -94,12 +98,6 @@ public class SettingsActivity extends AppCompatActivity {
     private void restartActivity() {
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
-    }
-
-    private void toggleDarkMode() {
-        boolean darkMode = sp.getBoolean("darkMode", false);
-        darkMode = !darkMode;
-        sp.edit().putBoolean("darkMode", darkMode).apply();
     }
 
     private void toggleMute() {
@@ -127,18 +125,6 @@ public class SettingsActivity extends AppCompatActivity {
         swSounds = findViewById(R.id.Sounds);
         swNotifications = findViewById(R.id.Notifications);
         swLocationPublic = findViewById(R.id.LocationPublic);
-
-        swDarkMode.setChecked(sp.getBoolean("darkMode", false));
-        swSounds.setChecked(sp.getBoolean("sounds", true));
-        swNotifications.setChecked(sp.getBoolean("notifications", true));
-        swLocationPublic.setChecked(sp.getBoolean("locationPublic", true));
-    }
-
-    private void switchStateDark() {
-        swDarkMode = findViewById(R.id.DarkModeDark);
-        swSounds = findViewById(R.id.SoundsDark);
-        swNotifications = findViewById(R.id.NotificationsDark);
-        swLocationPublic = findViewById(R.id.LocationPublicDark);
 
         swDarkMode.setChecked(sp.getBoolean("darkMode", false));
         swSounds.setChecked(sp.getBoolean("sounds", true));
@@ -298,9 +284,6 @@ public class SettingsActivity extends AppCompatActivity {
     public void download_image(){
         pd.show();
 
-        //Uri path = Uri.parse("android.resource://com.example.blitzbar/" + R.drawable.profile_image);
-        //String imgPath = path.toString();
-
         // TODO get username
         String tempusername = "Lukas";
         StorageReference imageRef = storageRef.child("Profile_Pictures").child(tempusername);
@@ -327,6 +310,29 @@ public class SettingsActivity extends AppCompatActivity {
         });
     }
 
+    private NavigationBarView.OnItemSelectedListener bottomnavFunction = new NavigationBarView.OnItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            Intent menu_intent = new Intent();
+            switch (item.getItemId()) {
+                case R.id.listView:
+                    menu_intent = new Intent(SettingsActivity.this, ListActivity.class);
+                    break;
+                case R.id.friends:
+                    menu_intent = new Intent(SettingsActivity.this, FriendsActivity.class);
+                    break;
+                case R.id.mapView:
+                    menu_intent = new Intent(SettingsActivity.this, MapsActivity.class);
+                    break;
+                default:
+                    return false;
+            }
+
+            startActivity(menu_intent);
+            return true;
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -339,20 +345,45 @@ public class SettingsActivity extends AppCompatActivity {
         pd.setCanceledOnTouchOutside(false);
 
         Button imageBtn;
+        boolean isChecked = false;
 
-        if (sp.getBoolean("darkMode", false)) {
-            setContentView(R.layout.activity_settings_dark);
-            userName = (TextView) findViewById(R.id.userNameDark);
-            profileImage = (ImageView) findViewById(R.id.profileImageDark);
-            imageBtn = (Button)findViewById(R.id.select_image_dark);
-            switchStateDark();
-        } else {
-            setContentView(R.layout.activity_settings);
-            userName = (TextView) findViewById(R.id.userName);
-            profileImage = (ImageView) findViewById(R.id.profileImage);
-            imageBtn = (Button) findViewById(R.id.select_image);
-            switchState();
+        boolean isDarkMode = sp.getInt("isDarkMode", 0) == 1;
+        if (isDarkMode) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            isChecked = true;
+        }else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
+
+        setContentView(R.layout.activity_settings);
+        userName = (TextView) findViewById(R.id.userName);
+        profileImage = (ImageView) findViewById(R.id.profileImage);
+        imageBtn = (Button) findViewById(R.id.select_image);
+        switchState();
+
+        bottomNavigationBarView = findViewById(R.id.bottomnav);
+        bottomNavigationBarView.setOnItemSelectedListener(bottomnavFunction);
+
+        SwitchCompat darkMode = (SwitchCompat) findViewById(R.id.DarkMode);
+
+        if (isChecked){
+            darkMode.setChecked(true);
+        }
+
+        darkMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SharedPreferences.Editor editor = sp.edit();
+                if (isChecked) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    editor.putInt("isDarkMode", 1).apply();
+                }else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    editor.putInt("isDarkMode", 0).apply();
+                }
+            }
+        });
+
         String userEmail = sp.getString("userEmail", "");
 
         if (userEmail != "") {
