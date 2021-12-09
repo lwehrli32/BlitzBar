@@ -12,6 +12,25 @@ public class FireBaseHelper {
         this.userDatabase = FirebaseDatabase.getInstance().getReference();
     }
 
+
+    private boolean insertUser(String first_name, String last_name, String email, String birthday, long blitz_score){
+        return true;
+    }
+
+    private boolean addFriend(String user_email, String friend_email){
+        return true;
+    }
+
+    private boolean updateBlitzScore(String email, long blitz_score) {
+        return true;
+    }
+
+    private boolean locationUpdate(String email) {
+        return true;
+    }
+
+
+
     private long getUserId(String email) {
         long user_Id = -1;
         return user_Id;
@@ -27,8 +46,10 @@ public class FireBaseHelper {
         return friends;
     }
 
-    public boolean insertUser(String first_name, String last_name, String email, String birthday, String blitz_score, String fav_drink, String fav_bar){
-        return true;
+    private long[] friendLocation(String friend_email) {
+        long longitude = 0;
+        long latitude = 0;
+        return new long[]{longitude, latitude};
     }
 
     public User getUser(String email) {
@@ -36,8 +57,6 @@ public class FireBaseHelper {
         String last_name = null;
         String birthday = null;
         long blitz_score = 0;
-        String fav_bar = null;
-        String fav_drink = null;
-        return new User(first_name, last_name, email, birthday, blitz_score, fav_bar, fav_drink);
+        return new User(first_name, last_name, email, birthday, blitz_score);
     }
 }
