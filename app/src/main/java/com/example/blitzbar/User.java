@@ -10,19 +10,15 @@ public class User {
     private final String email;
     private final String birthday;
     private long blitz_score;
-    private String fav_bar;
-    private String fav_drink;
     private int longitude;
     private int latitude;
 
-    public User(String first_name, String last_name, String email, String birthday, Long blitz_score, String fav_bar, String fav_drink){
+    public User(String first_name, String last_name, String email, String birthday, Long blitz_score){
         this.first_name = first_name;
         this.last_name = last_name;
         this.email = email;
         this.birthday = birthday;
         this.blitz_score = blitz_score;
-        this.fav_bar = fav_bar;
-        this.fav_drink = fav_drink;
     }
 
     public String getFirst_name(){return this.first_name;}
@@ -32,10 +28,6 @@ public class User {
     public String getEmail(){return this.email;}
 
     public String getBirthday(){return this.birthday;}
-
-    public String getFav_bar(){return this.fav_bar;}
-
-    public String getFav_drink(){return this.fav_drink;}
 
     public Long getBlitz_score(){return this.blitz_score;}
 
