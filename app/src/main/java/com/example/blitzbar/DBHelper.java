@@ -181,6 +181,9 @@ public class DBHelper {
 
         c.close();
 
-        return new User(first_name, last_name, email, birthday, blitz_score);
+        ArrayList<String> friends = null;
+        long longitude = 0;
+        long latitude = 0;
+        return new User(first_name, last_name, email, birthday, blitz_score, friends, longitude, latitude);
     }
 }

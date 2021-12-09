@@ -151,7 +151,7 @@ public class ListActivity extends AppCompatActivity {
     private NavigationBarView.OnItemSelectedListener bottomnavFunction = new NavigationBarView.OnItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            Intent menu_intent = new Intent(activity, GetNearbyBars.class);
+            Intent menu_intent = new Intent();
             switch (item.getItemId()) {
                 case R.id.settings:
                     menu_intent = new Intent(ListActivity.this, SettingsActivity.class);
@@ -165,7 +165,6 @@ public class ListActivity extends AppCompatActivity {
                 default:
                     return false;
             }
-            //getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
 
             startActivity(menu_intent);
             return true;
