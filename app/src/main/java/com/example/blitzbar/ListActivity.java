@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -39,29 +40,112 @@ public class ListActivity extends AppCompatActivity {
 
         ScrollView scroll = (ScrollView) this.findViewById(R.id.scrollView);
 
-        listBars(scroll);
+//        TextView bar1 = new TextView(this);
+//        bar1.setText("Sconniebar");
+
+//        scroll.addView(bar1);
+        addBarList(scroll);
+       // listBars(scroll);
     }
 
-    public void listBars(View v) {
-        StringBuilder stringBuilder = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?");
-        stringBuilder.append("location=43.0676,-89.4037");
-        stringBuilder.append("&radius="+1000);
-        stringBuilder.append("&keyword="+"bar");
-        stringBuilder.append("&key="+getResources().getString(R.string.google_places_key));
-
-        String url = stringBuilder.toString();
-
-        Object dataTransfer[] = new Object[3];
-        dataTransfer[0] = scrollView;
-        dataTransfer[1] = url;
-        dataTransfer[2] = textView;
-
-        GetNearbyBars getNearbyBars = new GetNearbyBars();
-        getNearbyBars.execute(dataTransfer);
-    }
+//    public void listBars(View v) {
+//        StringBuilder stringBuilder = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?");
+//        stringBuilder.append("location=43.0676,-89.4037");
+//        stringBuilder.append("&radius="+1000);
+//        stringBuilder.append("&keyword="+"bar");
+//        stringBuilder.append("&key="+getResources().getString(R.string.google_places_key));
+//
+//        String url = stringBuilder.toString();
+//
+//        Object dataTransfer[] = new Object[3];
+//        dataTransfer[0] = scrollView;
+//        dataTransfer[1] = url;
+//        dataTransfer[2] = textView;
+//
+//        GetNearbyBars getNearbyBars = new GetNearbyBars();
+//        getNearbyBars.execute(dataTransfer);
+//    }
 
     public void onAttach(Activity activity) {
         this.activity = (ListActivity) activity;
+    }
+
+    public void addBarList(View v) {
+        ScrollView scroll = (ScrollView) this.findViewById(R.id.scrollView);
+        LinearLayout linearLayout = (LinearLayout) this.findViewById(R.id.linearLayout);
+
+        TextView bar1 = new TextView(this);
+        bar1.setText("Sconniebar");
+
+        TextView bar2 = new TextView(this);
+        bar2.setText("Red Shed");
+
+        TextView bar3 = new TextView(this);
+        bar3.setText("Whiskey Jack's");
+
+        TextView bar4 = new TextView(this);
+        bar4.setText("Monday's");
+
+        TextView bar5 = new TextView(this);
+        bar5.setText("Lucky's");
+
+        TextView bar6 = new TextView(this);
+        bar6.setText("State Street Brats");
+
+        TextView bar7 = new TextView(this);
+        bar7.setText("Jordan's Big 10");
+
+        TextView bar8 = new TextView(this);
+        bar8.setText("The Library");
+
+        TextView bar9 = new TextView(this);
+        bar9.setText("Wando's");
+
+        TextView bar10 = new TextView(this);
+        bar10.setText("The Redzone");
+
+        TextView bar11 = new TextView(this);
+        bar11.setText("Buckingham's");
+
+        TextView bar12 = new TextView(this);
+        bar12.setText("Double U");
+
+        TextView bar13 = new TextView(this);
+        bar13.setText("Church Key");
+
+        TextView bar14 = new TextView(this);
+        bar14.setText("City Bar");
+
+        TextView bar15 = new TextView(this);
+        bar15.setText("The Kollege Klub");
+
+        TextView bar16 = new TextView(this);
+        bar16.setText("Nitty Gritty");
+
+        TextView bar17 = new TextView(this);
+        bar17.setText("Chasers 2.0");
+
+        linearLayout.addView(bar1);
+        linearLayout.addView(bar2);
+        linearLayout.addView(bar3);
+        linearLayout.addView(bar4);
+        linearLayout.addView(bar5);
+        linearLayout.addView(bar6);
+        linearLayout.addView(bar7);
+        linearLayout.addView(bar8);
+        linearLayout.addView(bar9);
+        linearLayout.addView(bar10);
+        linearLayout.addView(bar11);
+        linearLayout.addView(bar12);
+        linearLayout.addView(bar13);
+        linearLayout.addView(bar14);
+        linearLayout.addView(bar15);
+        linearLayout.addView(bar16);
+        linearLayout.addView(bar17);
+
+      //  scroll.addView(linearLayout);
+
+
     }
 
     private NavigationBarView.OnItemSelectedListener bottomnavFunction = new NavigationBarView.OnItemSelectedListener() {
