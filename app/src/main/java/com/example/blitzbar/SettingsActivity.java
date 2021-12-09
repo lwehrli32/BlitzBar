@@ -3,13 +3,15 @@ package com.example.blitzbar;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
+
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,8 +29,9 @@ import com.google.firebase.storage.UploadTask;
 import java.io.ByteArrayOutputStream;
 
 public class SettingsActivity extends AppCompatActivity {
+
     static final int PICK_IMAGE = 1;
-    static final long MAX_DOWNLOAD_SIZE = 1024 * 1024; // 1 megabyte
+    static final long MAX_DOWNLOAD_SIZE = 1024 * 1024;
 
     SharedPreferences sp;
     SwitchCompat swDarkMode;
@@ -37,6 +40,7 @@ public class SettingsActivity extends AppCompatActivity {
     SwitchCompat swLocationPublic;
     TextView userName;
     ImageView profileImage;
+    PermissionsController controller;
 
     public void onClick(View v) {
         if(v.getId() == R.id.backButton || v.getId() == R.id.backButtonDark) {
@@ -117,40 +121,42 @@ public class SettingsActivity extends AppCompatActivity {
         swLocationPublic.setChecked(sp.getBoolean("locationPublic", true));
     }
 
-    void selectImage(View v){
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
-    }
-
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode == RESULT_OK) {
-
-            // compare the resultCode with the
-            // SELECT_PICTURE constant
-            if (requestCode == PICK_IMAGE) {
-                // Get the url of the image from data
-                System.out.println("Found image");
-                Uri selectedImageUri = data.getData();
-                if (null != selectedImageUri) {
-                    System.out.println("Found image");
+    public void showImagePicDialog(View v) {
+        String options[] = {"Camera", "Gallery"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Pick Image From");
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // if access is not given then we will request for permission
+                if (which == 0) {
+                    if (!controller.checkCameraPermission()) {
+                        controller.requestCameraPermission();
+                    } else {
+                        controller.pickFromCamera();
+                    }
+                } else if (which == 1) {
+                    if (!controller.checkStoragePermission()) {
+                        controller.requestStoragePermission();
+                    } else {
+                        controller.pickFromGallery();
+                    }
                 }
             }
-        }
+        });
+        builder.create().show();
     }
 
-    public void uploadFile(){
+    public void upload_image(){
+
         try {
-            Uri path = Uri.parse("android.resource://com.example.blitzbar/" + R.drawable.default_account_image);
+            Uri path = Uri.parse("android.resource://com.example.blitzbar/" + R.drawable.profile_image);
             String imgPath = path.toString();
 
             StorageReference storageRef = FirebaseStorage.getInstance().getReference();
             StorageReference imageRef = storageRef.child(imgPath);
 
-            Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.default_account_image);
+            Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.profile_image);
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
             byte[] imageByteStream = outputStream.toByteArray();
@@ -179,13 +185,13 @@ public class SettingsActivity extends AppCompatActivity {
         // TODO this code may need some touching up before use
         // ***************************************
 
-        Uri path = Uri.parse("android.resource://com.example.blitzbar/" + R.drawable.default_account_image);
+        Uri path = Uri.parse("android.resource://com.example.blitzbar/" + R.drawable.profile_image);
         String imgPath = path.toString();
 
         StorageReference storageRef = FirebaseStorage.getInstance().getReference();
         StorageReference imageRef = storageRef.child(imgPath);
 
-        final ImageView imageView = findViewById(R.id.profileImage);
+        final ImageView imageView = (ImageView) findViewById(R.id.profileImage);
         final long image_size = MAX_DOWNLOAD_SIZE;
 
         imageRef.getBytes(image_size).addOnSuccessListener(new OnSuccessListener<byte[]>() {
@@ -211,6 +217,7 @@ public class SettingsActivity extends AppCompatActivity {
         sp = getApplicationContext().getSharedPreferences("BlitzBar", Context.MODE_PRIVATE);
 
         Button imageBtn;
+        controller = new PermissionsController();
 
         if (sp.getBoolean("darkMode", false)) {
             setContentView(R.layout.activity_settings_dark);
@@ -226,18 +233,12 @@ public class SettingsActivity extends AppCompatActivity {
             switchState();
         }
 
-        imageBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectImage(v);
-            }
-        });
-
         String userEmail = sp.getString("userEmail", "");
 
         if (userEmail != "") {
             Context context = getApplicationContext();
             SQLiteDatabase sqLiteDatabase = context.openOrCreateDatabase("BlitzBar", Context.MODE_PRIVATE, null);
+
             DBHelper dbHelper = new DBHelper(sqLiteDatabase);
 
             User user = dbHelper.getUser(userEmail);

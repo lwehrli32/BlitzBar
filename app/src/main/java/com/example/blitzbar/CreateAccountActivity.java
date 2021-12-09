@@ -87,6 +87,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         }
 
         if(goodInput) {
+
             Context context = getApplicationContext();
             SQLiteDatabase sqLiteDatabase = context.openOrCreateDatabase("BlitzBar", Context.MODE_PRIVATE, null);
             DBHelper dbHelper = new DBHelper(sqLiteDatabase);
