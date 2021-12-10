@@ -310,6 +310,15 @@ public class SettingsActivity extends AppCompatActivity {
         });
     }
 
+    public void signOutUser(View v){
+
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putInt("loggedIn", 0).apply();
+
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+    }
+
     private NavigationBarView.OnItemSelectedListener bottomnavFunction = new NavigationBarView.OnItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
