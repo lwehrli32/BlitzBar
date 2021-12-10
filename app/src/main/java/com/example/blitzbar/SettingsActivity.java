@@ -49,6 +49,9 @@ import java.io.ByteArrayOutputStream;
 
 public class SettingsActivity extends AppCompatActivity {
 
+    // TODO get username
+    String tempusername = "Lukas";
+
     static final int PICK_IMAGE = 1;
     static final long MAX_DOWNLOAD_SIZE = 1024 * 1024;
     private static final int IMAGEPICK_GALLERY_REQUEST = 300;
@@ -58,6 +61,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     private NavigationBarView bottomNavigationBarView;
 
+    ImageCache imgCache;
     String cameraPermission[];
     String storagePermission[];
     Uri imageuri;
@@ -65,6 +69,7 @@ public class SettingsActivity extends AppCompatActivity {
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
     StorageReference storageRef;
+    boolean justUploaded;
 
     SharedPreferences sp;
     SwitchCompat swDarkMode;
@@ -243,12 +248,13 @@ public class SettingsActivity extends AppCompatActivity {
     public void upload_image(final Uri uri){
         pd.show();
 
+        justUploaded = true;
+
         try {
             //Uri path = Uri.parse("android.resource://com.example.blitzbar/" + R.drawable.profile_image);
             //String imgPath = path.toString();
 
             // TODO get user name
-            String tempusername = "Lukas";
             StorageReference imageRef = storageRef.child("Profile_Pictures").child(tempusername);
 
             //Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.profile_image);
@@ -271,6 +277,12 @@ public class SettingsActivity extends AppCompatActivity {
                     profileImage.setImageURI(uri);
                     SharedPreferences.Editor editor = sp.edit();
                     editor.putInt("profilePic", 1).apply();
+                    editor.putBoolean("justUploaded", false).apply();
+
+                    // TODO get username
+                    imgCache.updateContext(getApplicationContext());
+                    imgCache.cacheProfilePic(tempusername, profileImage);
+
                     pd.dismiss();
                 }
             });
@@ -285,7 +297,6 @@ public class SettingsActivity extends AppCompatActivity {
         pd.show();
 
         // TODO get username
-        String tempusername = "Lukas";
         StorageReference imageRef = storageRef.child("Profile_Pictures").child(tempusername);
 
         final long image_size = MAX_DOWNLOAD_SIZE;
@@ -294,9 +305,14 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onSuccess(byte[] bytes) {
                 Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-
+                SharedPreferences.Editor editor = sp.edit();
                 // set image
                 profileImage.setImageBitmap(bitmap);
+
+                // TODO set username
+                imgCache.updateContext(getApplicationContext());
+                imgCache.cacheProfilePic(tempusername, profileImage);
+                editor.putBoolean("justUploaded", true).apply();
 
                 pd.dismiss();
             }
@@ -346,6 +362,7 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         sp = getApplicationContext().getSharedPreferences("BlitzBar", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         storageRef = FirebaseStorage.getInstance().getReference();
@@ -355,6 +372,9 @@ public class SettingsActivity extends AppCompatActivity {
 
         Button imageBtn;
         boolean isChecked = false;
+
+        justUploaded = sp.getBoolean("justUploaded", false) == true;
+        imgCache = new ImageCache(getApplicationContext());
 
         boolean isDarkMode = sp.getInt("isDarkMode", 0) == 1;
         if (isDarkMode) {
@@ -397,10 +417,14 @@ public class SettingsActivity extends AppCompatActivity {
 
         if (userEmail != "") {
 
-            int hasProfilePic = sp.getInt("profilePic", 0);
+            boolean hasProfilePic = sp.getInt("profilePic", 0) == 1;
 
-            if (hasProfilePic == 1) {
+            if (hasProfilePic && !justUploaded) {
                 download_image();
+                editor.putBoolean("justUploaded", true).apply();
+            }else if (hasProfilePic){
+                Bitmap bmp = imgCache.getProfilePic(tempusername);
+                profileImage.setImageBitmap(bmp);
             }
 
             Context context = getApplicationContext();
