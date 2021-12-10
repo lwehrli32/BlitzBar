@@ -72,18 +72,11 @@ public class SettingsActivity extends AppCompatActivity {
     boolean justUploaded;
 
     SharedPreferences sp;
-    SwitchCompat swDarkMode;
     SwitchCompat swSounds;
     SwitchCompat swNotifications;
     SwitchCompat swLocationPublic;
     TextView userName;
     ImageView profileImage;
-
-    /*public void onClick(View v) {
-        if(v.getId() == R.id.backButton) {
-            goToLastActivity();
-        }
-    }*/
 
     public void onSwitch(View v) {
         if (v.getId() == R.id.Sounds) {
@@ -126,12 +119,10 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void switchState() {
-        swDarkMode = findViewById(R.id.DarkMode);
         swSounds = findViewById(R.id.Sounds);
         swNotifications = findViewById(R.id.Notifications);
         swLocationPublic = findViewById(R.id.LocationPublic);
 
-        swDarkMode.setChecked(sp.getBoolean("darkMode", false));
         swSounds.setChecked(sp.getBoolean("sounds", true));
         swNotifications.setChecked(sp.getBoolean("notifications", true));
         swLocationPublic.setChecked(sp.getBoolean("locationPublic", true));
@@ -358,11 +349,36 @@ public class SettingsActivity extends AppCompatActivity {
         }
     };
 
+    public void onChangeListener(boolean isChecked){
+        SharedPreferences.Editor editor = sp.edit();
+        if (isChecked) {
+            editor.putInt("isDarkMode", 1).apply();
+            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }else {
+            editor.putInt("isDarkMode", 0).apply();
+            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         sp = getApplicationContext().getSharedPreferences("BlitzBar", Context.MODE_PRIVATE);
+
+        boolean isDarkMode = sp.getInt("isDarkMode", 0) == 1;
+        if (isDarkMode) {
+            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }else {
+            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_settings);
+
         SharedPreferences.Editor editor = sp.edit();
+        SwitchCompat darkMode = (SwitchCompat) findViewById(R.id.DarkMode);
+
+        if (isDarkMode)
+            darkMode.setChecked(true);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         storageRef = FirebaseStorage.getInstance().getReference();
@@ -373,18 +389,9 @@ public class SettingsActivity extends AppCompatActivity {
         Button imageBtn;
         boolean isChecked = false;
 
-        justUploaded = sp.getBoolean("justUploaded", false) == true;
+        justUploaded = sp.getBoolean("justUploaded", false);
         imgCache = new ImageCache(getApplicationContext());
 
-        boolean isDarkMode = sp.getInt("isDarkMode", 0) == 1;
-        if (isDarkMode) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            isChecked = true;
-        }else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }
-
-        setContentView(R.layout.activity_settings);
         userName = (TextView) findViewById(R.id.userName);
         profileImage = (ImageView) findViewById(R.id.profileImage);
         imageBtn = (Button) findViewById(R.id.select_image);
@@ -393,23 +400,10 @@ public class SettingsActivity extends AppCompatActivity {
         bottomNavigationBarView = findViewById(R.id.bottomnav);
         bottomNavigationBarView.setOnItemSelectedListener(bottomnavFunction);
 
-        SwitchCompat darkMode = (SwitchCompat) findViewById(R.id.DarkMode);
-
-        if (isChecked){
-            darkMode.setChecked(true);
-        }
-
         darkMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                SharedPreferences.Editor editor = sp.edit();
-                if (isChecked) {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    editor.putInt("isDarkMode", 1).apply();
-                }else {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    editor.putInt("isDarkMode", 0).apply();
-                }
+                onChangeListener(isChecked);
             }
         });
 

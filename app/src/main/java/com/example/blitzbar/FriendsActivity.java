@@ -18,18 +18,17 @@ public class FriendsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
         sp = getApplicationContext().getSharedPreferences("BlitzBar", Context.MODE_PRIVATE);
         boolean isDarkMode = sp.getInt("isDarkMode", 0) == 1;
         if (isDarkMode) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        }
-        else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }else {
+            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
 
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends);
+
         NavigationBarView bottomNavigationBarView = findViewById(R.id.bottomnav);
         bottomNavigationBarView.setOnItemSelectedListener(bottomnavFunction);
     }
