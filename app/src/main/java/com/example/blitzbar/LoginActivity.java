@@ -22,7 +22,6 @@ public class LoginActivity extends AppCompatActivity {
     TextView feedback;
     String userEmail;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         sp = getApplicationContext().getSharedPreferences("BlitzBar", Context.MODE_PRIVATE);
@@ -45,6 +44,15 @@ public class LoginActivity extends AppCompatActivity {
         feedback.setText("");
 
         if (loggedIn == 1 && userEmail != ""){
+            Context context = getApplicationContext();
+
+            SQLiteDatabase sqLiteDatabase = context.openOrCreateDatabase("BlitzBar", Context.MODE_PRIVATE,null);
+            DBHelper dbHelper = new DBHelper(sqLiteDatabase);
+            User user = dbHelper.getUser(userEmail);
+
+            sqLiteDatabase.close();
+            loggedInUser = user;
+
             Intent intent = new Intent(this, MapsActivity.class);
             startActivity(intent);
         }

@@ -50,6 +50,15 @@ public class CreateAccountActivity extends AppCompatActivity {
         feedback.setText("");
 
         if(loggedIn == 1 && userEmail != ""){
+            Context context = getApplicationContext();
+
+            SQLiteDatabase sqLiteDatabase = context.openOrCreateDatabase("BlitzBar", Context.MODE_PRIVATE,null);
+            DBHelper dbHelper = new DBHelper(sqLiteDatabase);
+            User user = dbHelper.getUser(userEmail);
+
+            sqLiteDatabase.close();
+            LoginActivity.loggedInUser = user;
+
             Intent intent = new Intent(this, MapsActivity.class);
             startActivity(intent);
         }
@@ -58,6 +67,11 @@ public class CreateAccountActivity extends AppCompatActivity {
     public void gotoLogin(View view){
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
+    }
+
+    public boolean verify_birthday(String birthday){
+
+        return true;
     }
 
     public void userCreateAccount(View v){

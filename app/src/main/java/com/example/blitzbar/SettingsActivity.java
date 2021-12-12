@@ -413,7 +413,6 @@ public class SettingsActivity extends AppCompatActivity {
 
         String userEmail = LoginActivity.loggedInUser.getEmail();
 
-
         if (userEmail != "") {
 
             boolean hasProfilePic = sp.getInt("profilePic", 0) == 1;
