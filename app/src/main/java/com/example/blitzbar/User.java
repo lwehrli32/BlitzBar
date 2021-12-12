@@ -43,6 +43,10 @@ public class User {
 
     public ArrayList<String> getFriends() {return this.friends;}
 
+    public void addFriend(String new_friend){
+        this.friends.add(new_friend);
+    }
+
     public long getLongitude() {return this.longitude;}
 
     public long getLatitude() {return this.latitude;}

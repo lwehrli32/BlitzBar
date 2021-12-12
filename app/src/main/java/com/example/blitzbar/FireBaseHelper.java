@@ -20,6 +20,7 @@ public class FireBaseHelper {
     }
 
     private boolean addFriend(String user_email, String friend_email){
+        // TODO add friend to friends arraylist in the user object
         return true;
     }
 
