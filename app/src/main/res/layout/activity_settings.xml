@@ -80,8 +80,9 @@
         android:id="@+id/userName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="44dp"
+        android:layout_marginBottom="20dp"
         android:text="Name"
+        android:textSize="20dp"
         android:textColor="@color/textColor"
         app:layout_constraintBottom_toTopOf="@+id/DarkMode"
         app:layout_constraintEnd_toEndOf="parent"
@@ -96,7 +97,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintVertical_bias="0.855"
         app:srcCompat="@drawable/profile_image" />
 
     <Button
@@ -104,7 +105,7 @@
         style="?android:attr/borderlessButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="60dp"
         android:background="@color/backgroundColor"
         android:onClick="showImagePicDialog"
         android:text="Change Profile Picture"
@@ -144,5 +145,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.644" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="17dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="168dp"
+        app:layout_constraintBottom_toTopOf="@+id/userName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/select_image"
+        app:layout_constraintVertical_bias="0.523"
+        app:srcCompat="@drawable/flame" />
+
+    <TextView
+        android:id="@+id/blitzbarscore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="BlitzBar Score"
+        app:layout_constraintBottom_toTopOf="@+id/userName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.071"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/select_image"
+        app:layout_constraintVertical_bias="0.536" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

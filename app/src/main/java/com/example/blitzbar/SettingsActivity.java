@@ -77,6 +77,7 @@ public class SettingsActivity extends AppCompatActivity {
     SwitchCompat swLocationPublic;
     TextView userName;
     ImageView profileImage;
+    TextView blitzBarScore;
 
     public void onSwitch(View v) {
         if (v.getId() == R.id.Sounds) {
@@ -322,6 +323,8 @@ public class SettingsActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = sp.edit();
         editor.putInt("loggedIn", 0).apply();
 
+        LoginActivity.loggedInUser = null;
+
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
@@ -392,6 +395,7 @@ public class SettingsActivity extends AppCompatActivity {
         justUploaded = sp.getBoolean("justUploaded", false);
         imgCache = new ImageCache(getApplicationContext());
 
+        blitzBarScore = (TextView) findViewById(R.id.blitzbarscore);
         userName = (TextView) findViewById(R.id.userName);
         profileImage = (ImageView) findViewById(R.id.profileImage);
         imageBtn = (Button) findViewById(R.id.select_image);
@@ -407,7 +411,8 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
-        String userEmail = sp.getString("userEmail", "");
+        String userEmail = LoginActivity.loggedInUser.getEmail();
+
 
         if (userEmail != "") {
 
@@ -421,16 +426,8 @@ public class SettingsActivity extends AppCompatActivity {
                 profileImage.setImageBitmap(bmp);
             }
 
-            Context context = getApplicationContext();
-            SQLiteDatabase sqLiteDatabase = context.openOrCreateDatabase("BlitzBar", Context.MODE_PRIVATE, null);
-
-            DBHelper dbHelper = new DBHelper(sqLiteDatabase);
-
-            User user = dbHelper.getUser(userEmail);
-
-            sqLiteDatabase.close();
-
-            userName.setText(user.getFirst_name() + " " + user.getLast_name());
+            userName.setText(LoginActivity.loggedInUser.getFirst_name() + " " + LoginActivity.loggedInUser.getLast_name());
+            blitzBarScore.setText(String.valueOf(LoginActivity.loggedInUser.getBlitz_score()));
         }
     }
 }

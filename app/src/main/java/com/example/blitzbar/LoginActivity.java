@@ -13,6 +13,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 public class LoginActivity extends AppCompatActivity {
+    public static User loggedInUser = null;
+
     SharedPreferences sp;
     int loggedIn = 0;
     EditText emailTextView;
@@ -71,6 +73,7 @@ public class LoginActivity extends AppCompatActivity {
             SharedPreferences.Editor editor = sp.edit();
             editor.putInt("loggedIn", 1).apply();
             editor.putString("userEmail", userEmail).apply();
+            loggedInUser = user;
 
             Intent intent = new Intent(this, MapsActivity.class);
             startActivity(intent);

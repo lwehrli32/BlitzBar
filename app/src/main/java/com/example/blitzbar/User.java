@@ -37,6 +37,10 @@ public class User {
 
     public Long getBlitz_score(){return this.blitz_score;}
 
+    public void incrementBlitzBar(){
+        this.blitz_score++;
+    }
+
     public ArrayList<String> getFriends() {return this.friends;}
 
     public long getLongitude() {return this.longitude;}

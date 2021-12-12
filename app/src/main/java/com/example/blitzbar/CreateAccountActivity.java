@@ -98,6 +98,7 @@ public class CreateAccountActivity extends AppCompatActivity {
             SQLiteDatabase sqLiteDatabase = context.openOrCreateDatabase("BlitzBar", Context.MODE_PRIVATE, null);
             DBHelper dbHelper = new DBHelper(sqLiteDatabase);
 
+            // TODO firebase helper returns user when inserted and then set loggedinuser to the user returned
             boolean userCreated = dbHelper.insertUser(firstName, lastName, userEmail, birthday, blitzScore, fav_drink, fav_bar);
 
             sqLiteDatabase.close();
@@ -107,6 +108,12 @@ public class CreateAccountActivity extends AppCompatActivity {
 
                 editor.putInt("loggedIn", 1).apply();
                 editor.putString("userEmail", userEmail).apply();
+
+                // TODO set this to the returned user from creating a new user
+                LoginActivity.loggedInUser = null;
+
+                // give blitzbar score for creating an account
+                LoginActivity.loggedInUser.incrementBlitzBar();
 
                 Intent intent = new Intent(this, MapsActivity.class);
                 startActivity(intent);
