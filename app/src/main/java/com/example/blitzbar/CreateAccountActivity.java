@@ -1,5 +1,7 @@
 package com.example.blitzbar;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
@@ -7,11 +9,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.Date;
 import java.util.regex.Pattern;
 
 public class CreateAccountActivity extends AppCompatActivity {
@@ -70,8 +79,87 @@ public class CreateAccountActivity extends AppCompatActivity {
     }
 
     public boolean verify_birthday(String birthday){
+        String[] date = birthday.split("/");
+
+        if (date.length != 3)
+            return false;
+
+        int day;
+        int month;
+        int year;
+
+        try{
+            month = Integer.parseInt(date[0]);
+            day = Integer.parseInt(date[1]);
+            year = Integer.parseInt(date[2]);
+        }catch(Exception e){
+            return false;
+        }
+
+        if (month <= 0 || month > 12)
+            return false;
+        if (day > 31 || day < 1)
+            return false;
+        if (date[2].length() != 4)
+            return false;
+
+        // check for leap year day
+        if (month == 2 && day == 29 && year % 4 != 0)
+            return false;
+
+        if (month == 2 && day > 28){
+            return false;
+        }
+
+        // check end of months
+        if (month == 4 || month == 6 || month == 9 || month == 11){
+            if(day > 30){
+                return false;
+            }
+        }
 
         return true;
+    }
+
+    public boolean verify_age(String birthday){
+        String pattern = "MM/dd/yyyy";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
+        String localDate = simpleDateFormat.format(new Date());
+
+        String[] currdate = localDate.split("/");
+        String[] birdate = birthday.split("/");
+
+        int curryear;
+        int currday;
+        int currmonth;
+        int biryear;
+        int birmonth;
+        int birday;
+
+        try{
+            curryear = Integer.parseInt(currdate[2]);
+            currday = Integer.parseInt(currdate[1]);
+            currmonth = Integer.parseInt(currdate[0]);
+            biryear = Integer.parseInt(birdate[2]);
+            birday = Integer.parseInt(birdate[1]);
+            birmonth = Integer.parseInt(birdate[0]);
+        }catch(Exception e){
+            return false;
+        }
+
+        if (curryear - biryear < 0){
+            return false;
+        }else {
+            if (currmonth - birmonth < 0) {
+                return false;
+            } else {
+                if (currday - birday < 0) {
+                    return false;
+                }
+                return true;
+            }
+        }
     }
 
     public void userCreateAccount(View v){
@@ -104,10 +192,15 @@ public class CreateAccountActivity extends AppCompatActivity {
         } else if(userPassword.equals("")){
             setFeedback("Password is required");
             goodInput = false;
+        }else if (!verify_birthday(birthday)){
+            goodInput = false;
+            setFeedback("Invalid date");
+        }else if (!verify_age(birthday)){
+            goodInput = false;
+            setFeedback("Must be 21 years old");
         }
 
         if(goodInput) {
-
             Context context = getApplicationContext();
             SQLiteDatabase sqLiteDatabase = context.openOrCreateDatabase("BlitzBar", Context.MODE_PRIVATE, null);
             DBHelper dbHelper = new DBHelper(sqLiteDatabase);
