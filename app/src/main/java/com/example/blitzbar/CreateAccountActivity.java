@@ -21,6 +21,11 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -51,6 +56,9 @@ public class CreateAccountActivity extends AppCompatActivity {
     int cyear = cal.get(Calendar.YEAR);
     int cmonth = cal.get(Calendar.MONTH);
     int cday = cal.get(Calendar.DAY_OF_MONTH);
+    DatabaseReference userDatabase = FirebaseDatabase.getInstance().getReference();
+    FusedLocationProviderClient fusedLocationProviderClient;
+
 
     private static final String TAG = "CreateAccountActivity";
     private DatePickerDialog.OnDateSetListener mDateSetListener;
@@ -161,7 +169,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         String userEmail = emailEditText.getText().toString();
         String userPassword = passwordEditText.getText().toString();
         boolean goodInput = true;
-        String blitzScore = "0";
+        long blitzScore = 0;
         String fav_bar = "";
         String fav_drink = "";
 
@@ -196,9 +204,20 @@ public class CreateAccountActivity extends AppCompatActivity {
             // TODO firebase helper returns user when inserted and then set loggedinuser to the user returned
             boolean userCreated = dbHelper.insertUser(firstName, lastName, userEmail, birthday, blitzScore, fav_drink, fav_bar);
 
+            fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+            long longitude = 0;
+            long latitude = 0;
+            FireBaseHelper fireBaseHelper = new FireBaseHelper(userDatabase);
+            if (!fireBaseHelper.checkUser(userEmail)) {
+                fireBaseHelper.insertUser(firstName, lastName, userEmail, birthday, blitzScore, longitude, latitude);
+                Intent intent = new Intent(this, MapsActivity.class);
+                startActivity(intent);
+            } else {
+                setFeedback("Email is already taken");
+            }
             sqLiteDatabase.close();
 
-            if (userCreated) {
+            /*if (userCreated) {
                 SharedPreferences.Editor editor = sp.edit();
 
                 editor.putInt("loggedIn", 1).apply();
@@ -215,6 +234,7 @@ public class CreateAccountActivity extends AppCompatActivity {
             } else {
                 setFeedback("Email is already taken");
             }
+             */
         }
     }
 
