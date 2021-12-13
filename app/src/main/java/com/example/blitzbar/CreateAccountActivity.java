@@ -513,4 +513,9 @@ public class CreateAccountActivity extends AppCompatActivity {
         Intent loginIntent = new Intent(this, MapsActivity.class);
         startActivity(loginIntent);
     }
+
+    public void gotoLogin(View view){
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+    }
 }

@@ -75,6 +75,7 @@ public class FindFriends extends AppCompatActivity {
                 Picasso.get().load(model.getProfile_image()).into(holder.profileImage);
                 holder.name.setText(model.getFullName());
                 holder.score.setText(model.getBlitz_score());
+
             }
 
             @NonNull
