@@ -1,14 +1,11 @@
 package com.example.blitzbar;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -45,6 +42,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private final int ACCESS_FINE_LOCATION_REQUEST_CODE = 11;
     private NavigationBarView bottomNavigationBarView;
     FusedLocationProviderClient fusedLocationProviderClient;
+    private ImageView logo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +56,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
-        ImageView blitzBarLogo = findViewById(R.id.imageView4);
+        ImageView blitzBarLogo = findViewById(R.id.BlitzBarLogo);
         blitzBarLogo.setVisibility(View.VISIBLE);
         assert mapFragment != null;
         mapFragment.getMapAsync(this);
@@ -68,6 +66,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         bottomNavigationBarView.setOnItemSelectedListener(bottomnavFunction);
 
         geofencingClient = LocationServices.getGeofencingClient(this);
+
+        logo = (ImageView) findViewById(R.id.BlitzBarLogo);
+        logo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openAboutDialog();
+            }
+        });
+
+    }
+
+    public void openAboutDialog() {
+        AboutDialog aboutDialog = new AboutDialog();
+        aboutDialog.show(getSupportFragmentManager(), "about dialog");
     }
 
     private NavigationBarView.OnItemSelectedListener bottomnavFunction = new NavigationBarView.OnItemSelectedListener() {
