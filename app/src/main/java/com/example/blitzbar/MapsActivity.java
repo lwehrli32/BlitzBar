@@ -91,7 +91,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     menu_intent = new Intent(MapsActivity.this, SettingsActivity.class);
                     break;
                 case R.id.friends:
-                    menu_intent = new Intent(MapsActivity.this, FriendsActivity.class);
+                    menu_intent = new Intent(MapsActivity.this, FindFriends.class);
                     break;
                 case R.id.listView:
                     menu_intent = new Intent(MapsActivity.this, ListActivity.class);
