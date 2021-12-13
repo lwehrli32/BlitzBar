@@ -31,6 +31,9 @@ import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 //import com.google.android.material.navigation.NavigationBarView;
 
@@ -43,6 +46,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private NavigationBarView bottomNavigationBarView;
     FusedLocationProviderClient fusedLocationProviderClient;
     private ImageView logo;
+    private FirebaseDatabase database;
+    private static final String USERS = "users";
+    private DatabaseReference mDatabase;
+    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +71,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         bottomNavigationBarView = findViewById(R.id.bottomnav);
         bottomNavigationBarView.setOnItemSelectedListener(bottomnavFunction);
+
+        database = FirebaseDatabase.getInstance();
+        mDatabase = database.getReference(USERS);
+        mAuth = FirebaseAuth.getInstance();
 
         geofencingClient = LocationServices.getGeofencingClient(this);
 
@@ -192,6 +203,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         locationTask.addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
+                FireBaseHelper fireBaseHelper = new FireBaseHelper(mDatabase);
+                fireBaseHelper.getUser().setLongitude((long) location.getLongitude());
+                fireBaseHelper.getUser().setLatitude((long) location.getLatitude());
                 LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 17));
             }

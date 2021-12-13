@@ -7,15 +7,15 @@ import java.util.ArrayList;
 
 public class User {
 
-    private final String first_name;
-    private final String last_name;
-    private final String email;
-    private final String birthday;
+    private String first_name;
+    private String last_name;
+    private String email;
+    private String birthday;
     private long blitz_score;
     private long longitude;
     private long latitude;
     private ArrayList<String> friends;
-    private final String password;
+    private String password;
 
     public User(String first_name, String last_name, String email, String birthday, Long blitz_score, long longitude, long latitude, String password){
         this.first_name = first_name;
@@ -30,16 +30,36 @@ public class User {
 
     public String getFirst_name(){return this.first_name;}
 
+    public void setFirst_name(String firstname) {
+        this.first_name = firstname;
+    }
+
     public String getLast_name(){return this.last_name;}
+
+    public void setLast_name(String lastname) {
+        this.last_name = lastname;
+    }
 
     public String getEmail(){return this.email;}
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getBirthday(){return this.birthday;}
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
 
     public Long getBlitz_score(){return this.blitz_score;}
 
     public String getPassword() {
         return this.password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public void incrementBlitzBar(){
@@ -54,7 +74,13 @@ public class User {
 
     public long getLongitude() {return this.longitude;}
 
+    public void setLongitude(long longitude) {
+        this.longitude = longitude;
+    }
+
     public long getLatitude() {return this.latitude;}
 
-
+    public void setLatitude(long latitude) {
+        this.latitude = latitude;
+    }
 }

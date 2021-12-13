@@ -4,6 +4,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -16,6 +17,7 @@ public class FireBaseHelper {
     DatabaseReference userDatabase;
     boolean userExists;
     User user;
+    private FirebaseAuth mAuth;
 
     public FireBaseHelper(DatabaseReference databaseReference) {
         this.userDatabase = FirebaseDatabase.getInstance().getReference();
@@ -38,6 +40,7 @@ public class FireBaseHelper {
     }
 
     private boolean locationUpdate(String email) {
+
         return true;
     }
 
@@ -56,8 +59,10 @@ public class FireBaseHelper {
         return new long[]{longitude, latitude};
     }
 
-    public boolean checkUser(String checkEmail) {
-        DatabaseReference userData = userDatabase.child("users").child(String.valueOf(checkEmail.hashCode()));
+    /*public boolean checkUser(String checkEmail) {
+        DatabaseReference userData = userDatabase.child("users").child(mAuth.getCurrentUser().getUid());
+        mAuth = FirebaseAuth.getInstance();
+        mAuth.getCurrentUser();
         String inputUserId = String.valueOf(checkEmail.hashCode());
         userData.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -74,12 +79,13 @@ public class FireBaseHelper {
         return userExists;
     }
 
-    public User getUser(String email) {
-        DatabaseReference userData = userDatabase.child("users").child(String.valueOf(email.hashCode()));
+     */
+
+    public User getUser() {
+        DatabaseReference userData = userDatabase.child("users").child(mAuth.getCurrentUser().getUid());
         userData.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                FireBaseHelper fireBaseHelper = new FireBaseHelper(userDatabase);
                 String firstname = snapshot.child("first_name").toString();
                 String lastname = snapshot.child("last_name").toString();
                 String userEmail = snapshot.child("email").toString();
@@ -88,8 +94,8 @@ public class FireBaseHelper {
                 long longitude = Long.parseLong(snapshot.child("longitude").toString());
                 long latitude = Long.parseLong(snapshot.child("latitude").toString());
                 String password = snapshot.child("password").toString();
-                fireBaseHelper.user = new User(firstname, lastname, userEmail, birthday, blitzScore, longitude, latitude, password);
-                if (fireBaseHelper.user == null) {
+                user = new User(firstname, lastname, userEmail, birthday, blitzScore, longitude, latitude, password);
+                if (user == null) {
                     Log.e("user null check, first", "USER IS NULL");
                 }
             }
