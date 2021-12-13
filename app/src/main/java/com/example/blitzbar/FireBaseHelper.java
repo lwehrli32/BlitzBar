@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -18,6 +19,8 @@ public class FireBaseHelper {
     boolean userExists;
     User user;
     private FirebaseAuth mAuth;
+    DatabaseReference mUserRef;
+    FirebaseUser mUser;
 
     public FireBaseHelper(DatabaseReference databaseReference) {
         this.userDatabase = FirebaseDatabase.getInstance().getReference();
@@ -82,6 +85,7 @@ public class FireBaseHelper {
      */
 
     public User getUser() {
+        mUser = mAuth.getCurrentUser();
         DatabaseReference userData = userDatabase.child("users").child(mAuth.getCurrentUser().getUid());
         userData.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

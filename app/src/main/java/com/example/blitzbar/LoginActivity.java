@@ -10,7 +10,9 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,6 +37,7 @@ public class LoginActivity extends AppCompatActivity {
     TextView feedback;
     String userEmail;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         sp = getApplicationContext().getSharedPreferences("BlitzBar", Context.MODE_PRIVATE);
@@ -49,58 +52,108 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        loggedIn = sp.getInt("loggedIn", 0);
-        userEmail = sp.getString("userEmail", "");
-        emailTextView = (EditText) findViewById (R.id.loginEmail);
-        passwordTextView = (EditText) findViewById (R.id.loginPassword);
-        feedback = (TextView) findViewById(R.id.loginfeedback);
-        feedback.setText("");
-        mAuth = FirebaseAuth.getInstance();
+        emailTextView=findViewById(R.id.loginEmail);
+        passwordTextView=findViewById(R.id.loginPassword);
+        Button btn_login = findViewById(R.id.loginButton);
+        Button btn_sign = findViewById(R.id.loginCreateAccount);
+        mAuth=FirebaseAuth.getInstance();
+        btn_login.setOnClickListener(v -> {
+            String email= emailTextView.getText().toString().trim();
+            String password= passwordTextView.getText().toString().trim();
+            if(email.isEmpty())
+            {
+                emailTextView.setError("Email is empty");
+                emailTextView.requestFocus();
+                return;
+            }
+            if(!Patterns.EMAIL_ADDRESS.matcher(email).matches())
+            {
+                emailTextView.setError("Enter the valid email");
+                emailTextView.requestFocus();
+                return;
+            }
+            if(password.isEmpty())
+            {
+                passwordTextView.setError("Password is empty");
+                passwordTextView.requestFocus();
+                return;
+            }
+            if(password.length()<6)
+            {
+                passwordTextView.setError("Length of password is more than 6");
+                passwordTextView.requestFocus();
+                return;
+            }
+            mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(task -> {
+                if(task.isSuccessful())
+                {
+                    startActivity(new Intent(this, MapsActivity.class));
+                }
+                else
+                {
+                    Toast.makeText(this,
+                            "Please Check Your login Credentials",
+                            Toast.LENGTH_SHORT).show();
+                }
 
-        if (loggedIn == 1 && userEmail != ""){
-            Context context = getApplicationContext();
-
-            SQLiteDatabase sqLiteDatabase = context.openOrCreateDatabase("BlitzBar", Context.MODE_PRIVATE,null);
-            DBHelper dbHelper = new DBHelper(sqLiteDatabase);
-            User user = dbHelper.getUser(userEmail);
-
-            sqLiteDatabase.close();
-            loggedInUser = user;
-
-            Intent intent = new Intent(this, MapsActivity.class);
-            startActivity(intent);
-        }
+            });
+        });
+        btn_sign.setOnClickListener(v -> startActivity(new Intent(this,CreateAccountActivity.class )));
     }
+
+//        loggedIn = sp.getInt("loggedIn", 0);
+//        userEmail = sp.getString("userEmail", "");
+//        emailTextView = (EditText) findViewById (R.id.loginEmail);
+//        passwordTextView = (EditText) findViewById (R.id.loginPassword);
+//        feedback = (TextView) findViewById(R.id.loginfeedback);
+//        feedback.setText("");
+//        mAuth = FirebaseAuth.getInstance();
+//
+//        if (loggedIn == 1 && userEmail != ""){
+//            Context context = getApplicationContext();
+//
+//            SQLiteDatabase sqLiteDatabase = context.openOrCreateDatabase("BlitzBar", Context.MODE_PRIVATE,null);
+//            DBHelper dbHelper = new DBHelper(sqLiteDatabase);
+//            User user = dbHelper.getUser(userEmail);
+//
+//            sqLiteDatabase.close();
+//            loggedInUser = user;
+//
+//            Intent intent = new Intent(this, MapsActivity.class);
+//            startActivity(intent);
+//        }
+
+
+
+    //}
 
     public void gotoCreateAccount(View view){
         Intent intent = new Intent(this, CreateAccountActivity.class);
         startActivity(intent);
     }
 
-    public void userLogin(View v){
-        setFeedback("");
-        String userEmail = emailTextView.getText().toString();
-        String password = passwordTextView.getText().toString();
-        mAuth.signInWithEmailAndPassword(userEmail, password)
-                .addOnCompleteListener(this, new onCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()) {
-                            Log.d(TAG, "signIn:success");
-                            SharedPreferences.Editor editor = sp.edit();
-                            editor.putInt("loggedIn", 1).apply();
-                            // TODO need to get user here
-                            // editor.putString("userEmail", user.getEmail()).apply();
-                            Intent intent = new Intent(this, MapsActivity.class);
-                            startActivity(intent);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(LoginActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    }
-        });
+//    public void userLogin(View v){
+//        setFeedback("");
+//        String userEmail = emailTextView.getText().toString();
+//        String password = passwordTextView.getText().toString();
+//        mAuth.signInWithEmailAndPassword(userEmail, password)
+//                .addOnCompleteListener(this, new onCompleteListener<AuthResult>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<AuthResult> task) {
+//                        if(task.isSuccessful()) {
+//                            Log.d(TAG, "signIn:success");
+//                            Intent intent = new Intent(this, MapsActivity.class);
+//                            startActivity(intent);
+//                        } else {
+//                            // If sign in fails, display a message to the user.
+//                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
+//                            Toast.makeText(LoginActivity.this, "Authentication failed.",
+//                                    Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//        });
+
+
         /*FireBaseHelper fireBaseHelper = new FireBaseHelper(userDatabase);
         User user = fireBaseHelper.getUser(userEmail);
         if (!fireBaseHelper.checkUser(userEmail) && !user.getPassword().equals(password)) {
@@ -137,7 +190,7 @@ public class LoginActivity extends AppCompatActivity {
             setFeedback("User not found");
         }
          */
-    }
+    //  }
 
     public void setFeedback(String msg){
         feedback.setText(msg);

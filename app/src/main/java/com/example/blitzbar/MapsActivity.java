@@ -200,16 +200,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             return;
         }
         Task<Location> locationTask = fusedLocationProviderClient.getLastLocation();
-        locationTask.addOnSuccessListener(new OnSuccessListener<Location>() {
-            @Override
-            public void onSuccess(Location location) {
-                FireBaseHelper fireBaseHelper = new FireBaseHelper(mDatabase);
-                fireBaseHelper.getUser().setLongitude((long) location.getLongitude());
-                fireBaseHelper.getUser().setLatitude((long) location.getLatitude());
-                LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 17));
-            }
-        });
+//        locationTask.addOnSuccessListener(new OnSuccessListener<Location>() {
+//            @Override
+////            public void onSuccess(Location location) {
+////                FireBaseHelper fireBaseHelper = new FireBaseHelper(mDatabase);
+////                fireBaseHelper.getUser().setLongitude((long) location.getLongitude());
+////                fireBaseHelper.getUser().setLatitude((long) location.getLatitude());
+////                LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+////                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 17));
+////            }
+//        });
 
     }
 
