@@ -25,7 +25,7 @@ public class FireBaseHelper {
 
     public void insertUser(String first_name, String last_name, String email, String birthday, long blitz_score, long longitude, long latitude, String password){
         User user = new User(first_name, last_name, email, birthday, blitz_score, longitude, latitude, password);
-        userDatabase.child(String.valueOf(email.hashCode())).setValue(user);
+        userDatabase.child("users").child(String.valueOf(email.hashCode())).setValue(user);
     }
 
     private boolean addFriend(String user_email, String friend_email){
@@ -34,7 +34,7 @@ public class FireBaseHelper {
     }
 
     public void updateBlitzScore(String email, long blitz_score) {
-        userDatabase.child(String.valueOf(email.hashCode())).child("blitz_score").setValue(blitz_score);
+        userDatabase.child("users").child(String.valueOf(email.hashCode())).child("blitz_score").setValue(blitz_score);
     }
 
     private boolean locationUpdate(String email) {
@@ -61,7 +61,7 @@ public class FireBaseHelper {
     }
 
     public boolean checkUser(String checkEmail) {
-        DatabaseReference userData = userDatabase.child(String.valueOf(checkEmail.hashCode()));
+        DatabaseReference userData = userDatabase.child("users").child(String.valueOf(checkEmail.hashCode()));
         String inputUserId = String.valueOf(checkEmail.hashCode());
         userData.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -78,7 +78,7 @@ public class FireBaseHelper {
     }
 
     public User getUser(String email) {
-        DatabaseReference userData = userDatabase.child(String.valueOf(email.hashCode()));
+        DatabaseReference userData = userDatabase.child("users").child(String.valueOf(email.hashCode()));
         userData.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
