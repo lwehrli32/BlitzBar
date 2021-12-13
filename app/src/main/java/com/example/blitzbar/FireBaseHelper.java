@@ -1,5 +1,7 @@
 package com.example.blitzbar;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.google.firebase.database.DataSnapshot;
@@ -89,6 +91,9 @@ public class FireBaseHelper {
                 long latitude = Long.parseLong(snapshot.child("latitude").toString());
                 String password = snapshot.child("password").toString();
                 user = new User(firstname, lastname, userEmail, birthday, blitzScore, longitude, latitude, password);
+                if (user == null) {
+                    Log.e("user null check, first", "USER IS NULL");
+                }
             }
 
             @Override
@@ -96,6 +101,9 @@ public class FireBaseHelper {
 
             }
         });
+        if (user == null) {
+            Log.e("user null check, second", "USER IS NULL");
+        }
         return user;
     }
 }

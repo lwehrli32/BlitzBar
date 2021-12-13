@@ -29,7 +29,6 @@
         android:hint="Password"
         android:inputType="textPassword"
         android:minHeight="48dp"
-        android:onClick="gotoCreateAccount"
         android:textColor="@color/textColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

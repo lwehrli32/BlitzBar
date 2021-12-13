@@ -209,6 +209,7 @@ public class CreateAccountActivity extends AppCompatActivity {
             long longitude = 0;
             long latitude = 0;
             FireBaseHelper fireBaseHelper = new FireBaseHelper(userDatabase);
+
             boolean userCreated = fireBaseHelper.checkUser(userEmail);
             if (userCreated) {
                 setFeedback("Email is already taken");

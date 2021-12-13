@@ -46,6 +46,9 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -78,6 +81,7 @@ public class SettingsActivity extends AppCompatActivity {
     TextView userName;
     ImageView profileImage;
     TextView blitzBarScore;
+    ImageView birthdayCake;
     String builtNameAge;
 
     public void onSwitch(View v) {
@@ -424,6 +428,16 @@ public class SettingsActivity extends AppCompatActivity {
             }else if (hasProfilePic){
                 Bitmap bmp = imgCache.getProfilePic(tempusername);
                 profileImage.setImageBitmap(bmp);
+            }
+            birthdayCake = (ImageView) findViewById(R.id.birthdayCake);
+            birthdayCake.setVisibility(View.INVISIBLE);
+            Calendar cal = Calendar.getInstance();
+            int cmonth = cal.get(Calendar.MONTH);
+            int cday = cal.get(Calendar.DAY_OF_MONTH) + 1;
+            String[] udate = LoginActivity.loggedInUser.getBirthday().split("/");
+            Log.i("Comparing dates", "User Birthday: " + udate[0] + "/" + udate[1] + " , " + "Current Day: " + cmonth + "/ " + cday);
+            if (Integer.parseInt(udate[0]) == cmonth && Integer.parseInt(udate[1]) == cday) {
+                birthdayCake.setVisibility(View.VISIBLE);
             }
             int fireEmoji = 0x1F525;
 
