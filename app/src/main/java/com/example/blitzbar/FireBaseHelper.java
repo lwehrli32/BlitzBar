@@ -13,13 +13,14 @@ public class FireBaseHelper {
     }
 
 
-    private boolean insertUser(String first_name, String last_name, String email, String birthday, long blitz_score, ArrayList<String> friends, long longitude, long latitude){
+    private User insertUser(String first_name, String last_name, String email, String birthday, long blitz_score, ArrayList<String> friends, long longitude, long latitude){
         User user = new User(first_name, last_name, email, birthday, blitz_score, friends, longitude, latitude);
         userDatabase.child("users").child(email).setValue(user);
-        return true;
+        return user;
     }
 
     private boolean addFriend(String user_email, String friend_email){
+        // TODO add friend to friends arraylist in the user object
         return true;
     }
 

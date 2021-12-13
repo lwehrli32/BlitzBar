@@ -76,26 +76,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Notifications" />
 
-    <!--<ImageButton
-        android:id="@+id/backButton"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="40dp"
-        android:textColor="@color/textColor"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/back_button"
-        android:onClick="onClick"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="?attr/homeAsUpIndicator" />-->
-
     <TextView
         android:id="@+id/userName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="28dp"
+        android:layout_marginBottom="20dp"
         android:text="Name"
+        android:textSize="20dp"
         android:textColor="@color/textColor"
         app:layout_constraintBottom_toTopOf="@+id/DarkMode"
         app:layout_constraintEnd_toEndOf="parent"
@@ -110,21 +97,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.914"
+        app:layout_constraintVertical_bias="0.855"
         app:srcCompat="@drawable/profile_image" />
 
     <Button
         android:id="@+id/select_image"
+        style="?android:attr/borderlessButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:text="Change Profile Picture"
-        android:textSize="25px"
+        android:layout_marginBottom="48dp"
+        android:background="@color/backgroundColor"
         android:onClick="showImagePicDialog"
-        android:textColor="@color/textColor"
+        android:text="Change Profile Picture"
+        android:textColor="@color/CadetBlue"
+        android:textSize="30px"
         app:layout_constraintBottom_toTopOf="@+id/userName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -141,5 +129,44 @@
         app:layout_constraintTop_toBottomOf="@+id/LocationPublic"
         app:layout_constraintVertical_bias="1.0"
         app:menu="@menu/bottom_nav_menu" />
+
+    <Button
+        android:id="@+id/signOutButton"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/backgroundColor"
+        android:onClick="signOutUser"
+        android:text="Sign Out"
+        android:textColor="@color/CadetBlue"
+        app:layout_constraintBottom_toTopOf="@+id/profileImage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.944"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.644" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="17dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="168dp"
+        app:layout_constraintBottom_toTopOf="@+id/userName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/select_image"
+        app:layout_constraintVertical_bias="0.523"
+        app:srcCompat="@drawable/flame" />
+
+    <TextView
+        android:id="@+id/blitzbarscore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="BlitzBar Score"
+        app:layout_constraintBottom_toTopOf="@+id/userName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.071"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/select_image"
+        app:layout_constraintVertical_bias="0.536" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

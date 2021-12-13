@@ -13,6 +13,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 public class LoginActivity extends AppCompatActivity {
+    public static User loggedInUser = null;
+
     SharedPreferences sp;
     int loggedIn = 0;
     EditText emailTextView;
@@ -20,20 +22,18 @@ public class LoginActivity extends AppCompatActivity {
     TextView feedback;
     String userEmail;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         sp = getApplicationContext().getSharedPreferences("BlitzBar", Context.MODE_PRIVATE);
 
         boolean isDarkMode = sp.getInt("isDarkMode", 0) == 1;
         if (isDarkMode) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        }
-        else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }else {
+            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
 
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
         loggedIn = sp.getInt("loggedIn", 0);
@@ -44,6 +44,15 @@ public class LoginActivity extends AppCompatActivity {
         feedback.setText("");
 
         if (loggedIn == 1 && userEmail != ""){
+            Context context = getApplicationContext();
+
+            SQLiteDatabase sqLiteDatabase = context.openOrCreateDatabase("BlitzBar", Context.MODE_PRIVATE,null);
+            DBHelper dbHelper = new DBHelper(sqLiteDatabase);
+            User user = dbHelper.getUser(userEmail);
+
+            sqLiteDatabase.close();
+            loggedInUser = user;
+
             Intent intent = new Intent(this, MapsActivity.class);
             startActivity(intent);
         }
@@ -72,6 +81,7 @@ public class LoginActivity extends AppCompatActivity {
             SharedPreferences.Editor editor = sp.edit();
             editor.putInt("loggedIn", 1).apply();
             editor.putString("userEmail", userEmail).apply();
+            loggedInUser = user;
 
             Intent intent = new Intent(this, MapsActivity.class);
             startActivity(intent);

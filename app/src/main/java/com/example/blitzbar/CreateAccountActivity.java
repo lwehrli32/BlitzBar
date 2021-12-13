@@ -1,5 +1,7 @@
 package com.example.blitzbar;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
@@ -11,6 +13,7 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -25,6 +28,12 @@ import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.Date;
 import java.util.regex.Pattern;
 
 public class CreateAccountActivity extends AppCompatActivity {
@@ -33,7 +42,7 @@ public class CreateAccountActivity extends AppCompatActivity {
     String userEmail;
     EditText firstNameEditText;
     EditText lastNameEditText;
-    TextView birthdayEditText;
+    EditText birthdayEditText;
     EditText emailEditText;
     EditText passwordEditText;
     TextView feedback;
@@ -54,9 +63,11 @@ public class CreateAccountActivity extends AppCompatActivity {
 
         boolean isDarkMode = sp.getInt("isDarkMode", 0) == 1;
         if (isDarkMode) {
+            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             int dialogTheme = AppCompatDelegate.MODE_NIGHT_YES;
         }else {
+            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             int dialogTheme = AppCompatDelegate.MODE_NIGHT_NO;
         }
@@ -71,13 +82,22 @@ public class CreateAccountActivity extends AppCompatActivity {
         userEmail = sp.getString("userEmail", "");
         firstNameEditText = (EditText) findViewById(R.id.createAccountFirstName);
         lastNameEditText = (EditText) findViewById(R.id.createAccountLastName);
-        birthdayEditText = (TextView) findViewById(R.id.createAccountBirthday);
+        birthdayEditText = (EditText) findViewById(R.id.createAccountBirthday);
         emailEditText = (EditText) findViewById(R.id.createAccountEmail);
         passwordEditText = (EditText) findViewById(R.id.createAccountPassword);
         feedback = (TextView) findViewById(R.id.createAccountFeedback);
         feedback.setText("");
 
         if(loggedIn == 1 && userEmail != ""){
+            Context context = getApplicationContext();
+
+            SQLiteDatabase sqLiteDatabase = context.openOrCreateDatabase("BlitzBar", Context.MODE_PRIVATE,null);
+            DBHelper dbHelper = new DBHelper(sqLiteDatabase);
+            User user = dbHelper.getUser(userEmail);
+
+            sqLiteDatabase.close();
+            LoginActivity.loggedInUser = user;
+
             Intent intent = new Intent(this, MapsActivity.class);
             startActivity(intent);
         }
@@ -128,8 +148,6 @@ public class CreateAccountActivity extends AppCompatActivity {
 
     }
 
-
-
     public void gotoLogin(View view){
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
@@ -171,11 +189,11 @@ public class CreateAccountActivity extends AppCompatActivity {
         }
 
         if(goodInput) {
-
             Context context = getApplicationContext();
             SQLiteDatabase sqLiteDatabase = context.openOrCreateDatabase("BlitzBar", Context.MODE_PRIVATE, null);
             DBHelper dbHelper = new DBHelper(sqLiteDatabase);
 
+            // TODO firebase helper returns user when inserted and then set loggedinuser to the user returned
             boolean userCreated = dbHelper.insertUser(firstName, lastName, userEmail, birthday, blitzScore, fav_drink, fav_bar);
 
             sqLiteDatabase.close();
@@ -185,6 +203,12 @@ public class CreateAccountActivity extends AppCompatActivity {
 
                 editor.putInt("loggedIn", 1).apply();
                 editor.putString("userEmail", userEmail).apply();
+
+                // TODO set this to the returned user from creating a new user
+                LoginActivity.loggedInUser = null;
+
+                // give blitzbar score for creating an account
+                LoginActivity.loggedInUser.incrementBlitzBar();
 
                 Intent intent = new Intent(this, MapsActivity.class);
                 startActivity(intent);
@@ -209,5 +233,4 @@ public class CreateAccountActivity extends AppCompatActivity {
             return false;
         return pat.matcher(email).matches();
     }
-
 }

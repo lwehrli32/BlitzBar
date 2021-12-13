@@ -49,6 +49,9 @@ import java.io.ByteArrayOutputStream;
 
 public class SettingsActivity extends AppCompatActivity {
 
+    // TODO get username
+    String tempusername = "Lukas";
+
     static final int PICK_IMAGE = 1;
     static final long MAX_DOWNLOAD_SIZE = 1024 * 1024;
     private static final int IMAGEPICK_GALLERY_REQUEST = 300;
@@ -58,6 +61,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     private NavigationBarView bottomNavigationBarView;
 
+    ImageCache imgCache;
     String cameraPermission[];
     String storagePermission[];
     Uri imageuri;
@@ -65,20 +69,15 @@ public class SettingsActivity extends AppCompatActivity {
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
     StorageReference storageRef;
+    boolean justUploaded;
 
     SharedPreferences sp;
-    SwitchCompat swDarkMode;
     SwitchCompat swSounds;
     SwitchCompat swNotifications;
     SwitchCompat swLocationPublic;
     TextView userName;
     ImageView profileImage;
-
-    /*public void onClick(View v) {
-        if(v.getId() == R.id.backButton) {
-            goToLastActivity();
-        }
-    }*/
+    TextView blitzBarScore;
 
     public void onSwitch(View v) {
         if (v.getId() == R.id.Sounds) {
@@ -121,12 +120,10 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void switchState() {
-        swDarkMode = findViewById(R.id.DarkMode);
         swSounds = findViewById(R.id.Sounds);
         swNotifications = findViewById(R.id.Notifications);
         swLocationPublic = findViewById(R.id.LocationPublic);
 
-        swDarkMode.setChecked(sp.getBoolean("darkMode", false));
         swSounds.setChecked(sp.getBoolean("sounds", true));
         swNotifications.setChecked(sp.getBoolean("notifications", true));
         swLocationPublic.setChecked(sp.getBoolean("locationPublic", true));
@@ -243,12 +240,13 @@ public class SettingsActivity extends AppCompatActivity {
     public void upload_image(final Uri uri){
         pd.show();
 
+        justUploaded = true;
+
         try {
             //Uri path = Uri.parse("android.resource://com.example.blitzbar/" + R.drawable.profile_image);
             //String imgPath = path.toString();
 
             // TODO get user name
-            String tempusername = "Lukas";
             StorageReference imageRef = storageRef.child("Profile_Pictures").child(tempusername);
 
             //Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.profile_image);
@@ -271,6 +269,12 @@ public class SettingsActivity extends AppCompatActivity {
                     profileImage.setImageURI(uri);
                     SharedPreferences.Editor editor = sp.edit();
                     editor.putInt("profilePic", 1).apply();
+                    editor.putBoolean("justUploaded", false).apply();
+
+                    // TODO get username
+                    imgCache.updateContext(getApplicationContext());
+                    imgCache.cacheProfilePic(tempusername, profileImage);
+
                     pd.dismiss();
                 }
             });
@@ -285,7 +289,6 @@ public class SettingsActivity extends AppCompatActivity {
         pd.show();
 
         // TODO get username
-        String tempusername = "Lukas";
         StorageReference imageRef = storageRef.child("Profile_Pictures").child(tempusername);
 
         final long image_size = MAX_DOWNLOAD_SIZE;
@@ -294,9 +297,14 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onSuccess(byte[] bytes) {
                 Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-
+                SharedPreferences.Editor editor = sp.edit();
                 // set image
                 profileImage.setImageBitmap(bitmap);
+
+                // TODO set username
+                imgCache.updateContext(getApplicationContext());
+                imgCache.cacheProfilePic(tempusername, profileImage);
+                editor.putBoolean("justUploaded", true).apply();
 
                 pd.dismiss();
             }
@@ -308,6 +316,17 @@ public class SettingsActivity extends AppCompatActivity {
                 pd.dismiss();
             }
         });
+    }
+
+    public void signOutUser(View v){
+
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putInt("loggedIn", 0).apply();
+
+        LoginActivity.loggedInUser = null;
+
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
     }
 
     private NavigationBarView.OnItemSelectedListener bottomnavFunction = new NavigationBarView.OnItemSelectedListener() {
@@ -333,10 +352,36 @@ public class SettingsActivity extends AppCompatActivity {
         }
     };
 
+    public void onChangeListener(boolean isChecked){
+        SharedPreferences.Editor editor = sp.edit();
+        if (isChecked) {
+            editor.putInt("isDarkMode", 1).apply();
+            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }else {
+            editor.putInt("isDarkMode", 0).apply();
+            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         sp = getApplicationContext().getSharedPreferences("BlitzBar", Context.MODE_PRIVATE);
+
+        boolean isDarkMode = sp.getInt("isDarkMode", 0) == 1;
+        if (isDarkMode) {
+            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }else {
+            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_settings);
+
+        SharedPreferences.Editor editor = sp.edit();
+        SwitchCompat darkMode = (SwitchCompat) findViewById(R.id.DarkMode);
+
+        if (isDarkMode)
+            darkMode.setChecked(true);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         storageRef = FirebaseStorage.getInstance().getReference();
@@ -347,15 +392,10 @@ public class SettingsActivity extends AppCompatActivity {
         Button imageBtn;
         boolean isChecked = false;
 
-        boolean isDarkMode = sp.getInt("isDarkMode", 0) == 1;
-        if (isDarkMode) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            isChecked = true;
-        }else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }
+        justUploaded = sp.getBoolean("justUploaded", false);
+        imgCache = new ImageCache(getApplicationContext());
 
-        setContentView(R.layout.activity_settings);
+        blitzBarScore = (TextView) findViewById(R.id.blitzbarscore);
         userName = (TextView) findViewById(R.id.userName);
         profileImage = (ImageView) findViewById(R.id.profileImage);
         imageBtn = (Button) findViewById(R.id.select_image);
@@ -364,46 +404,29 @@ public class SettingsActivity extends AppCompatActivity {
         bottomNavigationBarView = findViewById(R.id.bottomnav);
         bottomNavigationBarView.setOnItemSelectedListener(bottomnavFunction);
 
-        SwitchCompat darkMode = (SwitchCompat) findViewById(R.id.DarkMode);
-
-        if (isChecked){
-            darkMode.setChecked(true);
-        }
-
         darkMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                SharedPreferences.Editor editor = sp.edit();
-                if (isChecked) {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    editor.putInt("isDarkMode", 1).apply();
-                }else {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    editor.putInt("isDarkMode", 0).apply();
-                }
+                onChangeListener(isChecked);
             }
         });
 
-        String userEmail = sp.getString("userEmail", "");
+        String userEmail = LoginActivity.loggedInUser.getEmail();
 
         if (userEmail != "") {
 
-            int hasProfilePic = sp.getInt("profilePic", 0);
+            boolean hasProfilePic = sp.getInt("profilePic", 0) == 1;
 
-            if (hasProfilePic == 1) {
+            if (hasProfilePic && !justUploaded) {
                 download_image();
+                editor.putBoolean("justUploaded", true).apply();
+            }else if (hasProfilePic){
+                Bitmap bmp = imgCache.getProfilePic(tempusername);
+                profileImage.setImageBitmap(bmp);
             }
 
-            Context context = getApplicationContext();
-            SQLiteDatabase sqLiteDatabase = context.openOrCreateDatabase("BlitzBar", Context.MODE_PRIVATE, null);
-
-            DBHelper dbHelper = new DBHelper(sqLiteDatabase);
-
-            User user = dbHelper.getUser(userEmail);
-
-            sqLiteDatabase.close();
-
-            userName.setText(user.getFirst_name() + " " + user.getLast_name());
+            userName.setText(LoginActivity.loggedInUser.getFirst_name() + " " + LoginActivity.loggedInUser.getLast_name());
+            blitzBarScore.setText(String.valueOf(LoginActivity.loggedInUser.getBlitz_score()));
         }
     }
 }
