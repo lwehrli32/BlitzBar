@@ -371,6 +371,10 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         sp = getApplicationContext().getSharedPreferences("BlitzBar", Context.MODE_PRIVATE);
+        boolean loggedIn = sp.getInt("loggedIn", 0) == 1;
+
+        if (!loggedIn)
+            return;
 
         boolean isDarkMode = sp.getInt("isDarkMode", 0) == 1;
         if (isDarkMode) {

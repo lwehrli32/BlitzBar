@@ -482,7 +482,10 @@ public class CreateAccountActivity extends AppCompatActivity {
      * @param currentUser
      */
     public void updateUI(FirebaseUser currentUser) {
+        SharedPreferences.Editor editor = sp.edit();
         String keyid = mDatabase.push().getKey();
+        editor.putInt("loggedIn", 1).apply();
+        editor.putString("userEmail", user.getEmail()).apply();
         mDatabase.child(keyid).setValue(user); //adding user info to database
         Intent loginIntent = new Intent(this, MapsActivity.class);
         startActivity(loginIntent);

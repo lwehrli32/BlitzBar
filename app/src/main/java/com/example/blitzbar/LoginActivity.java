@@ -87,6 +87,10 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()) {
                             Log.d(TAG, "signIn:success");
+                            SharedPreferences.Editor editor = sp.edit();
+                            editor.putInt("loggedIn", 1).apply();
+                            // TODO need to get user here
+                            // editor.putString("userEmail", user.getEmail()).apply();
                             Intent intent = new Intent(this, MapsActivity.class);
                             startActivity(intent);
                         } else {
