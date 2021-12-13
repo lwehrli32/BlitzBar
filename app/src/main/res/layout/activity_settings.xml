@@ -105,13 +105,16 @@
         android:id="@+id/bottomnav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="92dp"
         android:background="?android:attr/windowBackground"
         android:outlineAmbientShadowColor="@color/black"
         android:textColor="@color/textColor"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/LocationPublic"
+        app:layout_constraintVertical_bias="0.956"
         app:menu="@menu/bottom_nav_menu" />
 
     <Button
