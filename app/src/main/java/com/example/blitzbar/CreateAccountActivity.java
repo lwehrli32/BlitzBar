@@ -457,14 +457,14 @@ public class CreateAccountActivity extends AppCompatActivity {
             }
         });
 
-        loginButton.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View view) {
-                Intent loginIntent = new Intent (CreateAccountActivity.this, LoginActivity.class);
-                startActivity(loginIntent);
-            }
-        });
+//        loginButton.setOnClickListener(new View.OnClickListener(){
+//
+//            @Override
+//            public void onClick(View view) {
+//                Intent loginIntent = new Intent (CreateAccountActivity.this, LoginActivity.class);
+//                startActivity(loginIntent);
+//            }
+//        });
 
 //           loginButton.setOnClickListener(new View.onClickListener(){
 //           public void onClick(View v) {
@@ -512,5 +512,10 @@ public class CreateAccountActivity extends AppCompatActivity {
         mDatabase.child(keyid).setValue(user); //adding user info to database
         Intent loginIntent = new Intent(this, MapsActivity.class);
         startActivity(loginIntent);
+    }
+
+    public void gotoLogin(View view){
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
     }
 }
