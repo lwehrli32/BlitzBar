@@ -435,7 +435,7 @@ public class SettingsActivity extends AppCompatActivity {
             int cmonth = cal.get(Calendar.MONTH);
             int cday = cal.get(Calendar.DAY_OF_MONTH) + 1;
             String[] udate = LoginActivity.loggedInUser.getBirthday().split("/");
-            Log.i("Comparing dates", "User Birthday: " + udate[0] + "/" + udate[1] + " , " + "Current Day: " + cmonth + "/ " + cday);
+            //Log.i("Comparing dates", "User Birthday: " + udate[0] + "/" + udate[1] + " , " + "Current Day: " + cmonth + "/ " + cday);
             if (Integer.parseInt(udate[0]) == cmonth && Integer.parseInt(udate[1]) == cday) {
                 birthdayCake.setVisibility(View.VISIBLE);
             }
