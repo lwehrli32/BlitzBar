@@ -1,11 +1,9 @@
 package com.example.blitzbar;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
-import android.annotation.SuppressLint;
+
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -13,7 +11,6 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,19 +18,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.util.Date;
 import java.util.regex.Pattern;
 
 public class CreateAccountActivity extends AppCompatActivity {
@@ -42,7 +27,7 @@ public class CreateAccountActivity extends AppCompatActivity {
     String userEmail;
     EditText firstNameEditText;
     EditText lastNameEditText;
-    EditText birthdayEditText;
+    TextView birthdayEditText;
     EditText emailEditText;
     EditText passwordEditText;
     TextView feedback;
@@ -82,7 +67,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         userEmail = sp.getString("userEmail", "");
         firstNameEditText = (EditText) findViewById(R.id.createAccountFirstName);
         lastNameEditText = (EditText) findViewById(R.id.createAccountLastName);
-        birthdayEditText = (EditText) findViewById(R.id.createAccountBirthday);
+        birthdayEditText = (TextView) findViewById(R.id.createAccountBirthday);
         emailEditText = (EditText) findViewById(R.id.createAccountEmail);
         passwordEditText = (EditText) findViewById(R.id.createAccountPassword);
         feedback = (TextView) findViewById(R.id.createAccountFeedback);

@@ -78,6 +78,7 @@ public class SettingsActivity extends AppCompatActivity {
     TextView userName;
     ImageView profileImage;
     TextView blitzBarScore;
+    String builtNameAge;
 
     public void onSwitch(View v) {
         if (v.getId() == R.id.Sounds) {
@@ -424,9 +425,10 @@ public class SettingsActivity extends AppCompatActivity {
                 Bitmap bmp = imgCache.getProfilePic(tempusername);
                 profileImage.setImageBitmap(bmp);
             }
+            int fireEmoji = 0x1F525;
 
             userName.setText(LoginActivity.loggedInUser.getFirst_name() + " " + LoginActivity.loggedInUser.getLast_name());
-            blitzBarScore.setText(String.valueOf(LoginActivity.loggedInUser.getBlitz_score()));
+            blitzBarScore.setText(new String(Character.toChars(fireEmoji)) + " " + String.valueOf(LoginActivity.loggedInUser.getBlitz_score()));
         }
     }
 }

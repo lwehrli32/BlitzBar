@@ -22,6 +22,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.GeofencingClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -40,6 +41,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     SharedPreferences sp;
     private GoogleMap mMap;
+    private GeofencingClient geofencingClient;
     private final int ACCESS_FINE_LOCATION_REQUEST_CODE = 11;
     private NavigationBarView bottomNavigationBarView;
     FusedLocationProviderClient fusedLocationProviderClient;
@@ -64,6 +66,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         bottomNavigationBarView = findViewById(R.id.bottomnav);
         bottomNavigationBarView.setOnItemSelectedListener(bottomnavFunction);
+
+        geofencingClient = LocationServices.getGeofencingClient(this);
     }
 
     private NavigationBarView.OnItemSelectedListener bottomnavFunction = new NavigationBarView.OnItemSelectedListener() {
