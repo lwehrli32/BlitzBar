@@ -15,16 +15,17 @@ public class User {
     private long longitude;
     private long latitude;
     private ArrayList<String> friends;
+    private final String password;
 
-    public User(String first_name, String last_name, String email, String birthday, Long blitz_score, long longitude, long latitude){
+    public User(String first_name, String last_name, String email, String birthday, Long blitz_score, long longitude, long latitude, String password){
         this.first_name = first_name;
         this.last_name = last_name;
         this.email = email;
         this.birthday = birthday;
         this.blitz_score = blitz_score;
-        this.friends = friends;
         this.longitude = longitude;
         this.latitude = latitude;
+        this.password = password;
     }
 
     public String getFirst_name(){return this.first_name;}
@@ -36,6 +37,10 @@ public class User {
     public String getBirthday(){return this.birthday;}
 
     public Long getBlitz_score(){return this.blitz_score;}
+
+    public String getPassword() {
+        return this.password;
+    }
 
     public void incrementBlitzBar(){
         this.blitz_score++;

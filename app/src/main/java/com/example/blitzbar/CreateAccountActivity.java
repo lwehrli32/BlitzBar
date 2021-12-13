@@ -209,7 +209,7 @@ public class CreateAccountActivity extends AppCompatActivity {
             long latitude = 0;
             FireBaseHelper fireBaseHelper = new FireBaseHelper(userDatabase);
             if (!fireBaseHelper.checkUser(userEmail)) {
-                fireBaseHelper.insertUser(firstName, lastName, userEmail, birthday, blitzScore, longitude, latitude);
+                fireBaseHelper.insertUser(firstName, lastName, userEmail, birthday, blitzScore, longitude, latitude, userPassword);
                 Intent intent = new Intent(this, MapsActivity.class);
                 startActivity(intent);
             } else {

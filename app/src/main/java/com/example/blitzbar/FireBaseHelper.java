@@ -13,6 +13,7 @@ import java.util.ArrayList;
 public class FireBaseHelper {
     DatabaseReference userDatabase;
     boolean userExists;
+    User user;
 
     public FireBaseHelper(DatabaseReference databaseReference) {
         this.userDatabase = FirebaseDatabase.getInstance().getReference();
@@ -20,9 +21,9 @@ public class FireBaseHelper {
 
 
 
-    public void insertUser(String first_name, String last_name, String email, String birthday, long blitz_score, long longitude, long latitude){
-        User user = new User(first_name, last_name, email, birthday, blitz_score, longitude, latitude);
-        userDatabase.child("users").child(String.valueOf(email.hashCode())).setValue(user);
+    public void insertUser(String first_name, String last_name, String email, String birthday, long blitz_score, long longitude, long latitude, String password){
+        User user = new User(first_name, last_name, email, birthday, blitz_score, longitude, latitude, password);
+        userDatabase.child(String.valueOf(email.hashCode())).setValue(user);
     }
 
     private boolean addFriend(String user_email, String friend_email){
@@ -31,7 +32,7 @@ public class FireBaseHelper {
     }
 
     public void updateBlitzScore(String email, long blitz_score) {
-        userDatabase.child("users").child(String.valueOf(email.hashCode())).child("blitz_score").setValue(blitz_score);
+        userDatabase.child(String.valueOf(email.hashCode())).child("blitz_score").setValue(blitz_score);
     }
 
     private boolean locationUpdate(String email) {
@@ -54,8 +55,7 @@ public class FireBaseHelper {
     }
 
     public boolean checkUser(String checkEmail) {
-        DatabaseReference userCheck= userDatabase.child("users");
-        userCheck.addListenerForSingleValueEvent(new ValueEventListener() {
+        userDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.child(String.valueOf(checkEmail.hashCode())).exists()) {
@@ -70,5 +70,28 @@ public class FireBaseHelper {
             }
         });
         return userExists;
+    }
+
+    public User getUser(String email) {
+        userDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String firstname = userDatabase.child(String.valueOf(email.hashCode())).child("first_name").toString();
+                String lastname = userDatabase.child(String.valueOf(email.hashCode())).child("last_name").toString();
+                String userEmail = userDatabase.child(String.valueOf(email.hashCode())).child("email").toString();
+                String birthday = userDatabase.child(String.valueOf(email.hashCode())).child("birthday").toString();
+                long blitzScore = Long.parseLong(userDatabase.child(String.valueOf(email.hashCode())).child("blitz_score").toString());
+                long longitude = Long.parseLong(userDatabase.child(String.valueOf(email.hashCode())).child("longitude").toString());
+                long latitude = Long.parseLong(userDatabase.child(String.valueOf(email.hashCode())).child("latitude").toString());
+                String password = userDatabase.child(String.valueOf(email.hashCode())).child("password").toString();
+                user = new User(firstname, lastname, userEmail, birthday, blitzScore, longitude, latitude, password);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        return user;
     }
 }
