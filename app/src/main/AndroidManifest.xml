@@ -19,6 +19,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
         <activity
+            android:name=".FindFriends"
+            android:exported="true" />
+        <activity
             android:name=".ListActivity"
             android:exported="true" />
         <activity
