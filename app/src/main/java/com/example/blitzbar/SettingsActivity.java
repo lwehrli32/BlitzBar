@@ -422,7 +422,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         String userEmail = LoginActivity.loggedInUser.getEmail();
 
-        if (userEmail != "") {
+        /*if (userEmail != "") {
 
             boolean hasProfilePic = sp.getInt("profilePic", 0) == 1;
 
@@ -448,5 +448,7 @@ public class SettingsActivity extends AppCompatActivity {
             userName.setText(LoginActivity.loggedInUser.getFirst_name() + " " + LoginActivity.loggedInUser.getLast_name());
             blitzBarScore.setText(new String(Character.toChars(fireEmoji)) + " " + String.valueOf(LoginActivity.loggedInUser.getBlitz_score()));
         }
+
+         */
     }
 }
