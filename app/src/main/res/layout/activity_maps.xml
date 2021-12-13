@@ -17,15 +17,13 @@
         tools:context=".MapsActivity" >
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/BlitzBarLogo"
         android:contentDescription="@string/blitzbar_logo_cutout_textless"
         android:layout_width="75dp"
         android:layout_height="75dp"
-        android:paddingTop="-20dp"
-        android:paddingStart="-20dp"
         app:layout_constraintHeight_percent="0.25"
         app:layout_constraintWidth_percent="0.25"
-        android:layout_gravity="start|top"
+        android:layout_gravity="center|top"
         android:src="@mipmap/logo_textless_foreground"
         tools:ignore="RtlSymmetry" />
 

@@ -12,4 +12,5 @@
     <string name="blitzbar_logo_cutout_textless">BlitzBar logo cutout textless</string>
     <string name="button">Button</string>
     <string name="google_places_key">AIzaSyDaQaR0aDza_nDhgYTeg-w6kaXsgP8Yzhw</string>
+    <string name="about_description">BlitzBar serves to give up-to-date wait times on what any college student is looking for on any social night, bars. The app is currently exclusive to the University of Wisconsin - Madison. Developed for the Fall 2021 semester of CS 407 by Jake DeWitte, Aristidis Giannopoulos, Jorge Tenorio, and Lukas Wehrli</string>
 </resources>
