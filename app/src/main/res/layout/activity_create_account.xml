@@ -5,123 +5,138 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backgroundColor"
-    tools:context=".LoginActivity">
+    tools:context=".CreateAccountActivity">
 
     <Button
         android:id="@+id/createAccountLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="27dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="8dp"
         android:onClick="gotoLogin"
         android:text="Login"
         android:textColor="@color/textColor"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/createAccountButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/createAccountButton" />
 
     <EditText
         android:id="@+id/createAccountPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="Password"
         android:inputType="textPassword"
+        android:minHeight="48dp"
         android:textColor="@color/textColor"
-        app:layout_constraintBottom_toTopOf="@+id/createAccountButton"
-        app:layout_constraintStart_toStartOf="@+id/createAccountEmail"
-        app:layout_constraintTop_toBottomOf="@+id/createAccountEmail" />
-
-    <EditText
-        android:id="@+id/createAccountEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="11dp"
-        android:ems="10"
-        android:hint="Email"
-        android:inputType="textPersonName"
-        android:textColor="@color/textColor"
-        app:layout_constraintBottom_toTopOf="@+id/createAccountPassword"
-        app:layout_constraintStart_toStartOf="@+id/createAccountBirthday"
-        app:layout_constraintTop_toBottomOf="@+id/createAccountBirthday" />
-
-    <ImageView
-        android:id="@+id/createAccountLogo"
-        android:layout_width="222dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="19dp"
-        app:layout_constraintBottom_toTopOf="@+id/createAccountFeedback"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo" />
-
-    <Button
-        android:id="@+id/createAccountButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="33dp"
-        android:layout_marginBottom="16dp"
-        android:onClick="userCreateAccount"
-        android:text="Create Account"
-        android:textColor="@color/textColor"
-        app:layout_constraintBottom_toTopOf="@+id/createAccountLogin"
-        app:layout_constraintEnd_toEndOf="@+id/createAccountPassword"
-        app:layout_constraintTop_toBottomOf="@+id/createAccountPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/createAccountEmail" />
 
     <EditText
         android:id="@+id/createAccountFirstName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="6dp"
-        android:layout_marginBottom="13dp"
+        android:layout_marginTop="136dp"
         android:ems="10"
         android:hint="First Name"
         android:inputType="textPersonName"
+        android:minHeight="48dp"
         android:textColor="@color/textColor"
-        app:layout_constraintBottom_toTopOf="@+id/createAccountLastName"
-        app:layout_constraintStart_toStartOf="@+id/createAccountLogo"
-        app:layout_constraintTop_toBottomOf="@+id/createAccountFeedback" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/createAccountLastName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="18dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="Last Name"
         android:inputType="textPersonName"
+        android:minHeight="48dp"
         android:textColor="@color/textColor"
-        app:layout_constraintBottom_toTopOf="@+id/createAccountBirthday"
-        app:layout_constraintStart_toStartOf="@+id/createAccountFirstName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/createAccountFirstName" />
 
-    <EditText
+    <TextView
         android:id="@+id/createAccountBirthday"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="13dp"
+        android:layout_width="210dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
+        android:gravity="center_vertical"
         android:hint="Birthday"
         android:inputType="date"
         android:textColor="@color/textColor"
-        app:layout_constraintBottom_toTopOf="@+id/createAccountEmail"
-        app:layout_constraintStart_toStartOf="@+id/createAccountLastName"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/createAccountLastName" />
+
+    <EditText
+        android:id="@+id/createAccountEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:ems="10"
+        android:hint="Email"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        android:textColor="@color/textColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/createAccountBirthday" />
+
+    <Button
+        android:id="@+id/createAccountButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:onClick="userCreateAccount"
+        android:text="Create Account"
+        android:textColor="@color/textColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/createAccountFeedback" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="234dp"
+        android:layout_height="159dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/logo_textless_foreground" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Please Drink Responsibly"
+        android:textColor="@color/LightGrey"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/createAccountLogin" />
 
     <TextView
         android:id="@+id/createAccountFeedback"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="78dp"
-        android:layout_marginEnd="80dp"
-        android:layout_marginBottom="16dp"
-        android:text=""
-        android:textColor="@color/textColor"
-        app:layout_constraintBottom_toTopOf="@+id/createAccountFirstName"
-        app:layout_constraintEnd_toEndOf="@+id/createAccountFirstName"
-        app:layout_constraintStart_toStartOf="@+id/createAccountLogo"
-        app:layout_constraintTop_toBottomOf="@+id/createAccountLogo" />
+        android:layout_marginTop="8dp"
+        android:textColor="@color/Crimson"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/createAccountPassword" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

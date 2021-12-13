@@ -83,4 +83,5 @@ public class LoginActivity extends AppCompatActivity {
     public void setFeedback(String msg){
         feedback.setText(msg);
     }
+
 }
