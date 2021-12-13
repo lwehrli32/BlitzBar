@@ -1,22 +1,28 @@
 package com.example.blitzbar;
 
+import androidx.annotation.NonNull;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
 public class FireBaseHelper {
     DatabaseReference userDatabase;
+    boolean userExists;
 
     public FireBaseHelper(DatabaseReference databaseReference) {
         this.userDatabase = FirebaseDatabase.getInstance().getReference();
     }
 
 
-    private User insertUser(String first_name, String last_name, String email, String birthday, long blitz_score, ArrayList<String> friends, long longitude, long latitude){
-        User user = new User(first_name, last_name, email, birthday, blitz_score, friends, longitude, latitude);
-        userDatabase.child("users").child(email).setValue(user);
-        return user;
+
+    public void insertUser(String first_name, String last_name, String email, String birthday, long blitz_score, long longitude, long latitude){
+        User user = new User(first_name, last_name, email, birthday, blitz_score, longitude, latitude);
+        userDatabase.child("users").child(String.valueOf(email.hashCode())).setValue(user);
     }
 
     private boolean addFriend(String user_email, String friend_email){
@@ -24,8 +30,8 @@ public class FireBaseHelper {
         return true;
     }
 
-    private boolean updateBlitzScore(String email, long blitz_score) {
-        return true;
+    public void updateBlitzScore(String email, long blitz_score) {
+        userDatabase.child("users").child(String.valueOf(email.hashCode())).child("blitz_score").setValue(blitz_score);
     }
 
     private boolean locationUpdate(String email) {
@@ -37,20 +43,32 @@ public class FireBaseHelper {
         return friends;
     }
 
+    private boolean checkFriend(String email, String friend_email) {
+        return true;
+    }
+
     private long[] friendLocation(String friend_email) {
         long longitude = 0;
         long latitude = 0;
         return new long[]{longitude, latitude};
     }
 
-    public User getUser(String email) {
-        String first_name = null;
-        String last_name = null;
-        String birthday = null;
-        long blitz_score = 0;
-        ArrayList<String> friends = null;
-        long longitude = 0;
-        long latitude = 0;
-        return new User(first_name, last_name, email, birthday, blitz_score, friends, longitude, latitude);
+    public boolean checkUser(String checkEmail) {
+        DatabaseReference userCheck= userDatabase.child("users");
+        userCheck.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.child(String.valueOf(checkEmail.hashCode())).exists()) {
+                    userExists = true;
+                } else {
+                    userExists = false;
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        return userExists;
     }
 }

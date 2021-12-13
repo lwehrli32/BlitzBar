@@ -121,7 +121,7 @@ public class DBHelper {
     }
 
     @SuppressLint("DefaultLocale")
-    public boolean insertUser(String first_name, String last_name, String email, String birthday, String blitz_score, String fav_drink, String fav_bar){
+    public boolean insertUser(String first_name, String last_name, String email, String birthday, long blitz_score, String fav_drink, String fav_bar){
         createUsersTable();
 
         // check if the user already exists
@@ -184,6 +184,6 @@ public class DBHelper {
         ArrayList<String> friends = null;
         long longitude = 0;
         long latitude = 0;
-        return new User(first_name, last_name, email, birthday, blitz_score, friends, longitude, latitude);
+        return new User(first_name, last_name, email, birthday, blitz_score, longitude, latitude);
     }
 }

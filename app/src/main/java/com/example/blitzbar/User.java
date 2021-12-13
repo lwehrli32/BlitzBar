@@ -16,7 +16,7 @@ public class User {
     private long latitude;
     private ArrayList<String> friends;
 
-    public User(String first_name, String last_name, String email, String birthday, Long blitz_score, ArrayList<String> friends, long longitude, long latitude){
+    public User(String first_name, String last_name, String email, String birthday, Long blitz_score, long longitude, long latitude){
         this.first_name = first_name;
         this.last_name = last_name;
         this.email = email;
