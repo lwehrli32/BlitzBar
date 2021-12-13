@@ -197,25 +197,27 @@ public class CreateAccountActivity extends AppCompatActivity {
         }
 
         if(goodInput) {
-            Context context = getApplicationContext();
+            /*Context context = getApplicationContext();
             SQLiteDatabase sqLiteDatabase = context.openOrCreateDatabase("BlitzBar", Context.MODE_PRIVATE, null);
             DBHelper dbHelper = new DBHelper(sqLiteDatabase);
 
             // TODO firebase helper returns user when inserted and then set loggedinuser to the user returned
             boolean userCreated = dbHelper.insertUser(firstName, lastName, userEmail, birthday, blitzScore, fav_drink, fav_bar);
 
+             */
             fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
             long longitude = 0;
             long latitude = 0;
             FireBaseHelper fireBaseHelper = new FireBaseHelper(userDatabase);
-            if (!fireBaseHelper.checkUser(userEmail)) {
+            boolean userCreated = fireBaseHelper.checkUser(userEmail);
+            if (!userCreated) {
                 fireBaseHelper.insertUser(firstName, lastName, userEmail, birthday, blitzScore, longitude, latitude, userPassword);
                 Intent intent = new Intent(this, MapsActivity.class);
                 startActivity(intent);
             } else {
                 setFeedback("Email is already taken");
             }
-            sqLiteDatabase.close();
+            //sqLiteDatabase.close();
 
             /*if (userCreated) {
                 SharedPreferences.Editor editor = sp.edit();

@@ -54,15 +54,18 @@ public class FireBaseHelper {
         return new long[]{longitude, latitude};
     }
 
+    public void test(boolean t){
+        userExists = t;
+    }
+
     public boolean checkUser(String checkEmail) {
-        userDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+        DatabaseReference userData = userDatabase.child(String.valueOf(checkEmail.hashCode()));
+        String test = String.valueOf(checkEmail.hashCode());
+        userData.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.child(String.valueOf(checkEmail.hashCode())).exists()) {
-                    userExists = true;
-                } else {
-                    userExists = false;
-                }
+                String test1 = snapshot.getKey();
+                test(test1.equals(test));
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -73,17 +76,18 @@ public class FireBaseHelper {
     }
 
     public User getUser(String email) {
-        userDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+        DatabaseReference userData = userDatabase.child(String.valueOf(email.hashCode()));
+        userData.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String firstname = userDatabase.child(String.valueOf(email.hashCode())).child("first_name").toString();
-                String lastname = userDatabase.child(String.valueOf(email.hashCode())).child("last_name").toString();
-                String userEmail = userDatabase.child(String.valueOf(email.hashCode())).child("email").toString();
-                String birthday = userDatabase.child(String.valueOf(email.hashCode())).child("birthday").toString();
-                long blitzScore = Long.parseLong(userDatabase.child(String.valueOf(email.hashCode())).child("blitz_score").toString());
-                long longitude = Long.parseLong(userDatabase.child(String.valueOf(email.hashCode())).child("longitude").toString());
-                long latitude = Long.parseLong(userDatabase.child(String.valueOf(email.hashCode())).child("latitude").toString());
-                String password = userDatabase.child(String.valueOf(email.hashCode())).child("password").toString();
+                String firstname = snapshot.child("first_name").toString();
+                String lastname = snapshot.child("last_name").toString();
+                String userEmail = snapshot.child("email").toString();
+                String birthday = snapshot.child("birthday").toString();
+                long blitzScore = Long.parseLong(snapshot.child("blitz_score").toString());
+                long longitude = Long.parseLong(snapshot.child("longitude").toString());
+                long latitude = Long.parseLong(snapshot.child("latitude").toString());
+                String password = snapshot.child("password").toString();
                 user = new User(firstname, lastname, userEmail, birthday, blitzScore, longitude, latitude, password);
             }
 

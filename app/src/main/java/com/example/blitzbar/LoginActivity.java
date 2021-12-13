@@ -12,8 +12,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class LoginActivity extends AppCompatActivity {
     public static User loggedInUser = null;
+    DatabaseReference userDatabase = FirebaseDatabase.getInstance().getReference();
 
     SharedPreferences sp;
     int loggedIn = 0;
@@ -66,8 +70,22 @@ public class LoginActivity extends AppCompatActivity {
     public void userLogin(View v){
         setFeedback("");
         String userEmail = emailTextView.getText().toString();
+        String password = passwordTextView.getText().toString();
+        FireBaseHelper fireBaseHelper = new FireBaseHelper(userDatabase);
+        User user = fireBaseHelper.getUser(userEmail);
+        if (!fireBaseHelper.checkUser(userEmail) && !user.getPassword().equals(password)) {
+            setFeedback("User not found");
+        } else {
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putInt("loggedIn", 1).apply();
+            editor.putString("userEmail", userEmail).apply();
+            loggedInUser = user;
+            Intent intent = new Intent(this, MapsActivity.class);
+            startActivity(intent);
+        }
 
-        Context context = getApplicationContext();
+
+        /*Context context = getApplicationContext();
 
         SQLiteDatabase sqLiteDatabase = context.openOrCreateDatabase("BlitzBar", Context.MODE_PRIVATE,null);
         DBHelper dbHelper = new DBHelper(sqLiteDatabase);
@@ -88,6 +106,7 @@ public class LoginActivity extends AppCompatActivity {
         }else{
             setFeedback("User not found");
         }
+         */
     }
 
     public void setFeedback(String msg){
