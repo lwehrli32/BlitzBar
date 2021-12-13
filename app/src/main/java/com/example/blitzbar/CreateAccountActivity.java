@@ -401,6 +401,7 @@ public class CreateAccountActivity extends AppCompatActivity {
     private User user;
     private FirebaseAuth mAuth;
     SharedPreferences sp;
+    private Button loginButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -434,6 +435,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         mDatabase = database.getReference(USERS);
         mAuth = FirebaseAuth.getInstance();
+        loginButton = findViewById(R.id.loginCreateAccount);
 
         registerButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -454,6 +456,18 @@ public class CreateAccountActivity extends AppCompatActivity {
                 }
             }
         });
+
+//           loginButton.setOnClickListener(new View.onClickListener(){
+//           public void onClick(View v) {
+//
+//           }
+//                                          });
+//            @Override
+//            public void onClick(View view) {
+//                Intent loginIntent = new Intent(this, LoginActivity.class);
+//                startActivity(loginIntent);
+//            }
+//        });
 
     }
 
