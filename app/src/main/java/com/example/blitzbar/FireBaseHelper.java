@@ -54,18 +54,18 @@ public class FireBaseHelper {
         return new long[]{longitude, latitude};
     }
 
-    public void test(boolean t){
-        userExists = t;
+    public void userExistUpdate(boolean bool){
+        userExists = bool;
     }
 
     public boolean checkUser(String checkEmail) {
         DatabaseReference userData = userDatabase.child(String.valueOf(checkEmail.hashCode()));
-        String test = String.valueOf(checkEmail.hashCode());
+        String inputUserId = String.valueOf(checkEmail.hashCode());
         userData.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String test1 = snapshot.getKey();
-                test(test1.equals(test));
+                String userId = snapshot.getKey();
+                userExistUpdate(userId.equals(inputUserId));
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {

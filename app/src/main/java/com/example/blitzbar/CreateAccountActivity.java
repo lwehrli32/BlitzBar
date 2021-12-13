@@ -210,12 +210,12 @@ public class CreateAccountActivity extends AppCompatActivity {
             long latitude = 0;
             FireBaseHelper fireBaseHelper = new FireBaseHelper(userDatabase);
             boolean userCreated = fireBaseHelper.checkUser(userEmail);
-            if (!userCreated) {
+            if (userCreated) {
+                setFeedback("Email is already taken");
+            } else {
                 fireBaseHelper.insertUser(firstName, lastName, userEmail, birthday, blitzScore, longitude, latitude, userPassword);
                 Intent intent = new Intent(this, MapsActivity.class);
                 startActivity(intent);
-            } else {
-                setFeedback("Email is already taken");
             }
             //sqLiteDatabase.close();
 
